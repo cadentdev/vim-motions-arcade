@@ -437,6 +437,33 @@ Vim Motions Arcade is a character-based platformer game that teaches players vim
 
 **Recommendation**: Prototype with Option B (DOM) for rapid development, then evaluate if Canvas (Option A) or Hybrid (Option C) is needed for performance/effects.
 
+### Language & Tooling Choice
+
+#### Vanilla JavaScript (Recommended Starting Point)
+**Pros**:
+- Zero build complexity - use ES modules directly in browser
+- Fastest iteration speed during prototyping
+- Modern JavaScript features sufficient for game logic
+- Easy to understand and debug
+- No learning curve for TypeScript
+- Can add type checking later with JSDoc or migrate to TypeScript
+
+**Cons**:
+- No compile-time type safety
+- Refactoring requires more manual care
+- Runtime errors for type mismatches
+
+**Migration Path**:
+- Start with vanilla JS and ES modules
+- Use `// @ts-check` in files where type safety would help
+- Migrate to TypeScript in later phases if:
+  - Getting frequent runtime errors from type issues
+  - Refactoring becomes risky
+  - State management complexity increases (Phase 4+)
+  - Team preference shifts toward typed code
+
+**Philosophy**: Keep things as simple as possible, but not too simple. Add complexity (TypeScript, frameworks) only when justified by actual pain points.
+
 ### Input Handling
 - **Keyboard Only**: Physical keyboard required (Bluetooth keyboards supported on mobile)
 - **Key Binding System**: Map vim motions to keyboard inputs

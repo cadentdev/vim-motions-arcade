@@ -8,11 +8,11 @@ This document outlines the initial development tasks for building the Vim Motion
 
 ### 1. Project Initialization
 - [ ] Initialize project structure (src, assets, tests directories)
-- [ ] Set up build tooling (Vite/Webpack/Parcel)
-- [ ] Configure TypeScript with strict type checking
+- [ ] Set up build tooling (Vite recommended for modern dev experience)
 - [ ] Set up linting (ESLint) and formatting (Prettier)
 - [ ] Create package.json with necessary dependencies
 - [ ] Set up Git hooks for code quality (husky + lint-staged)
+- [ ] Configure for ES modules (type="module" in package.json)
 
 ### 2. Development Environment
 - [ ] Configure hot module replacement for rapid iteration
@@ -21,7 +21,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Add source maps for debugging
 
 ### 3. Core Architecture Planning
-- [ ] Define core game state interface
+- [ ] Define core game state structure
   - Player position (x, y coordinates)
   - Score, timer, health
   - Available motions/power-ups
@@ -280,17 +280,25 @@ This document outlines the initial development tasks for building the Vim Motion
 ## Notes
 
 ### Technology Decisions
-- **Framework**: Vanilla TypeScript initially (can migrate to React/Svelte later if needed)
+- **Language**: Vanilla JavaScript (modern ES modules)
+  - Start simple, add TypeScript later only if needed
+  - Optional: Use `// @ts-check` for type checking in individual files
+  - Migration path: Convert to TypeScript in later phases if complexity warrants it
+- **Framework**: No framework - vanilla HTML/CSS/JS
+  - Can migrate to React/Svelte later if complexity demands it
 - **Rendering**: DOM-based for MVP (evaluate Canvas in Phase 3)
 - **Styling**: CSS with CSS variables for theming support
 - **State**: Simple class-based state (can migrate to Redux/Zustand later)
+- **Testing**: Vitest or Jest for unit tests, Playwright for E2E
 
 ### Development Principles
-1. **Iterative Development**: Build, playtest, refine
-2. **Fun First**: Prioritize gameplay feel over features
-3. **Clean Code**: Maintain readability for future features
-4. **Performance Aware**: Profile early, optimize as needed
-5. **Modular Design**: Easy to extend with Phase 2+ features
+1. **Start Simple**: Keep things as simple as possible, but not too simple
+2. **Iterative Development**: Build, playtest, refine
+3. **Fun First**: Prioritize gameplay feel over features
+4. **Clean Code**: Maintain readability for future features
+5. **Performance Aware**: Profile early, optimize as needed
+6. **Modular Design**: Easy to extend with Phase 2+ features
+7. **Add Complexity When Needed**: TypeScript, frameworks, etc. only when justified
 
 ### Open Questions for Phase 1
 - Map size: How many characters wide/tall? (Start 40x20, adjust)
