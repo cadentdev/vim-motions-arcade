@@ -437,6 +437,33 @@ Vim Motions Arcade is a character-based platformer game that teaches players vim
 
 **Recommendation**: Prototype with Option B (DOM) for rapid development, then evaluate if Canvas (Option A) or Hybrid (Option C) is needed for performance/effects.
 
+### Language & Tooling Choice
+
+#### Vanilla JavaScript (Recommended Starting Point)
+**Pros**:
+- Zero build complexity - use ES modules directly in browser
+- Fastest iteration speed during prototyping
+- Modern JavaScript features sufficient for game logic
+- Easy to understand and debug
+- No learning curve for TypeScript
+- Can add type checking later with JSDoc or migrate to TypeScript
+
+**Cons**:
+- No compile-time type safety
+- Refactoring requires more manual care
+- Runtime errors for type mismatches
+
+**Migration Path**:
+- Start with vanilla JS and ES modules
+- Use `// @ts-check` in files where type safety would help
+- Migrate to TypeScript in later phases if:
+  - Getting frequent runtime errors from type issues
+  - Refactoring becomes risky
+  - State management complexity increases (Phase 4+)
+  - Team preference shifts toward typed code
+
+**Philosophy**: Keep things as simple as possible, but not too simple. Add complexity (TypeScript, frameworks) only when justified by actual pain points.
+
 ### Input Handling
 - **Keyboard Only**: Physical keyboard required (Bluetooth keyboards supported on mobile)
 - **Key Binding System**: Map vim motions to keyboard inputs
@@ -457,11 +484,87 @@ Vim Motions Arcade is a character-based platformer game that teaches players vim
 - **Progression State**: XP, unlocks, persistent upgrades (saved to localStorage)
 - **Performance State**: FPS monitoring, optimization flags
 
+### Testing Strategy
+
+#### Two-Tier Approach
+The project uses a two-tier testing strategy to balance development velocity with deployment safety:
+
+**Tier 1: Unit Tests (Development Feedback Loop)**
+- **Tool**: Vitest (modern, fast, Vite-integrated)
+- **Purpose**: Immediate feedback during development
+- **When to run**:
+  - Watch mode during active development
+  - Pre-commit hook (blocks commits if failing)
+- **Speed requirement**: < 1 second for full suite in Phase 1
+- **Focus areas**:
+  - Player movement and collision detection
+  - Coin collection and scoring logic
+  - Timer countdown and callbacks
+  - State transitions and validation
+  - Win/lose condition detection
+- **Scope**: Game logic only, not rendering or visual effects
+
+**Tier 2: E2E Tests (Deployment Gate)**
+- **Tool**: Playwright (modern, reliable, multi-browser)
+- **Purpose**: Prevent broken builds from being pushed or deployed
+- **When to run**:
+  - Pre-push hook (blocks push if failing)
+  - CI/CD pipeline (before staging/production deploy)
+- **Speed tolerance**: 10-30 seconds acceptable
+- **Critical flows (Phase 1)**:
+  1. Happy path: Start game → collect all coins → win
+  2. Timeout path: Start game → timer expires → lose
+  3. Restart flow: Complete level → restart → verify game works
+  4. Movement verification: hjkl keys move cursor correctly
+- **Expansion**: Add more E2E tests in later phases for new features
+
+#### Type Checking (Optional)
+- **jsconfig.json**: Provides IntelliSense and basic IDE support
+- **No mandatory type checking**: Keep compilation simple
+- **Optional `// @ts-check`**: Add to individual files if desired
+- **JSDoc**: Use sparingly for documentation, not type enforcement
+- **Migration path**: Convert to TypeScript in later phases if needed
+
+### Deployment Architecture
+
+#### Client-Side Only (Phase 1-4)
+The game is entirely browser-based with no backend server required:
+
+**Development:**
+- Vite dev server serves static files (HTML, CSS, JS)
+- No API calls, no database, no server-side logic
+- Hot module replacement for fast iteration
+
+**Production:**
+- Deploy to static hosting (GitHub Pages, Netlify, Vercel, Cloudflare Pages)
+- Single-page application served as static assets
+- Zero server costs during Phases 1-4
+
+**State Management:**
+- Game state: In-memory JavaScript objects
+- Progress saves: Browser localStorage
+- Fully offline-capable after initial page load
+
+#### Backend Server (Phase 5+)
+Only needed when adding:
+- User accounts and authentication
+- Global leaderboards (requires centralized database)
+- Cross-device sync
+- Daily challenges (need to distribute same challenge to all players)
+- Social features
+
+**Technology options for future backend:**
+- Serverless functions (Cloudflare Workers, Netlify Functions)
+- Backend-as-a-Service (Supabase, Firebase)
+- Traditional server (Node.js, Deno, Go)
+
 ### Save System
-- **Auto-save**: Progress saved after each level completion
-- **Manual Save**: Available through command mode
-- **Storage**: LocalStorage for browser-based saves
-- **Cloud Sync**: Optional future feature
+- **Auto-save**: Progress saved to localStorage after each level completion
+- **Manual Save**: Available through command mode (`:save`)
+- **Storage**: Browser localStorage (persists across sessions, no backend needed)
+- **Scope**: Level progress, unlocked motions, XP, persistent upgrades
+- **Limitations**: Data is device-specific, lost if localStorage is cleared
+- **Cloud Sync**: Phase 5+ feature (requires backend server)
 
 ---
 
@@ -470,16 +573,36 @@ Vim Motions Arcade is a character-based platformer game that teaches players vim
 ### Phase 1: Core Prototype (MVP)
 **Goal**: Prove the core gameplay loop is fun
 
-**Features**:
-- Basic map generation (simple procedural blocks)
-- Character movement: `hjkl` only
-- Coin collection mechanic
-- Timer and basic scoring
-- Minimal visual effects (no motion blur yet)
-- Single level that restarts on completion/failure
-- DOM-based rendering
+**Development Approach**: Build from outside-in (screens → navigation → game mechanics)
 
-**Success Criteria**: Playable, controls feel responsive, core loop is engaging
+**Features**:
+- **Screen System**: Main menu, game screen, level complete/failed screens
+- **Main Menu**:
+  - Start new game / Continue game buttons
+  - Local leaderboard (top 10 scores from localStorage)
+  - Basic instructions display
+- **Tutorial Level 0**: "How to Quit Vim"
+  - First level teaches `:q` command
+  - Simple text screen with instructions
+  - Success = player successfully quits to menu
+  - Marks completion in localStorage
+- **Command Mode**: `:q`, `:quit`, `:help` commands
+- **LocalStorage System**: Save/load game progress, leaderboard management
+- **Basic map generation**: Simple procedural blocks (document-like structure)
+- **Character movement**: `hjkl` only
+- **Coin collection mechanic**: Collect coins, track score
+- **Timer and basic scoring**: Countdown timer, point system
+- **Win/Lose conditions**: All coins collected (win) or timer expires (lose)
+- **Level end screens**: Show score, return to menu, restart options
+- **Minimal visual effects**: No motion blur yet, basic CSS transitions
+- **DOM-based rendering**: All rendering via DOM manipulation
+
+**Success Criteria**:
+- Playable end-to-end flow (menu → tutorial → game → menu)
+- Controls feel responsive
+- Core loop is engaging (navigate → collect → score)
+- Screen navigation works smoothly
+- Save/load system works reliably
 
 ### Phase 2: Power-up System
 **Goal**: Introduce vim motion progression
