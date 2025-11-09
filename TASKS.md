@@ -17,7 +17,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 2. Development Environment
 - [ ] Configure hot module replacement for rapid iteration
 - [ ] Set up basic HTML template with game container
-- [ ] Create development server configuration
+- [ ] Configure Vite dev server (static file server only - no backend needed)
 - [ ] Add source maps for debugging
 
 ### 2a. Testing Infrastructure
@@ -341,6 +341,11 @@ This document outlines the initial development tasks for building the Vim Motion
   - Migration path: Convert to TypeScript in later phases if complexity warrants it
 - **Framework**: No framework - vanilla HTML/CSS/JS
   - Can migrate to React/Svelte later if complexity demands it
+- **Architecture**: Client-side only (no backend server)
+  - Phases 1-4: Pure browser-based game
+  - Vite dev server serves static files only (HTML/CSS/JS)
+  - Game state stored in-memory and localStorage
+  - Backend only needed in Phase 5+ for user accounts/leaderboards
 - **Rendering**: DOM-based for MVP (evaluate Canvas in Phase 3)
 - **Styling**: CSS with CSS variables for theming support
 - **State**: Simple class-based state (can migrate to Redux/Zustand later)

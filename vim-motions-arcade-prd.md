@@ -525,11 +525,46 @@ The project uses a two-tier testing strategy to balance development velocity wit
 - **JSDoc**: Use sparingly for documentation, not type enforcement
 - **Migration path**: Convert to TypeScript in later phases if needed
 
+### Deployment Architecture
+
+#### Client-Side Only (Phase 1-4)
+The game is entirely browser-based with no backend server required:
+
+**Development:**
+- Vite dev server serves static files (HTML, CSS, JS)
+- No API calls, no database, no server-side logic
+- Hot module replacement for fast iteration
+
+**Production:**
+- Deploy to static hosting (GitHub Pages, Netlify, Vercel, Cloudflare Pages)
+- Single-page application served as static assets
+- Zero server costs during Phases 1-4
+
+**State Management:**
+- Game state: In-memory JavaScript objects
+- Progress saves: Browser localStorage
+- Fully offline-capable after initial page load
+
+#### Backend Server (Phase 5+)
+Only needed when adding:
+- User accounts and authentication
+- Global leaderboards (requires centralized database)
+- Cross-device sync
+- Daily challenges (need to distribute same challenge to all players)
+- Social features
+
+**Technology options for future backend:**
+- Serverless functions (Cloudflare Workers, Netlify Functions)
+- Backend-as-a-Service (Supabase, Firebase)
+- Traditional server (Node.js, Deno, Go)
+
 ### Save System
-- **Auto-save**: Progress saved after each level completion
-- **Manual Save**: Available through command mode
-- **Storage**: LocalStorage for browser-based saves
-- **Cloud Sync**: Optional future feature
+- **Auto-save**: Progress saved to localStorage after each level completion
+- **Manual Save**: Available through command mode (`:save`)
+- **Storage**: Browser localStorage (persists across sessions, no backend needed)
+- **Scope**: Level progress, unlocked motions, XP, persistent upgrades
+- **Limitations**: Data is device-specific, lost if localStorage is cleared
+- **Cloud Sync**: Phase 5+ feature (requires backend server)
 
 ---
 
