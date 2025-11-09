@@ -573,16 +573,36 @@ Only needed when adding:
 ### Phase 1: Core Prototype (MVP)
 **Goal**: Prove the core gameplay loop is fun
 
-**Features**:
-- Basic map generation (simple procedural blocks)
-- Character movement: `hjkl` only
-- Coin collection mechanic
-- Timer and basic scoring
-- Minimal visual effects (no motion blur yet)
-- Single level that restarts on completion/failure
-- DOM-based rendering
+**Development Approach**: Build from outside-in (screens → navigation → game mechanics)
 
-**Success Criteria**: Playable, controls feel responsive, core loop is engaging
+**Features**:
+- **Screen System**: Main menu, game screen, level complete/failed screens
+- **Main Menu**:
+  - Start new game / Continue game buttons
+  - Local leaderboard (top 10 scores from localStorage)
+  - Basic instructions display
+- **Tutorial Level 0**: "How to Quit Vim"
+  - First level teaches `:q` command
+  - Simple text screen with instructions
+  - Success = player successfully quits to menu
+  - Marks completion in localStorage
+- **Command Mode**: `:q`, `:quit`, `:help` commands
+- **LocalStorage System**: Save/load game progress, leaderboard management
+- **Basic map generation**: Simple procedural blocks (document-like structure)
+- **Character movement**: `hjkl` only
+- **Coin collection mechanic**: Collect coins, track score
+- **Timer and basic scoring**: Countdown timer, point system
+- **Win/Lose conditions**: All coins collected (win) or timer expires (lose)
+- **Level end screens**: Show score, return to menu, restart options
+- **Minimal visual effects**: No motion blur yet, basic CSS transitions
+- **DOM-based rendering**: All rendering via DOM manipulation
+
+**Success Criteria**:
+- Playable end-to-end flow (menu → tutorial → game → menu)
+- Controls feel responsive
+- Core loop is engaging (navigate → collect → score)
+- Screen navigation works smoothly
+- Save/load system works reliably
 
 ### Phase 2: Power-up System
 **Goal**: Introduce vim motion progression

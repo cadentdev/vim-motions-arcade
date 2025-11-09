@@ -58,9 +58,117 @@ This document outlines the initial development tasks for building the Vim Motion
 
 ## Phase 1: Core Prototype (MVP)
 
-### 4. Map Generation System
+**Development Philosophy**: Build from outside-in. Start with screens and navigation, then add game mechanics.
 
-#### 4.1 Basic Map Structure
+### 4. Screen Management System
+
+#### 4.1 Screen Manager/Router
+- [ ] Create ScreenManager class/module
+- [ ] Define screen states (MAIN_MENU, PLAYING, LEVEL_COMPLETE, LEVEL_FAILED)
+- [ ] Implement screen switching logic
+- [ ] Handle screen transitions (show/hide DOM elements)
+- [ ] Add screen-specific event listener management (attach/detach)
+
+#### 4.2 Unit Tests for Screen Management
+- [ ] Test screen transitions (MAIN_MENU → PLAYING → COMPLETE/FAILED)
+- [ ] Test invalid screen transitions are prevented
+- [ ] Test event listeners are properly cleaned up on screen change
+
+### 5. Main Menu Screen
+
+#### 5.1 Main Menu UI
+- [ ] Create main menu HTML structure
+- [ ] Add title/logo area
+- [ ] Create "Start New Game" button
+- [ ] Create "Continue Game" button (disabled if no save exists)
+- [ ] Add basic instructions section (controls overview)
+- [ ] Style menu with retro/vim aesthetic
+
+#### 5.2 Local Leaderboard Display
+- [ ] Create leaderboard section (top 10 scores)
+- [ ] Display rank, score, level reached, date
+- [ ] Handle empty leaderboard (no games played yet)
+- [ ] Style leaderboard table/list
+
+#### 5.3 Main Menu Functionality
+- [ ] Wire up "Start New Game" button click
+- [ ] Wire up "Continue Game" button click
+- [ ] Check for existing save on menu load (enable/disable continue button)
+- [ ] Load and display leaderboard data
+
+### 6. LocalStorage & Save System
+
+#### 6.1 Save/Load Infrastructure
+- [ ] Create SaveManager class/module
+- [ ] Implement save game data structure
+  - Current level, score, unlocked motions, XP
+- [ ] Implement saveGame() function (write to localStorage)
+- [ ] Implement loadGame() function (read from localStorage)
+- [ ] Implement hasSave() function (check if save exists)
+
+#### 6.2 Leaderboard System
+- [ ] Create Leaderboard class/module
+- [ ] Implement leaderboard data structure (array of entries)
+- [ ] Implement addScore() function (add new score, sort, keep top 10)
+- [ ] Implement getTopScores() function (retrieve top 10)
+- [ ] Implement clearLeaderboard() function (for testing)
+
+#### 6.3 Unit Tests for Save System
+- [ ] Test save/load round-trip (save data, load data, verify match)
+- [ ] Test hasSave() returns correct boolean
+- [ ] Test leaderboard sorting (highest score first)
+- [ ] Test leaderboard limits to top 10 entries
+- [ ] Test saving when localStorage is full/unavailable
+
+### 7. Command Mode & Tutorial Level 0
+
+#### 7.1 Command Mode Infrastructure
+- [ ] Create CommandMode class/module
+- [ ] Detect `:` key press to enter command mode
+- [ ] Create command input overlay/prompt
+- [ ] Implement command parsing (split on spaces, handle args)
+- [ ] Handle Esc to exit command mode
+- [ ] Display command feedback (success/error messages)
+
+#### 7.2 Implement Core Commands
+- [ ] Implement `:q` command (quit to main menu)
+- [ ] Implement `:quit` command (alias for :q)
+- [ ] Implement `:help` command (show available commands)
+- [ ] Handle unknown commands (error message)
+
+#### 7.3 Tutorial Level 0: "How to Quit Vim"
+- [ ] Create tutorial level 0 content
+  - Simple screen with text: "Welcome to Vim Motions Arcade!"
+  - Instructions: "Type :q and press Enter to quit"
+- [ ] Render tutorial screen (no map, no coins, just text)
+- [ ] Detect successful `:q` command
+- [ ] Return to main menu on success
+- [ ] Mark tutorial as complete (save to localStorage)
+
+#### 7.4 Unit Tests for Command Mode
+- [ ] Test command parsing (`:q`, `:quit`, `:help`)
+- [ ] Test command execution (correct function called)
+- [ ] Test unknown command handling
+- [ ] Test Esc exits command mode
+
+### 8. Game Screen Container
+
+#### 8.1 Game Screen Structure
+- [ ] Create game screen HTML container
+- [ ] Add game area (where map/player will render)
+- [ ] Create HUD container (fixed position overlay)
+- [ ] Set up basic layout (game area + HUD)
+- [ ] Style game screen (background, borders, etc.)
+
+#### 8.2 Game Screen Lifecycle
+- [ ] Implement enterGameScreen() function
+- [ ] Implement exitGameScreen() function (cleanup, return to menu)
+- [ ] Wire up screen transitions from menu
+- [ ] Test screen switching (menu → game → menu)
+
+### 9. Map Generation System
+
+#### 9.1 Basic Map Structure
 - [ ] Create Map class/module
 - [ ] Implement simple grid system (character-based coordinates)
 - [ ] Define block/word data structure
@@ -71,7 +179,7 @@ This document outlines the initial development tasks for building the Vim Motion
   - Ensure document-like structure (words separated by spaces)
   - Add blank lines (for future paragraph navigation)
 
-#### 4.2 Map Rendering (DOM-based)
+#### 9.2 Map Rendering (DOM-based)
 - [ ] Create DOM elements for map blocks
 - [ ] Apply monospace styling for alignment
 - [ ] Implement block rendering from map data
@@ -80,15 +188,15 @@ This document outlines the initial development tasks for building the Vim Motion
   - Center view on player cursor
   - Handle map scrolling for larger documents
 
-### 5. Player Character System
+### 10. Player Character System
 
-#### 5.1 Cursor Block Implementation
+#### 10.1 Cursor Block Implementation
 - [ ] Create Player/Cursor class
 - [ ] Render cursor block with distinct styling
 - [ ] Position cursor on character grid
 - [ ] Implement z-index layering (cursor above map blocks)
 
-#### 5.2 Basic Movement (hjkl)
+#### 10.2 Basic Movement (hjkl)
 - [ ] Set up keyboard event listeners
 - [ ] Implement `h` (left) movement
   - Update player position
@@ -104,15 +212,15 @@ This document outlines the initial development tasks for building the Vim Motion
   - CSS transitions for movement
   - Duration based on distance traveled
 
-#### 5.3 Unit Tests for Player Movement
+#### 10.3 Unit Tests for Player Movement
 - [ ] Test player position updates for each direction (h, j, k, l)
 - [ ] Test boundary collision detection (prevent out-of-bounds)
 - [ ] Test movement validation with obstacles
 - [ ] Test player initialization at correct starting position
 
-### 6. Collectibles & Scoring
+### 11. Collectibles & Scoring
 
-#### 6.1 Coin System
+#### 11.1 Coin System
 - [ ] Create Coin class/data structure
 - [ ] Implement coin placement in map generation
   - Place at word boundaries initially
@@ -123,36 +231,36 @@ This document outlines the initial development tasks for building the Vim Motion
   - Remove collected coins from map
   - Trigger collection event
 
-#### 6.2 Basic Scoring
+#### 11.2 Basic Scoring
 - [ ] Create Score class/module
 - [ ] Implement point awarding on coin collection
   - Base points per coin (10pts)
 - [ ] Track total coins collected
 - [ ] Track remaining coins (for win condition)
 
-#### 6.3 Unit Tests for Coins & Scoring
+#### 11.3 Unit Tests for Coins & Scoring
 - [ ] Test coin collection detection (position overlap)
 - [ ] Test score increments correctly on collection
 - [ ] Test coin removal from map after collection
 - [ ] Test tracking of remaining coins
 - [ ] Test win condition (all coins collected)
 
-### 7. Timer System
+### 12. Timer System
 - [ ] Create Timer class
 - [ ] Implement countdown from 60 seconds
 - [ ] Pause timer functionality
 - [ ] Timer completion callback (lose condition)
 - [ ] Format time display (MM:SS)
 
-#### 7.1 Unit Tests for Timer
+#### 12.1 Unit Tests for Timer
 - [ ] Test timer countdown accuracy
 - [ ] Test pause/resume functionality
 - [ ] Test timer completion triggers callback
 - [ ] Test time formatting (MM:SS display)
 
-### 8. User Interface (HUD)
+### 13. User Interface (HUD)
 
-#### 8.1 Basic HUD Elements
+#### 13.1 Basic HUD Elements
 - [ ] Create HUD container (fixed position overlay)
 - [ ] Implement score display (top-right)
   - Current score
@@ -164,14 +272,14 @@ This document outlines the initial development tasks for building the Vim Motion
   - Modern, clean design
   - High contrast for readability
 
-#### 8.2 Mode Indicator
+#### 13.2 Mode Indicator
 - [ ] Create mode indicator element (bottom-left)
 - [ ] Display "NORMAL" mode (Phase 1 only has Normal mode)
 - [ ] Style with distinct color
 
-### 9. Game Loop & State Management
+### 14. Game Loop & State Management
 
-#### 9.1 Game Loop
+#### 14.1 Game Loop
 - [ ] Implement requestAnimationFrame-based game loop
 - [ ] Create update() function
   - Update timer
@@ -182,7 +290,7 @@ This document outlines the initial development tasks for building the Vim Motion
   - Re-render only changed elements (performance)
 - [ ] Implement frame rate monitoring (for debugging)
 
-#### 9.2 State Management
+#### 14.2 State Management
 - [ ] Create GameState class/store
 - [ ] Implement state transitions
   - MENU → PLAYING
@@ -191,43 +299,35 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Handle state-specific rendering
 - [ ] Implement state persistence (for pause/resume)
 
-#### 9.3 Unit Tests for State Management
+#### 14.3 Unit Tests for State Management
 - [ ] Test state transitions (MENU → PLAYING → COMPLETE/FAILED)
 - [ ] Test invalid state transitions are prevented
 - [ ] Test state persistence on pause/resume
 - [ ] Test game state initialization
 
-### 10. Win/Lose Conditions
+### 15. Win/Lose Conditions
 
-#### 10.1 Win Condition
+#### 15.1 Win Condition
 - [ ] Detect when all coins collected
 - [ ] Trigger level complete state
 - [ ] Display "Level Complete" message
 - [ ] Show final score
 - [ ] Add "Restart" button/option
 
-#### 10.2 Lose Condition
+#### 15.2 Lose Condition
 - [ ] Detect when timer reaches zero
 - [ ] Trigger level failed state
 - [ ] Display "Time's Up" message
 - [ ] Show final score (coins collected)
 - [ ] Add "Retry" button/option
 
-#### 10.3 Unit Tests for Win/Lose Conditions
+#### 15.3 Unit Tests for Win/Lose Conditions
 - [ ] Test win condition triggers when all coins collected
 - [ ] Test lose condition triggers when timer reaches zero
 - [ ] Test correct final score calculation
 - [ ] Test state transitions to LEVEL_COMPLETE and LEVEL_FAILED
 
-### 11. Basic Menus
-
-#### 11.1 Main Menu
-- [ ] Create simple main menu screen
-- [ ] Add "Start Game" button
-- [ ] Add "Quit" option (closes tab/returns to URL)
-- [ ] Style menu with theme consistent with game
-
-#### 11.2 Level End Screens
+### 16. Level End Screens
 - [ ] Create level complete screen template
   - Score display
   - "Next Level" button (restarts for MVP)
@@ -237,49 +337,44 @@ This document outlines the initial development tasks for building the Vim Motion
   - "Retry" button
   - "Main Menu" button
 
-### 12. Command Mode (Basic)
-- [ ] Detect `:` key press to enter command mode
-- [ ] Create command input overlay
-- [ ] Implement basic commands
-  - `:quit` - Return to main menu
-  - `:restart` - Restart current level
-- [ ] Handle Esc to exit command mode
-- [ ] Parse and execute commands
-
 ---
 
 ## Phase 1: Testing & Polish
 
-### 13. Playtesting & Iteration
+### 17. Playtesting & Iteration
 - [ ] Playtest core loop for fun factor
 - [ ] Adjust timing (movement speed, timer duration)
 - [ ] Tune difficulty (map size, coin placement)
 - [ ] Verify controls feel responsive
 - [ ] Test on different screen sizes
 
-### 14. Bug Fixes & Edge Cases
+### 18. Bug Fixes & Edge Cases
 - [ ] Test boundary conditions (map edges)
 - [ ] Handle rapid key presses
 - [ ] Test pause/resume functionality
 - [ ] Verify state transitions work correctly
 - [ ] Test with different keyboard layouts
 
-### 14a. E2E Tests (Deployment Gate)
+### 19. E2E Tests (Deployment Gate)
+- [ ] Write E2E test: Tutorial Level 0 (start → type :q → return to menu)
+- [ ] Write E2E test: Menu navigation (main menu → game → back to menu)
+- [ ] Write E2E test: Continue game (save exists → continue button enabled → loads game)
 - [ ] Write E2E test: Happy path (start → collect all coins → win)
 - [ ] Write E2E test: Timeout path (start → timer expires → lose)
 - [ ] Write E2E test: Restart flow (complete level → restart → game works)
 - [ ] Write E2E test: Movement (hjkl keys move cursor correctly)
+- [ ] Write E2E test: Leaderboard (complete game → score appears in leaderboard)
 - [ ] Verify E2E tests run in pre-push hook
 - [ ] Ensure E2E tests block push if failing
 
-### 15. Code Quality
+### 20. Code Quality
 - [ ] Add JSDoc comments to core functions/classes
 - [ ] Refactor duplicated code
 - [ ] Ensure consistent naming conventions
 - [ ] Run linter and fix issues
 - [ ] Basic performance profiling
 
-### 16. Documentation
+### 21. Documentation
 - [ ] Update README with setup instructions
 - [ ] Document development commands (dev, build, test)
 - [ ] Add controls reference for players
