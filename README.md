@@ -124,7 +124,7 @@ cd vim-motions-arcade && npm install && npm run dev
 
 ### Why JavaScript?
 
-We chose JavaScript to showcase what's possible in the browser. At [Cadent Technologies](https://cadent.dev), we specialize in fun, interactive web experiences. This project is our way of exploring JavaScript as a game-development tool while giving back to the vim community.
+We chose JavaScript to showcase what's possible in the browser. At [Cadent Technologies Corp.](https://cadent.net), we specialize in fun, interactive web experiences. This project is our way of exploring JavaScript as a game-development tool while giving back to the vim community.
 
 ### Built With
 
@@ -167,11 +167,11 @@ vim-motions-arcade/
 ## 🗺️ Roadmap
 
 ### Phase 1: Core Prototype (MVP) ✅
-- [x] Basic map generation
-- [x] Character movement (`hjkl`)
-- [x] Coin collection
-- [x] Timer and scoring
-- [x] Single playable level
+- [ ] Basic map generation
+- [ ] Character movement (`hjkl`)
+- [ ] Coin collection
+- [ ] Timer and scoring
+- [ ] Single playable level
 
 ### Phase 2: Power-up System 🚧
 - [ ] Power-up collection and unlocking
@@ -307,8 +307,8 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 
 - **Issues**: [GitHub Issues](../../issues)
 - **Discussions**: [GitHub Discussions](../../discussions)
-- **Email**: hello@cadent.dev
-- **Website**: [cadent.dev](https://cadent.dev)
+- **Email**: hello@cadent.net
+- **Website**: [cadent.net](https://cadent.net)
 
 ---
 
@@ -337,7 +337,7 @@ New to vim? Check out these resources:
 
 <div align="center">
 
-**Made with ❤️ by [Cadent Technologies](https://cadent.dev)**
+**Made with ❤️ by [Cadent Technologies Corp.](https://cadent.net)**
 
 *Empowering developers, one vim motion at a time*
 
