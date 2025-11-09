@@ -20,6 +20,22 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Create development server configuration
 - [ ] Add source maps for debugging
 
+### 2a. Testing Infrastructure
+- [ ] Set up Vitest for unit testing
+  - Configure vitest.config.js
+  - Set up watch mode for development
+  - Create test directory structure (tests/unit/, tests/e2e/)
+- [ ] Set up Playwright for E2E testing
+  - Install Playwright and browsers
+  - Configure playwright.config.js
+  - Create basic E2E test scaffold
+- [ ] Configure Git hooks
+  - Pre-commit: Run linter + unit tests
+  - Pre-push: Run E2E tests (deployment gate)
+- [ ] Add optional jsconfig.json for IntelliSense
+  - Enable better autocomplete for VS Code
+  - Keep type checking optional (no checkJs by default)
+
 ### 3. Core Architecture Planning
 - [ ] Define core game state structure
   - Player position (x, y coordinates)
@@ -88,6 +104,12 @@ This document outlines the initial development tasks for building the Vim Motion
   - CSS transitions for movement
   - Duration based on distance traveled
 
+#### 5.3 Unit Tests for Player Movement
+- [ ] Test player position updates for each direction (h, j, k, l)
+- [ ] Test boundary collision detection (prevent out-of-bounds)
+- [ ] Test movement validation with obstacles
+- [ ] Test player initialization at correct starting position
+
 ### 6. Collectibles & Scoring
 
 #### 6.1 Coin System
@@ -108,12 +130,25 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Track total coins collected
 - [ ] Track remaining coins (for win condition)
 
+#### 6.3 Unit Tests for Coins & Scoring
+- [ ] Test coin collection detection (position overlap)
+- [ ] Test score increments correctly on collection
+- [ ] Test coin removal from map after collection
+- [ ] Test tracking of remaining coins
+- [ ] Test win condition (all coins collected)
+
 ### 7. Timer System
 - [ ] Create Timer class
 - [ ] Implement countdown from 60 seconds
 - [ ] Pause timer functionality
 - [ ] Timer completion callback (lose condition)
 - [ ] Format time display (MM:SS)
+
+#### 7.1 Unit Tests for Timer
+- [ ] Test timer countdown accuracy
+- [ ] Test pause/resume functionality
+- [ ] Test timer completion triggers callback
+- [ ] Test time formatting (MM:SS display)
 
 ### 8. User Interface (HUD)
 
@@ -156,6 +191,12 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Handle state-specific rendering
 - [ ] Implement state persistence (for pause/resume)
 
+#### 9.3 Unit Tests for State Management
+- [ ] Test state transitions (MENU → PLAYING → COMPLETE/FAILED)
+- [ ] Test invalid state transitions are prevented
+- [ ] Test state persistence on pause/resume
+- [ ] Test game state initialization
+
 ### 10. Win/Lose Conditions
 
 #### 10.1 Win Condition
@@ -171,6 +212,12 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Display "Time's Up" message
 - [ ] Show final score (coins collected)
 - [ ] Add "Retry" button/option
+
+#### 10.3 Unit Tests for Win/Lose Conditions
+- [ ] Test win condition triggers when all coins collected
+- [ ] Test lose condition triggers when timer reaches zero
+- [ ] Test correct final score calculation
+- [ ] Test state transitions to LEVEL_COMPLETE and LEVEL_FAILED
 
 ### 11. Basic Menus
 
@@ -216,6 +263,14 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Test pause/resume functionality
 - [ ] Verify state transitions work correctly
 - [ ] Test with different keyboard layouts
+
+### 14a. E2E Tests (Deployment Gate)
+- [ ] Write E2E test: Happy path (start → collect all coins → win)
+- [ ] Write E2E test: Timeout path (start → timer expires → lose)
+- [ ] Write E2E test: Restart flow (complete level → restart → game works)
+- [ ] Write E2E test: Movement (hjkl keys move cursor correctly)
+- [ ] Verify E2E tests run in pre-push hook
+- [ ] Ensure E2E tests block push if failing
 
 ### 15. Code Quality
 - [ ] Add JSDoc comments to core functions/classes
@@ -289,7 +344,10 @@ This document outlines the initial development tasks for building the Vim Motion
 - **Rendering**: DOM-based for MVP (evaluate Canvas in Phase 3)
 - **Styling**: CSS with CSS variables for theming support
 - **State**: Simple class-based state (can migrate to Redux/Zustand later)
-- **Testing**: Vitest or Jest for unit tests, Playwright for E2E
+- **Testing**: Two-tier strategy
+  - **Unit tests** (Vitest): Development feedback loop, run in watch mode and on pre-commit
+  - **E2E tests** (Playwright): Deployment gate, run on pre-push hook to prevent broken builds
+  - Focus unit tests on game logic, E2E tests on critical user flows
 
 ### Development Principles
 1. **Start Simple**: Keep things as simple as possible, but not too simple

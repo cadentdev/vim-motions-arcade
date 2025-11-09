@@ -484,6 +484,47 @@ Vim Motions Arcade is a character-based platformer game that teaches players vim
 - **Progression State**: XP, unlocks, persistent upgrades (saved to localStorage)
 - **Performance State**: FPS monitoring, optimization flags
 
+### Testing Strategy
+
+#### Two-Tier Approach
+The project uses a two-tier testing strategy to balance development velocity with deployment safety:
+
+**Tier 1: Unit Tests (Development Feedback Loop)**
+- **Tool**: Vitest (modern, fast, Vite-integrated)
+- **Purpose**: Immediate feedback during development
+- **When to run**:
+  - Watch mode during active development
+  - Pre-commit hook (blocks commits if failing)
+- **Speed requirement**: < 1 second for full suite in Phase 1
+- **Focus areas**:
+  - Player movement and collision detection
+  - Coin collection and scoring logic
+  - Timer countdown and callbacks
+  - State transitions and validation
+  - Win/lose condition detection
+- **Scope**: Game logic only, not rendering or visual effects
+
+**Tier 2: E2E Tests (Deployment Gate)**
+- **Tool**: Playwright (modern, reliable, multi-browser)
+- **Purpose**: Prevent broken builds from being pushed or deployed
+- **When to run**:
+  - Pre-push hook (blocks push if failing)
+  - CI/CD pipeline (before staging/production deploy)
+- **Speed tolerance**: 10-30 seconds acceptable
+- **Critical flows (Phase 1)**:
+  1. Happy path: Start game → collect all coins → win
+  2. Timeout path: Start game → timer expires → lose
+  3. Restart flow: Complete level → restart → verify game works
+  4. Movement verification: hjkl keys move cursor correctly
+- **Expansion**: Add more E2E tests in later phases for new features
+
+#### Type Checking (Optional)
+- **jsconfig.json**: Provides IntelliSense and basic IDE support
+- **No mandatory type checking**: Keep compilation simple
+- **Optional `// @ts-check`**: Add to individual files if desired
+- **JSDoc**: Use sparingly for documentation, not type enforcement
+- **Migration path**: Convert to TypeScript in later phases if needed
+
 ### Save System
 - **Auto-save**: Progress saved after each level completion
 - **Manual Save**: Available through command mode
