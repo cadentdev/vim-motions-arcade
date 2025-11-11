@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    // Enable better autocomplete for VS Code
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": false,
+
+    // Enable better IntelliSense
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+
+    // Strict type checking (without checkJs - optional)
+    "checkJs": false,
+    "strict": false,
+
+    // Path mapping for cleaner imports (optional, can be added later)
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@utils/*": ["src/utils/*"],
+      "@components/*": ["src/components/*"]
+    }
+  },
+  "include": ["src/**/*", "tests/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
