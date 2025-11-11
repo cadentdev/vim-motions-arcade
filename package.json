@@ -1,0 +1,42 @@
+{
+  "name": "vim-motions-arcade",
+  "version": "0.1.0",
+  "description": "A retro arcade game that teaches Vim motions through engaging gameplay",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "vim",
+    "game",
+    "arcade",
+    "educational",
+    "motions"
+  ],
+  "author": "Cadent Technologies Corp.",
+  "license": "MIT",
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,html,json,md}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
+    "vite": "^7.2.2"
+  }
+}

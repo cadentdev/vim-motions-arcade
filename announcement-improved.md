@@ -6,7 +6,7 @@ Along the way, we're pushing the envelope of what's possible with JavaScript as 
 
 ## What Are Vim Motions?
 
-[Vim](https://en.wikipedia.org/wiki/Vim_(text_editor)) is a modal text editor that runs on virtually every computer platform or device in use today. Based on [vi](https://en.wikipedia.org/wiki/Vi_(text_editor)), a text editor first released by [Bill Joy](https://en.wikipedia.org/wiki/Bill_Joy) in 1976, vim works in text-only environments—basically, the terminal—where there's no mouse or graphical user interface.
+[Vim](<https://en.wikipedia.org/wiki/Vim_(text_editor)>) is a modal text editor that runs on virtually every computer platform or device in use today. Based on [vi](<https://en.wikipedia.org/wiki/Vi_(text_editor)>), a text editor first released by [Bill Joy](https://en.wikipedia.org/wiki/Bill_Joy) in 1976, vim works in text-only environments—basically, the terminal—where there's no mouse or graphical user interface.
 
 Created by [Bram Moolenaar](https://en.wikipedia.org/wiki/Bram_Moolenaar) in 1991, vim uses a modal system where different modes (normal, visual, insert, command) perform different types of operations. The default "normal" mode supports a vast array of powerful motions to navigate text documents. These **vim motions** become extraordinarily powerful once an experienced user has installed them in "muscle memory"—enabling navigation at the speed of thought.
 
@@ -66,6 +66,7 @@ Whether you're a vim master or just starting out, there's a way to contribute.
 ## Current Status
 
 We're currently in **Phase 1** of development, building the core prototype with:
+
 - Basic map generation and character movement
 - Coin collection and scoring
 - Timer and game loop
@@ -105,7 +106,7 @@ We'll be sharing development updates, technical deep-dives, and design decisions
 
 ## Let's Build This Together
 
-Whether you're a vim enthusiast, a JavaScript developer, a game designer, or just someone who loves interesting projects—we'd love to have you involved. 
+Whether you're a vim enthusiast, a JavaScript developer, a game designer, or just someone who loves interesting projects—we'd love to have you involved.
 
 Star the repo when it drops, try the game, provide feedback, or contribute code. Together, we can create the best vim learning experience available.
 
@@ -117,4 +118,4 @@ Star the repo when it drops, try the game, provide feedback, or contribute code.
 
 ---
 
-*What vim motions do you think should be included in the game? What features would make this most useful for learning? Drop your thoughts in the comments below!*
+_What vim motions do you think should be included in the game? What features would make this most useful for learning? Drop your thoughts in the comments below!_
