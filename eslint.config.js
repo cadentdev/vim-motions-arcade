@@ -15,6 +15,7 @@ export default [
         window: 'readonly',
         document: 'readonly',
         console: 'readonly',
+        localStorage: 'readonly',
         // Node.js globals (for config files)
         process: 'readonly',
         __dirname: 'readonly',
