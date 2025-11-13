@@ -7,49 +7,53 @@ This document outlines the initial development tasks for building the Vim Motion
 ## Phase 0: Project Setup & Architecture
 
 ### 1. Project Initialization
-- [ ] Initialize project structure (src, assets, tests directories)
-- [ ] Set up build tooling (Vite recommended for modern dev experience)
-- [ ] Set up linting (ESLint) and formatting (Prettier)
-- [ ] Create package.json with necessary dependencies
-- [ ] Set up Git hooks for code quality (husky + lint-staged)
-- [ ] Configure for ES modules (type="module" in package.json)
+
+- [x] Initialize project structure (src, assets, tests directories)
+- [x] Set up build tooling (Vite recommended for modern dev experience)
+- [x] Set up linting (ESLint) and formatting (Prettier)
+- [x] Create package.json with necessary dependencies
+- [x] Set up Git hooks for code quality (husky + lint-staged)
+- [x] Configure for ES modules (type="module" in package.json)
 
 ### 2. Development Environment
-- [ ] Configure hot module replacement for rapid iteration
-- [ ] Set up basic HTML template with game container
-- [ ] Configure Vite dev server (static file server only - no backend needed)
-- [ ] Add source maps for debugging
+
+- [x] Configure hot module replacement for rapid iteration
+- [x] Set up basic HTML template with game container
+- [x] Configure Vite dev server (static file server only - no backend needed)
+- [x] Add source maps for debugging
 
 ### 2a. Testing Infrastructure
-- [ ] Set up Vitest for unit testing
+
+- [x] Set up Vitest for unit testing
   - Configure vitest.config.js
   - Set up watch mode for development
   - Create test directory structure (tests/unit/, tests/e2e/)
-- [ ] Set up Playwright for E2E testing
+- [x] Set up Playwright for E2E testing
   - Install Playwright and browsers
   - Configure playwright.config.js
   - Create basic E2E test scaffold
-- [ ] Configure Git hooks
-  - Pre-commit: Run linter + unit tests
-  - Pre-push: Run E2E tests (deployment gate)
-- [ ] Add optional jsconfig.json for IntelliSense
+- [x] Configure Git hooks
+  - Pre-commit: Run linter + unit tests (temporarily disabled for TDD)
+  - Pre-push: Run E2E tests (deployment gate, currently skipped)
+- [x] Add optional jsconfig.json for IntelliSense
   - Enable better autocomplete for VS Code
   - Keep type checking optional (no checkJs by default)
 
 ### 3. Core Architecture Planning
-- [ ] Define core game state structure
+
+- [x] Define core game state structure
   - Player position (x, y coordinates)
   - Score, timer, health
   - Available motions/power-ups
   - Level state
-- [ ] Design rendering strategy decision
+- [x] Design rendering strategy decision
   - Start with DOM-based rendering (per PRD recommendation)
   - Structure code to allow Canvas migration later
-- [ ] Plan input handling system
+- [x] Plan input handling system
   - Keyboard event listeners
   - Mode-specific input handlers (normal/command/visual/insert)
   - Input buffer for combo execution
-- [ ] Define game loop architecture
+- [x] Define game loop architecture
   - Update cycle (game state)
   - Render cycle (visual updates)
   - Fixed timestep vs variable timestep decision
@@ -63,6 +67,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 4. Screen Management System
 
 #### 4.1 Screen Manager/Router
+
 - [ ] Create ScreenManager class/module
 - [ ] Define screen states (MAIN_MENU, PLAYING, LEVEL_COMPLETE, LEVEL_FAILED)
 - [ ] Implement screen switching logic
@@ -70,6 +75,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Add screen-specific event listener management (attach/detach)
 
 #### 4.2 Unit Tests for Screen Management
+
 - [ ] Test screen transitions (MAIN_MENU → PLAYING → COMPLETE/FAILED)
 - [ ] Test invalid screen transitions are prevented
 - [ ] Test event listeners are properly cleaned up on screen change
@@ -77,6 +83,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 5. Main Menu Screen
 
 #### 5.1 Main Menu UI
+
 - [ ] Create main menu HTML structure
 - [ ] Add title/logo area
 - [ ] Create "Start New Game" button
@@ -85,12 +92,14 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Style menu with retro/vim aesthetic
 
 #### 5.2 Local Leaderboard Display
+
 - [ ] Create leaderboard section (top 10 scores)
 - [ ] Display rank, score, level reached, date
 - [ ] Handle empty leaderboard (no games played yet)
 - [ ] Style leaderboard table/list
 
 #### 5.3 Main Menu Functionality
+
 - [ ] Wire up "Start New Game" button click
 - [ ] Wire up "Continue Game" button click
 - [ ] Check for existing save on menu load (enable/disable continue button)
@@ -99,6 +108,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 6. LocalStorage & Save System
 
 #### 6.1 Save/Load Infrastructure
+
 - [ ] Create SaveManager class/module
 - [ ] Implement save game data structure
   - Current level, score, unlocked motions, XP
@@ -107,6 +117,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Implement hasSave() function (check if save exists)
 
 #### 6.2 Leaderboard System
+
 - [ ] Create Leaderboard class/module
 - [ ] Implement leaderboard data structure (array of entries)
 - [ ] Implement addScore() function (add new score, sort, keep top 10)
@@ -114,6 +125,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Implement clearLeaderboard() function (for testing)
 
 #### 6.3 Unit Tests for Save System
+
 - [ ] Test save/load round-trip (save data, load data, verify match)
 - [ ] Test hasSave() returns correct boolean
 - [ ] Test leaderboard sorting (highest score first)
@@ -123,6 +135,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 7. Command Mode & Tutorial Level 0
 
 #### 7.1 Command Mode Infrastructure
+
 - [ ] Create CommandMode class/module
 - [ ] Detect `:` key press to enter command mode
 - [ ] Create command input overlay/prompt
@@ -131,12 +144,14 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Display command feedback (success/error messages)
 
 #### 7.2 Implement Core Commands
+
 - [ ] Implement `:q` command (quit to main menu)
 - [ ] Implement `:quit` command (alias for :q)
 - [ ] Implement `:help` command (show available commands)
 - [ ] Handle unknown commands (error message)
 
 #### 7.3 Tutorial Level 0: "How to Quit Vim"
+
 - [ ] Create tutorial level 0 content
   - Simple screen with text: "Welcome to Vim Motions Arcade!"
   - Instructions: "Type :q and press Enter to quit"
@@ -146,6 +161,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Mark tutorial as complete (save to localStorage)
 
 #### 7.4 Unit Tests for Command Mode
+
 - [ ] Test command parsing (`:q`, `:quit`, `:help`)
 - [ ] Test command execution (correct function called)
 - [ ] Test unknown command handling
@@ -154,6 +170,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 8. Game Screen Container
 
 #### 8.1 Game Screen Structure
+
 - [ ] Create game screen HTML container
 - [ ] Add game area (where map/player will render)
 - [ ] Create HUD container (fixed position overlay)
@@ -161,6 +178,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Style game screen (background, borders, etc.)
 
 #### 8.2 Game Screen Lifecycle
+
 - [ ] Implement enterGameScreen() function
 - [ ] Implement exitGameScreen() function (cleanup, return to menu)
 - [ ] Wire up screen transitions from menu
@@ -169,6 +187,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 9. Map Generation System
 
 #### 9.1 Basic Map Structure
+
 - [ ] Create Map class/module
 - [ ] Implement simple grid system (character-based coordinates)
 - [ ] Define block/word data structure
@@ -180,6 +199,7 @@ This document outlines the initial development tasks for building the Vim Motion
   - Add blank lines (for future paragraph navigation)
 
 #### 9.2 Map Rendering (DOM-based)
+
 - [ ] Create DOM elements for map blocks
 - [ ] Apply monospace styling for alignment
 - [ ] Implement block rendering from map data
@@ -191,12 +211,14 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 10. Player Character System
 
 #### 10.1 Cursor Block Implementation
+
 - [ ] Create Player/Cursor class
 - [ ] Render cursor block with distinct styling
 - [ ] Position cursor on character grid
 - [ ] Implement z-index layering (cursor above map blocks)
 
 #### 10.2 Basic Movement (hjkl)
+
 - [ ] Set up keyboard event listeners
 - [ ] Implement `h` (left) movement
   - Update player position
@@ -213,6 +235,7 @@ This document outlines the initial development tasks for building the Vim Motion
   - Duration based on distance traveled
 
 #### 10.3 Unit Tests for Player Movement
+
 - [ ] Test player position updates for each direction (h, j, k, l)
 - [ ] Test boundary collision detection (prevent out-of-bounds)
 - [ ] Test movement validation with obstacles
@@ -221,6 +244,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 11. Collectibles & Scoring
 
 #### 11.1 Coin System
+
 - [ ] Create Coin class/data structure
 - [ ] Implement coin placement in map generation
   - Place at word boundaries initially
@@ -232,6 +256,7 @@ This document outlines the initial development tasks for building the Vim Motion
   - Trigger collection event
 
 #### 11.2 Basic Scoring
+
 - [ ] Create Score class/module
 - [ ] Implement point awarding on coin collection
   - Base points per coin (10pts)
@@ -239,6 +264,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Track remaining coins (for win condition)
 
 #### 11.3 Unit Tests for Coins & Scoring
+
 - [ ] Test coin collection detection (position overlap)
 - [ ] Test score increments correctly on collection
 - [ ] Test coin removal from map after collection
@@ -246,6 +272,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Test win condition (all coins collected)
 
 ### 12. Timer System
+
 - [ ] Create Timer class
 - [ ] Implement countdown from 60 seconds
 - [ ] Pause timer functionality
@@ -253,6 +280,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Format time display (MM:SS)
 
 #### 12.1 Unit Tests for Timer
+
 - [ ] Test timer countdown accuracy
 - [ ] Test pause/resume functionality
 - [ ] Test timer completion triggers callback
@@ -261,6 +289,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 13. User Interface (HUD)
 
 #### 13.1 Basic HUD Elements
+
 - [ ] Create HUD container (fixed position overlay)
 - [ ] Implement score display (top-right)
   - Current score
@@ -273,6 +302,7 @@ This document outlines the initial development tasks for building the Vim Motion
   - High contrast for readability
 
 #### 13.2 Mode Indicator
+
 - [ ] Create mode indicator element (bottom-left)
 - [ ] Display "NORMAL" mode (Phase 1 only has Normal mode)
 - [ ] Style with distinct color
@@ -280,6 +310,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 14. Game Loop & State Management
 
 #### 14.1 Game Loop
+
 - [ ] Implement requestAnimationFrame-based game loop
 - [ ] Create update() function
   - Update timer
@@ -291,6 +322,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Implement frame rate monitoring (for debugging)
 
 #### 14.2 State Management
+
 - [ ] Create GameState class/store
 - [ ] Implement state transitions
   - MENU → PLAYING
@@ -300,6 +332,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Implement state persistence (for pause/resume)
 
 #### 14.3 Unit Tests for State Management
+
 - [ ] Test state transitions (MENU → PLAYING → COMPLETE/FAILED)
 - [ ] Test invalid state transitions are prevented
 - [ ] Test state persistence on pause/resume
@@ -308,6 +341,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ### 15. Win/Lose Conditions
 
 #### 15.1 Win Condition
+
 - [ ] Detect when all coins collected
 - [ ] Trigger level complete state
 - [ ] Display "Level Complete" message
@@ -315,6 +349,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Add "Restart" button/option
 
 #### 15.2 Lose Condition
+
 - [ ] Detect when timer reaches zero
 - [ ] Trigger level failed state
 - [ ] Display "Time's Up" message
@@ -322,12 +357,14 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Add "Retry" button/option
 
 #### 15.3 Unit Tests for Win/Lose Conditions
+
 - [ ] Test win condition triggers when all coins collected
 - [ ] Test lose condition triggers when timer reaches zero
 - [ ] Test correct final score calculation
 - [ ] Test state transitions to LEVEL_COMPLETE and LEVEL_FAILED
 
 ### 16. Level End Screens
+
 - [ ] Create level complete screen template
   - Score display
   - "Next Level" button (restarts for MVP)
@@ -342,6 +379,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ## Phase 1: Testing & Polish
 
 ### 17. Playtesting & Iteration
+
 - [ ] Playtest core loop for fun factor
 - [ ] Adjust timing (movement speed, timer duration)
 - [ ] Tune difficulty (map size, coin placement)
@@ -349,6 +387,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Test on different screen sizes
 
 ### 18. Bug Fixes & Edge Cases
+
 - [ ] Test boundary conditions (map edges)
 - [ ] Handle rapid key presses
 - [ ] Test pause/resume functionality
@@ -356,6 +395,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Test with different keyboard layouts
 
 ### 19. E2E Tests (Deployment Gate)
+
 - [ ] Write E2E test: Tutorial Level 0 (start → type :q → return to menu)
 - [ ] Write E2E test: Menu navigation (main menu → game → back to menu)
 - [ ] Write E2E test: Continue game (save exists → continue button enabled → loads game)
@@ -368,6 +408,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Ensure E2E tests block push if failing
 
 ### 20. Code Quality
+
 - [ ] Add JSDoc comments to core functions/classes
 - [ ] Refactor duplicated code
 - [ ] Ensure consistent naming conventions
@@ -375,6 +416,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Basic performance profiling
 
 ### 21. Documentation
+
 - [ ] Update README with setup instructions
 - [ ] Document development commands (dev, build, test)
 - [ ] Add controls reference for players
@@ -383,6 +425,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ---
 
 ## Phase 1 Success Criteria (from PRD)
+
 ✅ Playable game with responsive controls
 ✅ Core loop is engaging (navigate → collect → score)
 ✅ Single level that restarts on completion/failure
@@ -394,6 +437,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ## Next Phases (Future Work)
 
 ### Phase 2: Power-up System
+
 - Word-based movements (w, b, e)
 - Power-up collection and unlocking
 - Cooldown system with badges
@@ -401,6 +445,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - 5 progressive levels
 
 ### Phase 3: Visual Polish
+
 - Movement effects (rocket, blur, jello)
 - Particle effects
 - Sound effects and music
@@ -408,12 +453,14 @@ This document outlines the initial development tasks for building the Vim Motion
 - Theme system
 
 ### Phase 4: Advanced Mechanics
+
 - Visual mode, Insert mode
 - Line/paragraph jumps
 - Obstacles and health system
 - 15 total levels
 
 ### Phase 5: Progression & Polish
+
 - XP and leveling
 - Persistent unlocks
 - Leaderboards
@@ -421,6 +468,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - 25+ levels
 
 ### Phase 6: Community & Content
+
 - Daily challenges
 - Speedrun mode
 - Social features
@@ -430,6 +478,7 @@ This document outlines the initial development tasks for building the Vim Motion
 ## Notes
 
 ### Technology Decisions
+
 - **Language**: Vanilla JavaScript (modern ES modules)
   - Start simple, add TypeScript later only if needed
   - Optional: Use `// @ts-check` for type checking in individual files
@@ -450,6 +499,7 @@ This document outlines the initial development tasks for building the Vim Motion
   - Focus unit tests on game logic, E2E tests on critical user flows
 
 ### Development Principles
+
 1. **Start Simple**: Keep things as simple as possible, but not too simple
 2. **Iterative Development**: Build, playtest, refine
 3. **Fun First**: Prioritize gameplay feel over features
@@ -459,6 +509,7 @@ This document outlines the initial development tasks for building the Vim Motion
 7. **Add Complexity When Needed**: TypeScript, frameworks, etc. only when justified
 
 ### Open Questions for Phase 1
+
 - Map size: How many characters wide/tall? (Start 40x20, adjust)
 - Movement speed: Instant or animated? (CSS transitions ~100-200ms)
 - Coin density: How many coins per map? (Start with 20-30)

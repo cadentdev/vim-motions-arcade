@@ -18,7 +18,7 @@ One of the most compelling aspects of vim is its video-game-like use of key sequ
 
 Navigate a cursor block through "documents" made of word-like blocks, collect coins and power-ups that unlock new vim commands, avoid obstacles, and master efficient movement patterns—all while racing against the clock.
 
-**Core Hook**: Instead of reading documentation, you'll *play* your way to vim mastery.
+**Core Hook**: Instead of reading documentation, you'll _play_ your way to vim mastery.
 
 ---
 
@@ -37,20 +37,20 @@ Navigate a cursor block through "documents" made of word-like blocks, collect co
 
 ## 🎓 What are Vim Motions?
 
-[Vim](https://en.wikipedia.org/wiki/Vim_(text_editor)) is a modal text editor that runs on virtually every computer platform. Based on [vi](https://en.wikipedia.org/wiki/Vi_(text_editor)), first released by [Bill Joy](https://en.wikipedia.org/wiki/Bill_Joy) in 1976, vim works in text-only environments where there's no mouse or graphical interface.
+[Vim](<https://en.wikipedia.org/wiki/Vim_(text_editor)>) is a modal text editor that runs on virtually every computer platform. Based on [vi](<https://en.wikipedia.org/wiki/Vi_(text_editor)>), first released by [Bill Joy](https://en.wikipedia.org/wiki/Bill_Joy) in 1976, vim works in text-only environments where there's no mouse or graphical interface.
 
 Vim uses a modal system where different modes (normal, visual, insert, command) perform different operations. The default "normal" mode supports a vast array of powerful motions to navigate text documents. These **vim motions** become extraordinarily powerful once an experienced user has installed them in "muscle memory"—enabling navigation at the speed of thought.
 
 **Vim Motions Arcade** teaches you these essential movements through gameplay:
 
-| Motion | Command | What it Does |
-|--------|---------|--------------|
-| **Character** | `hjkl` | Move left, down, up, right |
-| **Word** | `w` `b` `e` | Jump between words |
-| **Line** | `0` `$` `^` | Jump to line start/end |
-| **Paragraph** | `{` `}` | Navigate by paragraphs |
-| **Search** | `f` `F` `/` | Find characters and patterns |
-| **Visual** | `v` `y` `d` `p` | Select, copy, delete, paste |
+| Motion        | Command         | What it Does                 |
+| ------------- | --------------- | ---------------------------- |
+| **Character** | `hjkl`          | Move left, down, up, right   |
+| **Word**      | `w` `b` `e`     | Jump between words           |
+| **Line**      | `0` `$` `^`     | Jump to line start/end       |
+| **Paragraph** | `{` `}`         | Navigate by paragraphs       |
+| **Search**    | `f` `F` `/`     | Find characters and patterns |
+| **Visual**    | `v` `y` `d` `p` | Select, copy, delete, paste  |
 
 ---
 
@@ -64,17 +64,20 @@ Vim uses a modal system where different modes (normal, visual, insert, command) 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/vim-motions-arcade.git
    cd vim-motions-arcade
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Start the development server**
+
    ```bash
    npm run dev
    ```
@@ -167,6 +170,7 @@ vim-motions-arcade/
 ## 🗺️ Roadmap
 
 ### Phase 1: Core Prototype (MVP) ✅
+
 - [ ] Basic map generation
 - [ ] Character movement (`hjkl`)
 - [ ] Coin collection
@@ -174,6 +178,7 @@ vim-motions-arcade/
 - [ ] Single playable level
 
 ### Phase 2: Power-up System 🚧
+
 - [ ] Power-up collection and unlocking
 - [ ] Word movement (`w`, `b`, `e`)
 - [ ] Cooldown system with visual badges
@@ -182,6 +187,7 @@ vim-motions-arcade/
 - [ ] 5 progressive levels
 
 ### Phase 3: Visual Polish 📋
+
 - [ ] Cursor movement effects (trails, blur, distortion)
 - [ ] Particle effects and animations
 - [ ] Sound effects and music
@@ -190,6 +196,7 @@ vim-motions-arcade/
 - [ ] Performance optimization
 
 ### Phase 4: Advanced Mechanics 📋
+
 - [ ] Visual mode (select, yank, paste)
 - [ ] Insert mode challenges
 - [ ] Line jumps (`0`, `$`, `^`)
@@ -198,6 +205,7 @@ vim-motions-arcade/
 - [ ] 15 total levels
 
 ### Phase 5: Progression & Polish 📋
+
 - [ ] XP and leveling system
 - [ ] Persistent unlocks
 - [ ] Leaderboards
@@ -206,6 +214,7 @@ vim-motions-arcade/
 - [ ] 25+ levels
 
 ### Phase 6: Community & Content 💭
+
 - [ ] Daily challenges
 - [ ] Custom level editor
 - [ ] Speedrun mode
@@ -339,7 +348,7 @@ New to vim? Check out these resources:
 
 **Made with ❤️ by [Cadent Technologies Corp.](https://cadent.net)**
 
-*Empowering developers, one vim motion at a time*
+_Empowering developers, one vim motion at a time_
 
 [⬆ Back to Top](#vim-motions-arcade-)
 

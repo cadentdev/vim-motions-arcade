@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# E2E tests as deployment gate
+# Note: Chromium must be installed with system dependencies for E2E tests to run
+# Run manually with: npm run test:e2e
+# TODO: Enable this in CI environment where Chromium can be properly installed
+# npm run test:e2e
+
+echo "Pre-push hook: E2E tests skipped (run manually with 'npm run test:e2e')"

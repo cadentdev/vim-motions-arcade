@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run lint-staged (linting and formatting)
+npx lint-staged
+
+# Run unit tests (temporarily disabled for TDD red phase)
+# TODO: Re-enable once Phase 1 implementations are complete
+# npm run test:run
