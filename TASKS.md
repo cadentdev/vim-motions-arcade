@@ -284,30 +284,30 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Test state persistence on pause/resume
 - [x] Test game state initialization
 
-### 15. Win/Lose Conditions
+### 15. Win/Lose Conditions ✅
 
-#### 15.1 Win Condition
+#### 15.1 Win Condition ✅
 
-- [ ] Detect when all coins collected
-- [ ] Trigger level complete state
-- [ ] Display "Level Complete" message
-- [ ] Show final score
-- [ ] Add "Restart" button/option
+- [x] Detect when all coins collected
+- [x] Trigger level complete state
+- [x] Display "Level Complete" message (callback to screen)
+- [x] Show final score
+- [ ] Add "Restart" button/option (Group 7)
 
-#### 15.2 Lose Condition
+#### 15.2 Lose Condition ✅
 
-- [ ] Detect when timer reaches zero
-- [ ] Trigger level failed state
-- [ ] Display "Time's Up" message
-- [ ] Show final score (coins collected)
-- [ ] Add "Retry" button/option
+- [x] Detect when timer reaches zero
+- [x] Trigger level failed state
+- [x] Display "Time's Up" message (callback to screen)
+- [x] Show final score (coins collected)
+- [ ] Add "Retry" button/option (Group 7)
 
-#### 15.3 Unit Tests for Win/Lose Conditions
+#### 15.3 Unit Tests for Win/Lose Conditions ✅
 
-- [ ] Test win condition triggers when all coins collected
-- [ ] Test lose condition triggers when timer reaches zero
-- [ ] Test correct final score calculation
-- [ ] Test state transitions to LEVEL_COMPLETE and LEVEL_FAILED
+- [x] Test win condition triggers when all coins collected
+- [x] Test lose condition triggers when timer reaches zero
+- [x] Test correct final score calculation
+- [x] Test state transitions to LEVEL_COMPLETE and LEVEL_FAILED
 
 ### 16. Level End Screens
 
