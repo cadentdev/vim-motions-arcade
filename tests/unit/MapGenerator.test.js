@@ -87,15 +87,21 @@ describe('MapGenerator', () => {
 
   describe('Procedural Generation', () => {
     it('should generate different maps each time', () => {
-      const map1 = mapGenerator.generate();
-      const map2 = mapGenerator.generate();
+      // Generate multiple maps and check they're not all identical
+      const maps = [
+        mapGenerator.generate(),
+        mapGenerator.generate(),
+        mapGenerator.generate(),
+      ];
 
-      // Maps should be different (at least in block count or positions)
-      const different =
-        map1.blocks.length !== map2.blocks.length ||
-        map1.blocks[0].x !== map2.blocks[0].x;
+      // Check if at least two maps are different
+      const map1Str = JSON.stringify(maps[0].blocks);
+      const map2Str = JSON.stringify(maps[1].blocks);
+      const map3Str = JSON.stringify(maps[2].blocks);
 
-      expect(different).toBe(true);
+      const allSame = map1Str === map2Str && map2Str === map3Str;
+
+      expect(allSame).toBe(false);
     });
 
     it('should generate deterministic maps with seed', () => {
