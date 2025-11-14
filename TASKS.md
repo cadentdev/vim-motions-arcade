@@ -232,26 +232,26 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Test timer completion triggers callback
 - [x] Test time formatting (MM:SS display)
 
-### 13. User Interface (HUD)
+### 13. User Interface (HUD) ✅
 
-#### 13.1 Basic HUD Elements
+#### 13.1 Basic HUD Elements ✅
 
-- [ ] Create HUD container (fixed position overlay)
-- [ ] Implement score display (top-right)
+- [x] Create HUD container (fixed position overlay)
+- [x] Implement score display (top-right)
   - Current score
   - Update on score change
-- [ ] Implement timer display (top-center)
+- [x] Implement timer display (top-center)
   - Countdown display
   - Color coding (green → yellow → red as time decreases)
-- [ ] Add basic styling for HUD elements
+- [x] Add basic styling for HUD elements
   - Modern, clean design
   - High contrast for readability
 
-#### 13.2 Mode Indicator
+#### 13.2 Mode Indicator ✅
 
-- [ ] Create mode indicator element (bottom-left)
-- [ ] Display "NORMAL" mode (Phase 1 only has Normal mode)
-- [ ] Style with distinct color
+- [x] Create mode indicator element (bottom-left)
+- [x] Display "NORMAL" mode (Phase 1 only has Normal mode)
+- [x] Style with distinct color
 
 ### 14. Game Loop & State Management ✅
 
