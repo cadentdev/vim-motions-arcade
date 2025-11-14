@@ -231,7 +231,7 @@ Completes **Section 9.2: Map Rendering (DOM-based)**:
 ## Group 3: Player Rendering & Input ✅
 
 **Completed**: ✅
-**Commits**: 1 (TBD - will be added after commit)
+**Commits**: 1 (74eb711)
 **Tests Added**: 53 (22 PlayerRenderer + 31 InputManager)
 **Files Created**: 4
 
