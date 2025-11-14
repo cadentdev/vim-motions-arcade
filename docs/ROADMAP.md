@@ -12,10 +12,11 @@ High-level overview of development phases. See [TASKS.md](../TASKS.md) for detai
 
 ### Core Systems
 
-- [ ] **Screen Management System** - Menu, game, level complete/failed screens with transitions
-- [ ] **Main Menu** - Start/continue game, local leaderboard, instructions
-- [ ] **LocalStorage & Save System** - Save/load game progress, leaderboard management
-- [ ] **Command Mode** - Tutorial Level 0 "How to Quit Vim" (`:q`, `:quit`, `:help`)
+- [x] **Screen Management System** - Menu, game, level complete/failed screens with transitions ✅
+- [x] **Main Menu** - Start/continue game, local leaderboard, instructions ✅
+- [x] **LocalStorage & Save System** - Save/load game progress, leaderboard management ✅
+- [x] **Command Mode (Logic)** - Command parsing, `:q`, `:quit`, `:help` commands ✅
+- [ ] **Command Mode (UI)** - Tutorial Level 0 "How to Quit Vim" with visual overlay
 
 ### Gameplay Mechanics
 
@@ -33,7 +34,8 @@ High-level overview of development phases. See [TASKS.md](../TASKS.md) for detai
 
 ### Testing & Polish
 
-- [ ] **Unit Tests** - Core game logic (movement, scoring, timer, state)
+- [x] **Unit Tests (Phase 1a)** - Screen management, save system, leaderboard, command mode (62/62 passing) ✅
+- [ ] **Unit Tests (Phase 1b)** - Movement, scoring, timer, game state (pending gameplay implementation)
 - [ ] **E2E Tests** - Critical user flows (tutorial, happy path, timeout, restart)
 - [ ] **Playtesting** - Tune difficulty, timing, and controls
 - [ ] **Code Quality** - Documentation, refactoring, linting
@@ -143,8 +145,8 @@ High-level overview of development phases. See [TASKS.md](../TASKS.md) for detai
 
 ---
 
-**Current Status**: Phase 1 in progress  
-**Next Milestone**: Complete MVP with playable core loop  
-**Estimated Timeline**: 2-3 weeks for Phase 1
+**Current Status**: Phase 1 - ~40% complete (Core systems ✅, Gameplay mechanics pending)
+**Next Milestone**: Implement gameplay mechanics (map generation, player movement, scoring)
+**Estimated Timeline**: 1-2 weeks remaining for Phase 1 MVP
 
 For detailed task breakdown, see [TASKS.md](../TASKS.md)
