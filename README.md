@@ -8,7 +8,7 @@
 
 **Vim Motions Arcade** is an open-source browser-based game that teaches vim text editor motions through engaging arcade gameplay. Learn to navigate like a vim master by collecting power-ups, dodging obstacles, and racing against the clock in procedurally-generated levels that look like vim documents.
 
-[Play the Game](#) • [Read the Docs](#) • [Report Bug](../../issues) • [Request Feature](../../issues)
+[Play the Game](#) • [Read the Docs](./docs/) • [Report Bug](../../issues) • [Request Feature](../../issues)
 
 ---
 
@@ -83,6 +83,7 @@ Vim uses a modal system where different modes (normal, visual, insert, command) 
    ```
 
 4. **Open your browser**
+
    ```
    Navigate to http://localhost:3000
    ```
