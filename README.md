@@ -8,7 +8,7 @@
 
 **Vim Motions Arcade** is an open-source browser-based game that teaches vim text editor motions through engaging arcade gameplay. Learn to navigate like a vim master by collecting power-ups, dodging obstacles, and racing against the clock in procedurally-generated levels that look like vim documents.
 
-[Play the Game](#) • [Read the Docs](#) • [Report Bug](../../issues) • [Request Feature](../../issues)
+[Play the Game](#) • [Read the Docs](./docs/) • [Report Bug](../../issues) • [Request Feature](../../issues)
 
 ---
 
@@ -83,6 +83,7 @@ Vim uses a modal system where different modes (normal, visual, insert, command) 
    ```
 
 4. **Open your browser**
+
    ```
    Navigate to http://localhost:3000
    ```
@@ -162,64 +163,11 @@ vim-motions-arcade/
 - **[Product Requirements Document](./docs/PRD.md)**: Complete game design specification
 - **[Development Roadmap](./docs/ROADMAP.md)**: Phased development plan
 - **[Contributing Guide](./CONTRIBUTING.md)**: How to contribute to the project
-- **[API Documentation](./docs/API.md)**: Code reference and architecture
 - **[Vim Motion Reference](./docs/VIM_MOTIONS.md)**: Complete list of vim commands in the game
 
 ---
 
 ## 🗺️ Roadmap
-
-### Phase 1: Core Prototype (MVP) ✅
-
-- [ ] Basic map generation
-- [ ] Character movement (`hjkl`)
-- [ ] Coin collection
-- [ ] Timer and scoring
-- [ ] Single playable level
-
-### Phase 2: Power-up System 🚧
-
-- [ ] Power-up collection and unlocking
-- [ ] Word movement (`w`, `b`, `e`)
-- [ ] Cooldown system with visual badges
-- [ ] Stack system for power-ups
-- [ ] Tutorial popups
-- [ ] 5 progressive levels
-
-### Phase 3: Visual Polish 📋
-
-- [ ] Cursor movement effects (trails, blur, distortion)
-- [ ] Particle effects and animations
-- [ ] Sound effects and music
-- [ ] Combo system with feedback
-- [ ] Theme system
-- [ ] Performance optimization
-
-### Phase 4: Advanced Mechanics 📋
-
-- [ ] Visual mode (select, yank, paste)
-- [ ] Insert mode challenges
-- [ ] Line jumps (`0`, `$`, `^`)
-- [ ] Paragraph navigation (`{`, `}`)
-- [ ] Dynamic obstacles
-- [ ] 15 total levels
-
-### Phase 5: Progression & Polish 📋
-
-- [ ] XP and leveling system
-- [ ] Persistent unlocks
-- [ ] Leaderboards
-- [ ] Achievements
-- [ ] Find commands (`f`, `F`, `/`)
-- [ ] 25+ levels
-
-### Phase 6: Community & Content 💭
-
-- [ ] Daily challenges
-- [ ] Custom level editor
-- [ ] Speedrun mode
-- [ ] Social features
-- [ ] Mobile optimization
 
 [View detailed roadmap →](./docs/ROADMAP.md)
 
