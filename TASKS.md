@@ -159,13 +159,13 @@ This document outlines the initial development tasks for building the Vim Motion
 #### 10.1 Cursor Block Implementation ✅
 
 - [x] Create Player/Cursor class
-- [ ] Render cursor block with distinct styling
-- [ ] Position cursor on character grid
-- [ ] Implement z-index layering (cursor above map blocks)
+- [x] Render cursor block with distinct styling
+- [x] Position cursor on character grid
+- [x] Implement z-index layering (cursor above map blocks)
 
 #### 10.2 Basic Movement (hjkl) ✅
 
-- [ ] Set up keyboard event listeners
+- [x] Set up keyboard event listeners
 - [x] Implement `h` (left) movement
   - Update player position
   - Validate movement (grid boundaries, obstacles)
@@ -176,7 +176,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Add movement validation
   - Prevent out-of-bounds movement
   - Collision detection with blocks (for future obstacles)
-- [ ] Implement smooth cursor transitions
+- [x] Implement smooth cursor transitions
   - CSS transitions for movement
   - Duration based on distance traveled
 

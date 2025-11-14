@@ -1,8 +1,8 @@
 # Phase 1 MVP Implementation Plan
 
-**Status**: In Progress (Group 1 of 7 Complete)
+**Status**: In Progress (Group 3 of 7 Complete)
 **Methodology**: Test-Driven Development (TDD)
-**Test Count**: 245 passing tests
+**Test Count**: 321 passing tests
 
 ---
 
@@ -26,7 +26,7 @@ The TASKS.md document is organized by architectural layer (Screen Management, Pl
 | ----------- | ------------------------ | ------------------------ | ----------- |
 | **Group 1** | Game State & Loop        | Section 14               | ✅ Complete |
 | **Group 2** | Map Rendering            | Section 9.2              | ✅ Complete |
-| **Group 3** | Player Rendering & Input | Section 10               | ⏳ Pending  |
+| **Group 3** | Player Rendering & Input | Section 10               | ✅ Complete |
 | **Group 4** | Coin Rendering           | Section 11.1 (rendering) | ⏳ Pending  |
 | **Group 5** | HUD Elements             | Section 13               | ⏳ Pending  |
 | **Group 6** | Win/Lose Integration     | Section 15               | ⏳ Pending  |
@@ -228,53 +228,64 @@ Completes **Section 9.2: Map Rendering (DOM-based)**:
 
 ---
 
-## Group 3: Player Rendering & Input ⏳
+## Group 3: Player Rendering & Input ✅
 
-**Status**: Pending
-**Estimated Tests**: ~20-25
+**Completed**: ✅
+**Commits**: 1 (TBD - will be added after commit)
+**Tests Added**: 53 (22 PlayerRenderer + 31 InputManager)
+**Files Created**: 4
 
-### What Will Be Built
+### What Was Built
 
-#### Player Rendering (`src/rendering/PlayerRenderer.js`)
+#### PlayerRenderer Class (`src/rendering/PlayerRenderer.js`)
 
-Render the cursor block with distinct styling:
+DOM-based player cursor rendering with smooth transitions:
 
-**Responsibilities**:
+**Implementation Details**:
 
-- Render player cursor as DOM element
-- Position based on GameState player coordinates
-- Apply visual styling (color, border, etc.)
-- Handle z-index layering (above map/coins)
-- Smooth CSS transitions for movement
-
-**Methods**:
-
-- `renderPlayer(gameState)` - Create/update player DOM element
-- `updatePosition(x, y)` - Move player to new position
-- `setPlayerContainer(element)` - Bind to DOM container
-
-#### Input Manager (`src/input/InputManager.js`)
-
-Capture keyboard input and dispatch to game:
-
-**Responsibilities**:
-
-- Listen for hjkl key presses
-- Validate movement with Player class
-- Update GameState on valid moves
-- Check for coin collection after each move
-- Ignore input when paused
+- Character-grid positioning (10px × 16px matching MapRenderer)
+- DOM element caching (single reusable cursor element)
+- Z-index layering: cursor at z-index 2 (above map at 0, coins at 1)
+- CSS transitions: 0.15s ease-out for smooth movement
+- Block character (█) for cursor visualization
+- Monospace font alignment
 
 **Methods**:
 
-- `attachKeyboardListeners()` - Set up event listeners
-- `detachKeyboardListeners()` - Clean up on screen exit
-- `handleKeyPress(event)` - Process keyboard input
-- `setEnabled(boolean)` - Enable/disable input
+- `setContainer(container)` - Bind to DOM container
+- `renderCursor(x, y)` - Create/update cursor at grid position
+- `clearCursor()` - Remove cursor from DOM
+- `setCharacterSize(width, height)` - Configure character dimensions
+- `getCharacterSize()` - Retrieve current character dimensions
 
-**Integration**:
+#### InputManager Class (`src/input/InputManager.js`)
 
-- Keyboard → InputManager → Player.move() → GameState update → Renderer update
+Keyboard event handling with callback-based architecture:
+
+**Implementation Details**:
+
+- Document-level keydown event listening
+- Movement key detection (h, j, k, l) with case-insensitive handling
+- Command mode trigger (:) and Escape key support
+- Modifier key filtering (blocks Ctrl, Alt, Meta combinations)
+- Key blocking system for disabling specific inputs
+- Enable/disable state management with proper cleanup
+- Automatic preventDefault for game keys to avoid browser conflicts
+
+**Methods**:
+
+- `enable()` - Attach event listeners
+- `disable()` - Remove event listeners and cleanup
+- `handleKeyDown(event)` - Process keyboard input
+- `blockKeys(keys)` - Disable specific key inputs
+- `unblockKeys(keys)` - Re-enable blocked keys
+- `clearBlockedKeys()` - Clear all blocks
+
+**Callbacks**:
+
+- `onMove(key)` - Triggered for hjkl movement keys
+- `onCommandMode()` - Triggered for : (colon) key
+- `onEscape()` - Triggered for Escape key
 
 ### TASKS.md Mapping
 
@@ -282,47 +293,67 @@ Completes **Section 10: Player Character System**:
 
 **10.1 Cursor Block Implementation**:
 
-- [x] Create Player/Cursor class (already exists)
-- [ ] Render cursor block with distinct styling
-- [ ] Position cursor on character grid
-- [ ] Implement z-index layering (cursor above map blocks)
+- ✅ Create Player/Cursor class (already existed from Group 1)
+- ✅ Render cursor block with distinct styling
+- ✅ Position cursor on character grid
+- ✅ Implement z-index layering (cursor above map blocks)
 
 **10.2 Basic Movement (hjkl)**:
 
-- [ ] Set up keyboard event listeners
-- [x] Implement `h` (left) movement (logic exists)
-  - [ ] Wire to keyboard
-  - [x] Update player position
-  - [x] Validate movement (grid boundaries, obstacles)
-  - [ ] Re-render cursor position
-- [x] Implement `j` (down) movement (logic exists)
-- [x] Implement `k` (up) movement (logic exists)
-- [x] Implement `l` (right) movement (logic exists)
-- [x] Add movement validation (logic exists)
-  - [x] Prevent out-of-bounds movement
-  - [x] Collision detection with blocks
-- [ ] Implement smooth cursor transitions
-  - [ ] CSS transitions for movement
-  - [ ] Duration based on distance traveled
+- ✅ Set up keyboard event listeners
+- ✅ Implement `h` (left) movement
+  - ✅ Wire to keyboard
+  - ✅ Update player position
+  - ✅ Validate movement (grid boundaries, obstacles)
+  - ✅ Re-render cursor position
+- ✅ Implement `j` (down) movement
+- ✅ Implement `k` (up) movement
+- ✅ Implement `l` (right) movement
+- ✅ Add movement validation
+  - ✅ Prevent out-of-bounds movement
+  - ✅ Collision detection with blocks
+- ✅ Implement smooth cursor transitions
+  - ✅ CSS transitions for movement
+  - ✅ Duration based on distance traveled (0.15s ease-out)
 
-**10.3 Unit Tests for Player Movement** (already complete):
+**10.3 Unit Tests for Player Movement**:
 
 - [x] Test player position updates for each direction
 - [x] Test boundary collision detection
 - [x] Test movement validation with obstacles
 - [x] Test player initialization at correct starting position
 
-### Test Plan
+### Test Coverage
 
-**Integration Tests** (15-20 tests):
+**53 unit tests** covering:
 
-- Keyboard input captured correctly
-- Movement updates game state
-- Visual position matches state position
-- Coin collection triggered on overlap
-- Input disabled when paused
-- CSS transitions applied
-- Z-index layering correct
+**PlayerRenderer (22 tests)**:
+
+- Container initialization and validation
+- Cursor rendering at specified positions
+- Character grid positioning accuracy
+- Z-index layering (cursor at z-index 2)
+- Visual styling (monospace font, block character)
+- Position updates and DOM element reuse
+- CSS transition application (0.15s ease-out)
+- Cursor clearing functionality
+- Character size configuration
+- Error handling (no container, invalid coordinates)
+- Integration with GameState player positions
+
+**InputManager (31 tests)**:
+
+- Enable/disable state management
+- Movement key detection (h, j, k, l) with case handling
+- Command mode trigger (:) and Escape key
+- Modifier key filtering (Ctrl, Alt, Meta)
+- Default browser behavior prevention
+- Event listener attachment/detachment
+- Callback invocation (onMove, onCommandMode, onEscape)
+- Missing callback safety checks
+- Key blocking/unblocking system
+- Rapid key press handling
+- Mixed key sequence processing
 
 ---
 
