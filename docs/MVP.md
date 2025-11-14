@@ -432,7 +432,7 @@ Completes **Section 11.1: Coin System (rendering portion)**:
 ## Group 5: HUD Elements ✅
 
 **Completed**: ✅
-**Commits**: 1 (TBD - will be added after commit)
+**Commits**: 1 (81209b2)
 **Tests Added**: 39
 **Files Created**: 2
 
