@@ -253,36 +253,36 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Display "NORMAL" mode (Phase 1 only has Normal mode)
 - [ ] Style with distinct color
 
-### 14. Game Loop & State Management
+### 14. Game Loop & State Management ✅
 
-#### 14.1 Game Loop
+#### 14.1 Game Loop ✅
 
-- [ ] Implement requestAnimationFrame-based game loop
-- [ ] Create update() function
+- [x] Implement requestAnimationFrame-based game loop
+- [x] Create update() function
   - Update timer
   - Check win/lose conditions
   - Handle collision detection
-- [ ] Create render() function
+- [x] Create render() function
   - Update DOM based on game state
   - Re-render only changed elements (performance)
-- [ ] Implement frame rate monitoring (for debugging)
+- [x] Implement frame rate monitoring (for debugging)
 
-#### 14.2 State Management
+#### 14.2 State Management ✅
 
-- [ ] Create GameState class/store
-- [ ] Implement state transitions
+- [x] Create GameState class/store
+- [x] Implement state transitions
   - MENU → PLAYING
   - PLAYING → LEVEL_COMPLETE
   - PLAYING → LEVEL_FAILED
-- [ ] Handle state-specific rendering
-- [ ] Implement state persistence (for pause/resume)
+- [x] Handle state-specific rendering
+- [x] Implement state persistence (for pause/resume)
 
-#### 14.3 Unit Tests for State Management
+#### 14.3 Unit Tests for State Management ✅
 
-- [ ] Test state transitions (MENU → PLAYING → COMPLETE/FAILED)
-- [ ] Test invalid state transitions are prevented
-- [ ] Test state persistence on pause/resume
-- [ ] Test game state initialization
+- [x] Test state transitions (MENU → PLAYING → COMPLETE/FAILED)
+- [x] Test invalid state transitions are prevented
+- [x] Test state persistence on pause/resume
+- [x] Test game state initialization
 
 ### 15. Win/Lose Conditions
 

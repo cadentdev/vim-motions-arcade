@@ -1,0 +1,738 @@
+# Phase 1 MVP Implementation Plan
+
+**Status**: In Progress (Group 1 of 7 Complete)
+**Methodology**: Test-Driven Development (TDD)
+**Test Count**: 245 passing tests
+
+---
+
+## Implementation Strategy
+
+Rather than working through TASKS.md sequentially, we're implementing in **functional groups** that combine related tasks across multiple sections. This ensures each group delivers a cohesive, testable feature.
+
+### Why Group By Function?
+
+The TASKS.md document is organized by architectural layer (Screen Management, Player System, etc.), but implementation is more efficient when we group related functionality:
+
+- **Test once, implement once**: Related features share test fixtures and setup
+- **Integration as we go**: Each group delivers working, visible functionality
+- **Minimize context switching**: Stay focused on one area (e.g., rendering) at a time
+
+---
+
+## Group Overview
+
+| Group       | Description              | TASKS.md Sections        | Status      |
+| ----------- | ------------------------ | ------------------------ | ----------- |
+| **Group 1** | Game State & Loop        | Section 14               | ✅ Complete |
+| **Group 2** | Map Rendering            | Section 9.2              | ⏳ Pending  |
+| **Group 3** | Player Rendering & Input | Section 10               | ⏳ Pending  |
+| **Group 4** | Coin Rendering           | Section 11.1 (rendering) | ⏳ Pending  |
+| **Group 5** | HUD Elements             | Section 13               | ⏳ Pending  |
+| **Group 6** | Win/Lose Integration     | Section 15               | ⏳ Pending  |
+| **Group 7** | Level End Screens        | Section 16               | ⏳ Pending  |
+
+---
+
+## Group 1: Game State & Loop ✅
+
+**Completed**: ✅
+**Commits**: 1 (808d9d6)
+**Tests Added**: 54 (27 GameState + 27 GameLoop)
+**Files Created**: 4
+
+### What Was Built
+
+#### GameState Class (`src/game/GameState.js`)
+
+Centralized state management for all game data:
+
+**State Management**:
+
+- Player state (position, vim mode)
+- Level state (current level, coins, collection progress)
+- Score, timer, health tracking
+- Unlocked motions system (hjkl unlocked by default)
+- XP and player level (for future progression)
+- Game flags (paused, game over, level complete)
+
+**Methods**:
+
+- `updatePlayerPosition(x, y)` - Move player
+- `updatePlayerMode(mode)` - Switch vim modes
+- `addScore(points)` - Award points
+- `initializeLevel(levelNum, coins)` - Set up new level
+- `collectCoin(index)` - Mark coin as collected
+- `areAllCoinsCollected()` - Check win condition
+- `unlockMotion(motion)` - Grant access to new movements
+- `pause() / resume()` - Game pause control
+- `setGameOver() / setLevelComplete()` - End game states
+- `toJSON() / fromJSON()` - Serialization for save/load
+
+**Test Coverage**: 27 tests covering:
+
+- Initialization with default values
+- State updates (player, score, timer, health)
+- Level management and coin collection
+- Motion unlocking system
+- Game state flags (pause, game over, level complete)
+- State reset functionality
+- JSON serialization/deserialization
+
+#### GameLoop Class (`src/game/GameLoop.js`)
+
+RequestAnimationFrame-based game loop with fixed timestep:
+
+**Architecture**:
+
+- Fixed timestep at 60 FPS for consistent game speed
+- Variable framerate rendering for smooth visuals
+- Callback-based design for extensibility
+- Testable with manual `tick()` method
+
+**Loop Phases**:
+
+1. **Update** (60 FPS fixed): Game logic, timer countdown
+2. **Render** (variable): Visual updates
+3. **Condition Check**: Win/lose detection
+
+**Features**:
+
+- Win detection: All coins collected → stops loop, calls `onWin` callback
+- Lose detection: Timer expires → stops loop, calls `onLose` callback
+- Pause/resume without stopping the loop
+- Frame counting and FPS tracking
+- Graceful handling of missing callbacks
+
+**Methods**:
+
+- `start() / stop()` - Control loop execution
+- `pause() / resume() / togglePause()` - Pause control
+- `tick(deltaTime)` - Manual step for testing
+- `getAverageFPS()` - Performance monitoring
+
+**Test Coverage**: 27 tests covering:
+
+- Start/stop lifecycle
+- Update cycle (timer countdown, pause behavior)
+- Render cycle (always renders, even when paused)
+- Win condition detection
+- Lose condition detection
+- Pause/resume functionality
+- Frame timing and FPS calculation
+- Edge cases (missing callbacks, rapid start/stop)
+
+### TASKS.md Mapping
+
+This group completes **Section 14: Game Loop & State Management**:
+
+- ✅ 14.1 Game Loop
+  - ✅ Implement requestAnimationFrame-based game loop
+  - ✅ Create update() function (timer, win/lose, collision)
+  - ✅ Create render() function (callback-based)
+  - ✅ Implement frame rate monitoring (FPS tracking)
+
+- ✅ 14.2 State Management
+  - ✅ Create GameState class/store
+  - ✅ Implement state transitions (MENU → PLAYING → COMPLETE/FAILED)
+  - ✅ Handle state-specific rendering (via callbacks)
+  - ✅ Implement state persistence (toJSON/fromJSON for pause/resume)
+
+- ✅ 14.3 Unit Tests for State Management
+  - ✅ Test state transitions
+  - ✅ Test invalid state transitions are prevented
+  - ✅ Test state persistence on pause/resume
+  - ✅ Test game state initialization
+
+### Key Design Decisions
+
+1. **Callback-Based Loop**: GameLoop doesn't know about rendering - it calls callbacks, making it testable and flexible
+2. **Centralized State**: Single GameState object makes saves/loads trivial and debugging easier
+3. **Fixed Timestep**: Game speed is consistent across all devices (60 FPS logic, variable render)
+4. **Testability First**: `tick()` method allows deterministic testing without real animation frames
+
+---
+
+## Group 2: Map Rendering ⏳
+
+**Status**: Pending
+**Estimated Tests**: ~15-20
+
+### What Will Be Built
+
+#### DOMRenderer Class (`src/rendering/DOMRenderer.js`)
+
+Render map blocks as DOM elements:
+
+**Responsibilities**:
+
+- Convert map data (from MapGenerator) to DOM elements
+- Apply monospace styling for character grid alignment
+- Implement viewport/camera system
+- Handle map scrolling centered on player
+
+**Methods**:
+
+- `renderMap(mapData)` - Create/update map DOM elements
+- `updateViewport(playerX, playerY)` - Center camera on player
+- `clearMap()` - Remove all map elements
+- `setMapContainer(element)` - Bind to DOM container
+
+**Implementation Details**:
+
+- Map blocks rendered as `<div class="map-block">` with absolute positioning
+- Monospace font (Courier New) for pixel-perfect alignment
+- CSS Grid or absolute positioning for layout
+- Viewport follows player with smooth scrolling
+- Z-index layering: map (0) → coins (1) → player (2)
+
+### TASKS.md Mapping
+
+Completes **Section 9.2: Map Rendering (DOM-based)**:
+
+- [ ] Create DOM elements for map blocks
+- [ ] Apply monospace styling for alignment
+- [ ] Implement block rendering from map data
+- [ ] Add basic styling (colors, spacing)
+- [ ] Create viewport/camera system
+  - [ ] Center view on player cursor
+  - [ ] Handle map scrolling for larger documents
+
+### Test Plan
+
+**Unit Tests** (15-20 tests):
+
+- Map element creation from data
+- Correct positioning and styling
+- Viewport centering on player
+- Scrolling behavior for large maps
+- Performance with many blocks
+- Element cleanup on map change
+
+---
+
+## Group 3: Player Rendering & Input ⏳
+
+**Status**: Pending
+**Estimated Tests**: ~20-25
+
+### What Will Be Built
+
+#### Player Rendering (`src/rendering/PlayerRenderer.js`)
+
+Render the cursor block with distinct styling:
+
+**Responsibilities**:
+
+- Render player cursor as DOM element
+- Position based on GameState player coordinates
+- Apply visual styling (color, border, etc.)
+- Handle z-index layering (above map/coins)
+- Smooth CSS transitions for movement
+
+**Methods**:
+
+- `renderPlayer(gameState)` - Create/update player DOM element
+- `updatePosition(x, y)` - Move player to new position
+- `setPlayerContainer(element)` - Bind to DOM container
+
+#### Input Manager (`src/input/InputManager.js`)
+
+Capture keyboard input and dispatch to game:
+
+**Responsibilities**:
+
+- Listen for hjkl key presses
+- Validate movement with Player class
+- Update GameState on valid moves
+- Check for coin collection after each move
+- Ignore input when paused
+
+**Methods**:
+
+- `attachKeyboardListeners()` - Set up event listeners
+- `detachKeyboardListeners()` - Clean up on screen exit
+- `handleKeyPress(event)` - Process keyboard input
+- `setEnabled(boolean)` - Enable/disable input
+
+**Integration**:
+
+- Keyboard → InputManager → Player.move() → GameState update → Renderer update
+
+### TASKS.md Mapping
+
+Completes **Section 10: Player Character System**:
+
+**10.1 Cursor Block Implementation**:
+
+- [x] Create Player/Cursor class (already exists)
+- [ ] Render cursor block with distinct styling
+- [ ] Position cursor on character grid
+- [ ] Implement z-index layering (cursor above map blocks)
+
+**10.2 Basic Movement (hjkl)**:
+
+- [ ] Set up keyboard event listeners
+- [x] Implement `h` (left) movement (logic exists)
+  - [ ] Wire to keyboard
+  - [x] Update player position
+  - [x] Validate movement (grid boundaries, obstacles)
+  - [ ] Re-render cursor position
+- [x] Implement `j` (down) movement (logic exists)
+- [x] Implement `k` (up) movement (logic exists)
+- [x] Implement `l` (right) movement (logic exists)
+- [x] Add movement validation (logic exists)
+  - [x] Prevent out-of-bounds movement
+  - [x] Collision detection with blocks
+- [ ] Implement smooth cursor transitions
+  - [ ] CSS transitions for movement
+  - [ ] Duration based on distance traveled
+
+**10.3 Unit Tests for Player Movement** (already complete):
+
+- [x] Test player position updates for each direction
+- [x] Test boundary collision detection
+- [x] Test movement validation with obstacles
+- [x] Test player initialization at correct starting position
+
+### Test Plan
+
+**Integration Tests** (15-20 tests):
+
+- Keyboard input captured correctly
+- Movement updates game state
+- Visual position matches state position
+- Coin collection triggered on overlap
+- Input disabled when paused
+- CSS transitions applied
+- Z-index layering correct
+
+---
+
+## Group 4: Coin Rendering ⏳
+
+**Status**: Pending
+**Estimated Tests**: ~10-15
+
+### What Will Be Built
+
+#### Coin Renderer (`src/rendering/CoinRenderer.js`)
+
+Render coins as collectible DOM elements:
+
+**Responsibilities**:
+
+- Render coins from GameState coin data
+- Update visual state (collected coins become invisible)
+- Apply styling (color, size, animations)
+- Handle z-index (above map, below player)
+
+**Methods**:
+
+- `renderCoins(gameState)` - Create/update all coin elements
+- `updateCoinState(coinIndex, collected)` - Show/hide collected coins
+- `setCoinContainer(element)` - Bind to DOM container
+
+**Visual Design**:
+
+- Coins rendered as `<div class="coin">` with distinct color
+- CSS animation (pulse, glow, or rotate)
+- Fade out animation on collection
+- Higher z-index than map, lower than player
+
+### TASKS.md Mapping
+
+Completes **Section 11.1: Coin System (rendering portion)**:
+
+- [x] Create Coin class/data structure (exists)
+- [x] Implement coin placement in map generation (exists)
+- [ ] Render coins as DOM elements
+- [x] Implement collection detection (logic exists)
+  - [x] Check cursor position vs coin positions
+  - [x] Remove collected coins from map (state)
+  - [ ] Trigger collection event (visual feedback)
+
+### Test Plan
+
+**Unit Tests** (10-15 tests):
+
+- Coins rendered at correct positions
+- Collected coins become invisible
+- Coin count matches game state
+- Visual feedback on collection
+- Performance with many coins
+
+---
+
+## Group 5: HUD Elements ⏳
+
+**Status**: Pending
+**Estimated Tests**: ~15-20
+
+### What Will Be Built
+
+#### HUD Manager (`src/ui/HUD.js`)
+
+Display game information overlay:
+
+**Responsibilities**:
+
+- Display score (top-right)
+- Display timer (top-center) with color coding
+- Display mode indicator (bottom-left)
+- Update in real-time as GameState changes
+
+**Methods**:
+
+- `initialize(container)` - Create HUD DOM structure
+- `updateScore(score)` - Refresh score display
+- `updateTimer(seconds)` - Refresh timer with color coding
+- `updateMode(mode)` - Show current vim mode
+- `destroy()` - Clean up HUD elements
+
+**Visual Design**:
+
+- Fixed position overlay (doesn't scroll with map)
+- High contrast for readability
+- Timer color coding:
+  - Green: > 30 seconds
+  - Yellow: 15-30 seconds
+  - Red: < 15 seconds
+- Mode indicator with distinct colors per mode
+
+### TASKS.md Mapping
+
+Completes **Section 13: User Interface (HUD)**:
+
+**13.1 Basic HUD Elements**:
+
+- [ ] Create HUD container (fixed position overlay)
+- [ ] Implement score display (top-right)
+  - [ ] Current score
+  - [ ] Update on score change
+- [ ] Implement timer display (top-center)
+  - [ ] Countdown display
+  - [ ] Color coding (green → yellow → red as time decreases)
+- [ ] Add basic styling for HUD elements
+  - [ ] Modern, clean design
+  - [ ] High contrast for readability
+
+**13.2 Mode Indicator**:
+
+- [ ] Create mode indicator element (bottom-left)
+- [ ] Display "NORMAL" mode (Phase 1 only has Normal mode)
+- [ ] Style with distinct color
+
+### Test Plan
+
+**Unit Tests** (15-20 tests):
+
+- HUD elements created correctly
+- Score updates reflected in DOM
+- Timer countdown displayed accurately
+- Timer color changes at thresholds
+- Mode indicator shows correct mode
+- HUD doesn't interfere with game area
+
+---
+
+## Group 6: Win/Lose Integration ⏳
+
+**Status**: Pending
+**Estimated Tests**: ~10-15
+
+### What Will Be Built
+
+#### Game Coordinator (`src/game/GameCoordinator.js`)
+
+Ties everything together and handles game flow:
+
+**Responsibilities**:
+
+- Initialize all systems (state, loop, renderers, input)
+- Start new game / Continue game
+- Handle win/lose callbacks from GameLoop
+- Trigger screen transitions
+- Clean up on game exit
+
+**Methods**:
+
+- `startNewGame()` - Initialize fresh game
+- `continueGame(savedState)` - Resume from save
+- `handleWin()` - Transition to LEVEL_COMPLETE screen
+- `handleLose()` - Transition to LEVEL_FAILED screen
+- `cleanup()` - Stop loop, remove listeners
+
+**Flow**:
+
+```
+Main Menu → GameCoordinator.startNewGame()
+  → Initialize GameState with level 1
+  → Generate map with coins
+  → Start GameLoop with callbacks
+  → Attach keyboard listeners
+  → Render everything
+
+GameLoop detects win/lose
+  → Calls callback
+  → GameCoordinator.handleWin() or handleLose()
+  → Update final scores in screens
+  → Save to leaderboard
+  → Switch to end screen
+```
+
+### TASKS.md Mapping
+
+Completes **Section 15: Win/Lose Conditions**:
+
+**15.1 Win Condition**:
+
+- [x] Detect when all coins collected (GameLoop)
+- [ ] Trigger level complete state (integration)
+- [ ] Display "Level Complete" message (screen transition)
+- [ ] Show final score (update end screen)
+- [ ] Add "Restart" button/option (wire up)
+
+**15.2 Lose Condition**:
+
+- [x] Detect when timer reaches zero (GameLoop)
+- [ ] Trigger level failed state (integration)
+- [ ] Display "Time's Up" message (screen transition)
+- [ ] Show final score (update end screen)
+- [ ] Add "Retry" button/option (wire up)
+
+**15.3 Unit Tests for Win/Lose Conditions** (mostly complete):
+
+- [x] Test win condition triggers when all coins collected
+- [x] Test lose condition triggers when timer reaches zero
+- [x] Test correct final score calculation
+- [x] Test state transitions to LEVEL_COMPLETE and LEVEL_FAILED
+- [ ] Integration tests for screen transitions
+
+### Test Plan
+
+**Integration Tests** (10-15 tests):
+
+- Full game flow: start → play → win → menu
+- Full game flow: start → play → lose → retry
+- Score saved to leaderboard on completion
+- Screen transitions work correctly
+- Save game persists state
+- Continue game restores state
+
+---
+
+## Group 7: Level End Screens ⏳
+
+**Status**: Pending
+**Estimated Tests**: ~10-15
+
+### What Will Be Built
+
+#### End Screen Manager (`src/ui/EndScreens.js`)
+
+Manage level complete and failed screens:
+
+**Responsibilities**:
+
+- Update final score displays
+- Handle button clicks (retry, next level, menu)
+- Show appropriate messages
+- Animate transitions (optional)
+
+**Methods**:
+
+- `showLevelComplete(score)` - Display win screen with score
+- `showLevelFailed(score)` - Display lose screen with score
+- `attachEventListeners()` - Wire up buttons
+- `detachEventListeners()` - Clean up on hide
+
+**Button Actions**:
+
+- **Next Level** (complete screen): Restart level (MVP restarts same level)
+- **Retry** (failed screen): Restart level
+- **Main Menu** (both screens): Return to menu, save score to leaderboard
+
+### TASKS.md Mapping
+
+Completes **Section 16: Level End Screens**:
+
+- [ ] Create level complete screen template
+  - [ ] Score display
+  - [ ] "Next Level" button (restarts for MVP)
+  - [ ] "Main Menu" button
+- [ ] Create level failed screen template
+  - [ ] Score display
+  - [ ] "Retry" button
+  - [ ] "Main Menu" button
+
+Note: HTML templates already exist in `index.html`, this group wires them up.
+
+### Test Plan
+
+**Integration Tests** (10-15 tests):
+
+- Score displayed correctly on both screens
+- "Next Level" button restarts game
+- "Retry" button restarts game
+- "Main Menu" returns to menu
+- Leaderboard updated with final score
+- Screen visibility toggled correctly
+
+---
+
+## Integration Points
+
+### How Groups Connect
+
+```
+Group 1 (State & Loop)
+  ↓
+Group 2 (Map Rendering) ← reads GameState
+  ↓
+Group 3 (Player & Input) ← updates GameState, triggers re-render
+  ↓
+Group 4 (Coin Rendering) ← reads GameState coins
+  ↓
+Group 5 (HUD) ← reads GameState (score, timer, mode)
+  ↓
+Group 6 (Win/Lose) ← GameLoop callbacks trigger screen changes
+  ↓
+Group 7 (End Screens) ← displays final results, returns to menu
+```
+
+### Main.js Integration
+
+The `main.js` file will be updated incrementally:
+
+**After Group 1**: No changes (logic only, no visuals)
+**After Group 2**: Renderer instantiated when entering PLAYING screen
+**After Group 3**: Input listeners attached, player visible
+**After Group 4**: Coins visible and collectible
+**After Group 5**: HUD displays during gameplay
+**After Group 6**: Win/lose triggers screen transitions
+**After Group 7**: Full game loop functional, MVP complete
+
+---
+
+## Testing Strategy
+
+### Unit Tests (Vitest)
+
+- Run in watch mode during development
+- Fast (<1 second for full suite in Phase 1)
+- Test individual functions and classes
+- Mock DOM and external dependencies
+- Pre-commit hook requirement
+
+### Integration Tests (Optional for MVP)
+
+- Test how components work together
+- Verify rendering produces correct DOM
+- Check event flow (keyboard → state → render)
+
+### E2E Tests (Playwright)
+
+- Will be written after MVP is complete
+- Test full user flows
+- Run on pre-push hook
+- Deployment gate
+
+### Current Test Count
+
+- **Total**: 245 passing tests
+- **Group 1**: 54 tests (GameState: 27, GameLoop: 27)
+- **Existing**: 191 tests (from previous phases)
+
+---
+
+## Progress Tracking
+
+### Completed
+
+- ✅ Group 1: Game State & Loop (54 tests, 1 commit)
+
+### In Progress
+
+- ⏳ Group 2: Map Rendering
+
+### Remaining
+
+- ⏳ Groups 3-7 (estimated 70-90 additional tests)
+
+### Estimated Completion
+
+- **Per Group**: 2-4 hours (with TDD)
+- **Total Remaining**: 12-24 hours
+- **MVP Complete**: After Group 7
+
+---
+
+## Success Criteria
+
+The MVP is complete when all 7 groups are finished and:
+
+### Functional Requirements
+
+- ✅ Player can start a new game from menu
+- ⏳ Map is visible with word-like blocks
+- ⏳ Player cursor is visible and controllable (hjkl)
+- ⏳ Coins are visible and collectible
+- ⏳ Score and timer display and update
+- ⏳ Collecting all coins triggers level complete screen
+- ⏳ Timer expiring triggers level failed screen
+- ⏳ Can retry failed levels
+- ⏳ Can return to main menu from end screens
+- ✅ Scores are saved to leaderboard
+
+### Technical Requirements
+
+- ✅ All unit tests passing (245+)
+- ⏳ No console errors during gameplay
+- ⏳ Smooth 60 FPS performance
+- ⏳ Clean code (ESLint passing)
+- ⏳ Well-documented (JSDoc comments)
+
+### User Experience
+
+- ⏳ Game is playable end-to-end
+- ⏳ Controls feel responsive
+- ⏳ Visual feedback is clear
+- ⏳ Win/lose conditions are obvious
+- ⏳ Can complete full game cycle (start → play → end → restart)
+
+---
+
+## Next Steps
+
+**Immediate**: Begin Group 2 (Map Rendering)
+
+1. Write tests for DOMRenderer class
+2. Implement map rendering from MapGenerator data
+3. Add viewport/camera system
+4. Integrate with main.js PLAYING screen
+5. Verify maps render correctly
+6. Commit and push
+
+**Then**: Continue sequentially through Groups 3-7
+
+---
+
+## Notes
+
+### Why This Approach Works
+
+- **Incremental progress**: Each group delivers visible functionality
+- **Testable**: Pure functions, mockable dependencies
+- **Maintainable**: Clear separation of concerns
+- **Efficient**: Related features developed together
+- **Low risk**: Can stop at any group and have working code
+
+### Flexibility
+
+If priorities change, groups can be reordered:
+
+- Need gameplay faster? Do Groups 3-4 before Group 2
+- Need visuals first? Do Groups 2-4 before Groups 5-7
+
+Current order prioritizes: Logic → Visuals → Integration → Polish
