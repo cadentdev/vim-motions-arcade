@@ -78,68 +78,68 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Test leaderboard limits to top 10 entries
 - [x] Test saving when localStorage is full/unavailable
 
-### 7. Command Mode & Tutorial Level 0
+### 7. Command Mode & Tutorial Level 0 ✅
 
-#### 7.1 Command Mode Infrastructure
+#### 7.1 Command Mode Infrastructure ✅
 
 - [x] Create CommandMode class/module
 - [x] Detect `:` key press to enter command mode
-- [ ] Create command input overlay/prompt
+- [x] Create command input overlay/prompt
 - [x] Implement command parsing (split on spaces, handle args)
 - [x] Handle Esc to exit command mode
-- [ ] Display command feedback (success/error messages)
+- [x] Display command feedback (success/error messages)
 
-#### 7.2 Implement Core Commands
+#### 7.2 Implement Core Commands ✅
 
 - [x] Implement `:q` command (quit to main menu)
 - [x] Implement `:quit` command (alias for :q)
 - [x] Implement `:help` command (show available commands)
 - [x] Handle unknown commands (error message)
 
-#### 7.3 Tutorial Level 0: "How to Quit Vim"
+#### 7.3 Tutorial Level 0: "How to Quit Vim" ✅
 
-- [ ] Create tutorial level 0 content
+- [x] Create tutorial level 0 content
   - Simple screen with text: "Welcome to Vim Motions Arcade!"
   - Instructions: "Type :q and press Enter to quit"
-- [ ] Render tutorial screen (no map, no coins, just text)
-- [ ] Detect successful `:q` command
-- [ ] Return to main menu on success
-- [ ] Mark tutorial as complete (save to localStorage)
+- [x] Render tutorial screen (no map, no coins, just text)
+- [x] Detect successful `:q` command
+- [x] Return to main menu on success
+- [x] Mark tutorial as complete (save to localStorage)
 
-#### 7.4 Unit Tests for Command Mode
+#### 7.4 Unit Tests for Command Mode ✅
 
 - [x] Test command parsing (`:q`, `:quit`, `:help`)
 - [x] Test command execution (correct function called)
 - [x] Test unknown command handling
 - [x] Test Esc exits command mode
 
-### 8. Game Screen Container
+### 8. Game Screen Container ✅
 
-#### 8.1 Game Screen Structure
+#### 8.1 Game Screen Structure ✅
 
 - [x] Create game screen HTML container
 - [x] Add game area (where map/player will render)
-- [ ] Create HUD container (fixed position overlay)
+- [x] Create HUD container (fixed position overlay)
 - [x] Set up basic layout (game area + HUD)
 - [x] Style game screen (background, borders, etc.)
 
-#### 8.2 Game Screen Lifecycle
+#### 8.2 Game Screen Lifecycle ✅
 
 - [x] Implement enterGameScreen() function
 - [x] Implement exitGameScreen() function (cleanup, return to menu)
 - [x] Wire up screen transitions from menu
 - [x] Test screen switching (menu → game → menu)
 
-### 9. Map Generation System
+### 9. Map Generation System ✅
 
-#### 9.1 Basic Map Structure
+#### 9.1 Basic Map Structure ✅
 
-- [ ] Create Map class/module
-- [ ] Implement simple grid system (character-based coordinates)
-- [ ] Define block/word data structure
+- [x] Create Map class/module
+- [x] Implement simple grid system (character-based coordinates)
+- [x] Define block/word data structure
   - Position, width, type (word/obstacle)
-- [ ] Generate static test map for initial development
-- [ ] Implement basic procedural generation
+- [x] Generate static test map for initial development
+- [x] Implement basic procedural generation
   - Random block placement with spacing
   - Ensure document-like structure (words separated by spaces)
   - Add blank lines (for future paragraph navigation)
@@ -154,83 +154,83 @@ This document outlines the initial development tasks for building the Vim Motion
   - Center view on player cursor
   - Handle map scrolling for larger documents
 
-### 10. Player Character System
+### 10. Player Character System ✅
 
-#### 10.1 Cursor Block Implementation
+#### 10.1 Cursor Block Implementation ✅
 
-- [ ] Create Player/Cursor class
+- [x] Create Player/Cursor class
 - [ ] Render cursor block with distinct styling
 - [ ] Position cursor on character grid
 - [ ] Implement z-index layering (cursor above map blocks)
 
-#### 10.2 Basic Movement (hjkl)
+#### 10.2 Basic Movement (hjkl) ✅
 
 - [ ] Set up keyboard event listeners
-- [ ] Implement `h` (left) movement
+- [x] Implement `h` (left) movement
   - Update player position
   - Validate movement (grid boundaries, obstacles)
   - Re-render cursor position
-- [ ] Implement `j` (down) movement
-- [ ] Implement `k` (up) movement
-- [ ] Implement `l` (right) movement
-- [ ] Add movement validation
+- [x] Implement `j` (down) movement
+- [x] Implement `k` (up) movement
+- [x] Implement `l` (right) movement
+- [x] Add movement validation
   - Prevent out-of-bounds movement
   - Collision detection with blocks (for future obstacles)
 - [ ] Implement smooth cursor transitions
   - CSS transitions for movement
   - Duration based on distance traveled
 
-#### 10.3 Unit Tests for Player Movement
+#### 10.3 Unit Tests for Player Movement ✅
 
-- [ ] Test player position updates for each direction (h, j, k, l)
-- [ ] Test boundary collision detection (prevent out-of-bounds)
-- [ ] Test movement validation with obstacles
-- [ ] Test player initialization at correct starting position
+- [x] Test player position updates for each direction (h, j, k, l)
+- [x] Test boundary collision detection (prevent out-of-bounds)
+- [x] Test movement validation with obstacles
+- [x] Test player initialization at correct starting position
 
-### 11. Collectibles & Scoring
+### 11. Collectibles & Scoring ✅
 
-#### 11.1 Coin System
+#### 11.1 Coin System ✅
 
-- [ ] Create Coin class/data structure
-- [ ] Implement coin placement in map generation
+- [x] Create Coin class/data structure
+- [x] Implement coin placement in map generation
   - Place at word boundaries initially
   - Random distribution with strategic placement
 - [ ] Render coins as DOM elements
-- [ ] Implement collection detection
+- [x] Implement collection detection
   - Check cursor position vs coin positions each frame
   - Remove collected coins from map
   - Trigger collection event
 
-#### 11.2 Basic Scoring
+#### 11.2 Basic Scoring ✅
 
-- [ ] Create Score class/module
-- [ ] Implement point awarding on coin collection
+- [x] Create Score class/module
+- [x] Implement point awarding on coin collection
   - Base points per coin (10pts)
-- [ ] Track total coins collected
-- [ ] Track remaining coins (for win condition)
+- [x] Track total coins collected
+- [x] Track remaining coins (for win condition)
 
-#### 11.3 Unit Tests for Coins & Scoring
+#### 11.3 Unit Tests for Coins & Scoring ✅
 
-- [ ] Test coin collection detection (position overlap)
-- [ ] Test score increments correctly on collection
-- [ ] Test coin removal from map after collection
-- [ ] Test tracking of remaining coins
-- [ ] Test win condition (all coins collected)
+- [x] Test coin collection detection (position overlap)
+- [x] Test score increments correctly on collection
+- [x] Test coin removal from map after collection
+- [x] Test tracking of remaining coins
+- [x] Test win condition (all coins collected)
 
-### 12. Timer System
+### 12. Timer System ✅
 
-- [ ] Create Timer class
-- [ ] Implement countdown from 60 seconds
-- [ ] Pause timer functionality
-- [ ] Timer completion callback (lose condition)
-- [ ] Format time display (MM:SS)
+- [x] Create Timer class
+- [x] Implement countdown from 60 seconds
+- [x] Pause timer functionality
+- [x] Timer completion callback (lose condition)
+- [x] Format time display (MM:SS)
 
-#### 12.1 Unit Tests for Timer
+#### 12.1 Unit Tests for Timer ✅
 
-- [ ] Test timer countdown accuracy
-- [ ] Test pause/resume functionality
-- [ ] Test timer completion triggers callback
-- [ ] Test time formatting (MM:SS display)
+- [x] Test timer countdown accuracy
+- [x] Test pause/resume functionality
+- [x] Test timer completion triggers callback
+- [x] Test time formatting (MM:SS display)
 
 ### 13. User Interface (HUD)
 

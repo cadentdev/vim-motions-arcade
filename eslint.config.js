@@ -16,6 +16,10 @@ export default [
         document: 'readonly',
         console: 'readonly',
         localStorage: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        requestAnimationFrame: 'readonly',
+        cancelAnimationFrame: 'readonly',
         // Node.js globals (for config files)
         process: 'readonly',
         __dirname: 'readonly',
