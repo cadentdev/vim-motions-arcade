@@ -306,6 +306,66 @@ body {
   background: rgba(0, 0, 0, 0.5);
 }
 
+/* Command Mode Overlay */
+.command-mode-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-lg);
+  background: rgba(10, 14, 39, 0.95);
+  border-top: 2px solid var(--accent-primary);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  transition: opacity 0.2s ease;
+}
+
+.command-mode-overlay.hidden {
+  display: none;
+}
+
+.command-input {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  color: var(--accent-primary);
+  padding: var(--spacing-md);
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--accent-primary);
+  border-radius: 4px;
+  margin-bottom: var(--spacing-md);
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  box-shadow:
+    0 0 10px rgba(0, 255, 136, 0.3),
+    inset 0 0 10px rgba(0, 255, 136, 0.1);
+}
+
+.command-feedback {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: var(--spacing-md);
+  border-radius: 4px;
+  margin-top: var(--spacing-sm);
+  transition: all 0.2s ease;
+}
+
+.command-feedback.hidden {
+  display: none;
+}
+
+.command-feedback.success {
+  color: var(--accent-primary);
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid var(--accent-primary);
+}
+
+.command-feedback.error {
+  color: var(--accent-danger);
+  background: rgba(255, 51, 102, 0.1);
+  border: 1px solid var(--accent-danger);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .game-title {
@@ -328,5 +388,13 @@ body {
 
   .leaderboard-date {
     display: none;
+  }
+
+  .command-input {
+    font-size: 1.2rem;
+  }
+
+  .command-feedback {
+    font-size: 0.9rem;
   }
 }
