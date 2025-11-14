@@ -144,13 +144,13 @@ This document outlines the initial development tasks for building the Vim Motion
   - Ensure document-like structure (words separated by spaces)
   - Add blank lines (for future paragraph navigation)
 
-#### 9.2 Map Rendering (DOM-based)
+#### 9.2 Map Rendering (DOM-based) ✅
 
-- [ ] Create DOM elements for map blocks
-- [ ] Apply monospace styling for alignment
-- [ ] Implement block rendering from map data
-- [ ] Add basic styling (colors, spacing)
-- [ ] Create viewport/camera system
+- [x] Create DOM elements for map blocks
+- [x] Apply monospace styling for alignment
+- [x] Implement block rendering from map data
+- [x] Add basic styling (colors, spacing)
+- [x] Create viewport/camera system
   - Center view on player cursor
   - Handle map scrolling for larger documents
 

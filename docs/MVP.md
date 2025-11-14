@@ -25,7 +25,7 @@ The TASKS.md document is organized by architectural layer (Screen Management, Pl
 | Group       | Description              | TASKS.md Sections        | Status      |
 | ----------- | ------------------------ | ------------------------ | ----------- |
 | **Group 1** | Game State & Loop        | Section 14               | ✅ Complete |
-| **Group 2** | Map Rendering            | Section 9.2              | ⏳ Pending  |
+| **Group 2** | Map Rendering            | Section 9.2              | ✅ Complete |
 | **Group 3** | Player Rendering & Input | Section 10               | ⏳ Pending  |
 | **Group 4** | Coin Rendering           | Section 11.1 (rendering) | ⏳ Pending  |
 | **Group 5** | HUD Elements             | Section 13               | ⏳ Pending  |
@@ -153,61 +153,78 @@ This group completes **Section 14: Game Loop & State Management**:
 
 ---
 
-## Group 2: Map Rendering ⏳
+## Group 2: Map Rendering ✅
 
-**Status**: Pending
-**Estimated Tests**: ~15-20
+**Completed**: ✅
+**Commits**: 1 (6f69bdd)
+**Tests Added**: 23
+**Files Created**: 2
 
-### What Will Be Built
+### What Was Built
 
-#### DOMRenderer Class (`src/rendering/DOMRenderer.js`)
+#### MapRenderer Class (`src/rendering/MapRenderer.js`)
 
-Render map blocks as DOM elements:
+Renders map blocks as DOM elements:
 
 **Responsibilities**:
 
 - Convert map data (from MapGenerator) to DOM elements
 - Apply monospace styling for character grid alignment
-- Implement viewport/camera system
+- Implement viewport/camera system with CSS transforms
 - Handle map scrolling centered on player
+- Efficient DOM element caching and reuse
 
 **Methods**:
 
+- `setContainer(element)` - Bind to DOM container
 - `renderMap(mapData)` - Create/update map DOM elements
-- `updateViewport(playerX, playerY)` - Center camera on player
+- `renderBlock(block, index)` - Render individual block
 - `clearMap()` - Remove all map elements
-- `setMapContainer(element)` - Bind to DOM container
+- `centerOnPlayer(x, y)` - Center camera on player position
+- `getCharacterSize() / setCharacterSize()` - Character dimensions
 
 **Implementation Details**:
 
 - Map blocks rendered as `<div class="map-block">` with absolute positioning
-- Monospace font (Courier New) for pixel-perfect alignment
-- CSS Grid or absolute positioning for layout
-- Viewport follows player with smooth scrolling
+- Monospace font (Courier New, monospace) for pixel-perfect alignment
+- Character grid: 10px width, 16px height per character
+- Viewport uses CSS transform for smooth GPU-accelerated scrolling
 - Z-index layering: map (0) → coins (1) → player (2)
+- DOM element caching via Map for performance
+- Handles 200+ blocks efficiently (<100ms render time)
 
 ### TASKS.md Mapping
 
 Completes **Section 9.2: Map Rendering (DOM-based)**:
 
-- [ ] Create DOM elements for map blocks
-- [ ] Apply monospace styling for alignment
-- [ ] Implement block rendering from map data
-- [ ] Add basic styling (colors, spacing)
-- [ ] Create viewport/camera system
-  - [ ] Center view on player cursor
-  - [ ] Handle map scrolling for larger documents
+- ✅ Create DOM elements for map blocks
+- ✅ Apply monospace styling for alignment
+- ✅ Implement block rendering from map data
+- ✅ Add basic styling (colors, spacing)
+- ✅ Create viewport/camera system
+  - ✅ Center view on player cursor
+  - ✅ Handle map scrolling for larger documents
 
-### Test Plan
+### Test Coverage
 
-**Unit Tests** (15-20 tests):
+**23 unit tests** covering:
 
-- Map element creation from data
-- Correct positioning and styling
-- Viewport centering on player
-- Scrolling behavior for large maps
-- Performance with many blocks
-- Element cleanup on map change
+- Container initialization and validation
+- Map rendering from MapGenerator format
+- Block positioning and coordinate system
+- Text content rendering
+- Empty map handling
+- Block re-rendering and updates
+- Map clearing functionality
+- Viewport centering on player position
+- Boundary scrolling prevention
+- Small map handling (no scroll needed)
+- Performance with 200 blocks
+- DOM element reuse
+- Error handling (no container, invalid data, malformed blocks)
+- Z-index layering
+- Coordinate system consistency
+- Integration with MapGenerator output format
 
 ---
 
