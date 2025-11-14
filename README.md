@@ -201,16 +201,27 @@ Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for details on our code of cond
 
 ## 📊 Project Status
 
-**Current Version**: 0.1.0 (Alpha)  
-**Development Phase**: Phase 1 - Core Prototype  
+**Current Version**: 0.1.0 (Alpha)
+**Development Phase**: Phase 1 - Core Prototype (~40% complete)
 **Status**: Active Development 🚧
 
 ### Quick Stats
 
-- **Lines of Code**: ~0 (just getting started!)
+- **Source Code**: ~1,090 lines (JavaScript, CSS, HTML)
+- **Test Code**: ~570 lines (62 unit tests, all passing ✅)
+- **Core Systems**: Screen management, save system, leaderboard, command mode ✅
 - **Contributors**: 1
 - **Open Issues**: 0
 - **Stars**: ⭐ Help us reach 100!
+
+### What's Working Now
+
+- ✅ Interactive main menu with retro arcade aesthetic
+- ✅ Screen transitions (menu, game, level complete/failed)
+- ✅ Save/Continue game functionality with localStorage
+- ✅ Local leaderboard (top 10 scores)
+- ✅ Command mode logic (`:q`, `:quit`, `:help`)
+- ⏳ Gameplay mechanics (map generation, player movement, scoring) - Coming next!
 
 ---
 
