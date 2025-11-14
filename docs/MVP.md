@@ -360,7 +360,7 @@ Completes **Section 10: Player Character System**:
 ## Group 4: Coin Rendering ✅
 
 **Completed**: ✅
-**Commits**: 1 (TBD - will be added after commit)
+**Commits**: 1 (6cf1e95)
 **Tests Added**: 25
 **Files Created**: 2
 
