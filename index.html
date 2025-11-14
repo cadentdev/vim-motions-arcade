@@ -8,8 +8,80 @@
   </head>
   <body>
     <div id="game-container">
-      <h1>Vim Motions Arcade</h1>
-      <p>Loading...</p>
+      <!-- Main Menu Screen -->
+      <div id="screen-main-menu" class="screen">
+        <div class="main-menu">
+          <header class="game-header">
+            <h1 class="game-title">VIM MOTIONS ARCADE</h1>
+            <p class="game-subtitle">
+              Master vim motions through arcade gameplay
+            </p>
+          </header>
+
+          <nav class="menu-nav">
+            <button id="btn-start-game" class="menu-button primary">
+              Start New Game
+            </button>
+            <button id="btn-continue-game" class="menu-button" disabled>
+              Continue Game
+            </button>
+          </nav>
+
+          <section class="instructions">
+            <h2>Controls</h2>
+            <div class="controls-grid">
+              <div class="control-item">
+                <kbd>h j k l</kbd>
+                <span>Move cursor (left, down, up, right)</span>
+              </div>
+              <div class="control-item">
+                <kbd>:</kbd>
+                <span>Enter command mode</span>
+              </div>
+              <div class="control-item">
+                <kbd>:q</kbd>
+                <span>Quit to menu</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="leaderboard">
+            <h2>Top Scores</h2>
+            <div id="leaderboard-list" class="leaderboard-list">
+              <p class="empty-message">No scores yet. Be the first to play!</p>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Playing Screen -->
+      <div id="screen-playing" class="screen" style="display: none">
+        <div id="game-area" class="game-area">
+          <p>Game will render here...</p>
+        </div>
+      </div>
+
+      <!-- Level Complete Screen -->
+      <div id="screen-level-complete" class="screen" style="display: none">
+        <div class="end-screen">
+          <h1>Level Complete!</h1>
+          <p id="final-score">Score: 0</p>
+          <button id="btn-next-level" class="menu-button primary">
+            Next Level
+          </button>
+          <button id="btn-menu-complete" class="menu-button">Main Menu</button>
+        </div>
+      </div>
+
+      <!-- Level Failed Screen -->
+      <div id="screen-level-failed" class="screen" style="display: none">
+        <div class="end-screen">
+          <h1>Time's Up!</h1>
+          <p id="failed-score">Score: 0</p>
+          <button id="btn-retry" class="menu-button primary">Retry</button>
+          <button id="btn-menu-failed" class="menu-button">Main Menu</button>
+        </div>
+      </div>
     </div>
 
     <script type="module" src="/src/main.js"></script>
