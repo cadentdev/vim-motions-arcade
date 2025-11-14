@@ -1,8 +1,8 @@
 # Phase 1 MVP Implementation Plan
 
-**Status**: In Progress (Group 3 of 7 Complete)
+**Status**: In Progress (Group 4 of 7 Complete)
 **Methodology**: Test-Driven Development (TDD)
-**Test Count**: 321 passing tests
+**Test Count**: 346 passing tests
 
 ---
 
@@ -27,7 +27,7 @@ The TASKS.md document is organized by architectural layer (Screen Management, Pl
 | **Group 1** | Game State & Loop        | Section 14               | ✅ Complete |
 | **Group 2** | Map Rendering            | Section 9.2              | ✅ Complete |
 | **Group 3** | Player Rendering & Input | Section 10               | ✅ Complete |
-| **Group 4** | Coin Rendering           | Section 11.1 (rendering) | ⏳ Pending  |
+| **Group 4** | Coin Rendering           | Section 11.1 (rendering) | ✅ Complete |
 | **Group 5** | HUD Elements             | Section 13               | ⏳ Pending  |
 | **Group 6** | Win/Lose Integration     | Section 15               | ⏳ Pending  |
 | **Group 7** | Level End Screens        | Section 16               | ⏳ Pending  |
@@ -357,58 +357,75 @@ Completes **Section 10: Player Character System**:
 
 ---
 
-## Group 4: Coin Rendering ⏳
+## Group 4: Coin Rendering ✅
 
-**Status**: Pending
-**Estimated Tests**: ~10-15
+**Completed**: ✅
+**Commits**: 1 (TBD - will be added after commit)
+**Tests Added**: 25
+**Files Created**: 2
 
-### What Will Be Built
+### What Was Built
 
-#### Coin Renderer (`src/rendering/CoinRenderer.js`)
+#### CoinRenderer Class (`src/rendering/CoinRenderer.js`)
 
-Render coins as collectible DOM elements:
+DOM-based coin rendering with collection state management:
 
-**Responsibilities**:
+**Implementation Details**:
 
-- Render coins from GameState coin data
-- Update visual state (collected coins become invisible)
-- Apply styling (color, size, animations)
-- Handle z-index (above map, below player)
+- Character-grid positioning (10px × 16px matching MapRenderer/PlayerRenderer)
+- DOM element array caching (one element per coin, reused on updates)
+- Z-index layering: coins at z-index 1 (above map at 0, below player at 2)
+- Diamond character (◆) for coin visualization
+- Visibility management: `display: none` for collected coins, `display: block` for uncollected
+- Monospace font alignment
+- Automatic cleanup when coin count changes
 
 **Methods**:
 
-- `renderCoins(gameState)` - Create/update all coin elements
-- `updateCoinState(coinIndex, collected)` - Show/hide collected coins
-- `setCoinContainer(element)` - Bind to DOM container
+- `setContainer(container)` - Bind to DOM container
+- `renderCoins(coins)` - Create/update all coin elements from array
+- `clearCoins()` - Remove all coins from DOM
+- `setCharacterSize(width, height)` - Configure character dimensions
+- `getCharacterSize()` - Retrieve current character dimensions
 
 **Visual Design**:
 
-- Coins rendered as `<div class="coin">` with distinct color
-- CSS animation (pulse, glow, or rotate)
-- Fade out animation on collection
-- Higher z-index than map, lower than player
+- Coins rendered as `<div class="coin">` elements
+- Diamond character (◆) for visual representation
+- Z-index 1 (above map blocks, below player cursor)
+- Hidden when collected (display: none)
 
 ### TASKS.md Mapping
 
 Completes **Section 11.1: Coin System (rendering portion)**:
 
-- [x] Create Coin class/data structure (exists)
-- [x] Implement coin placement in map generation (exists)
-- [ ] Render coins as DOM elements
-- [x] Implement collection detection (logic exists)
-  - [x] Check cursor position vs coin positions
-  - [x] Remove collected coins from map (state)
-  - [ ] Trigger collection event (visual feedback)
+- ✅ Create Coin class/data structure (already existed)
+- ✅ Implement coin placement in map generation (already existed)
+- ✅ Render coins as DOM elements
+- ✅ Implement collection detection (logic already existed)
+  - ✅ Check cursor position vs coin positions
+  - ✅ Remove collected coins from map (state)
+  - ✅ Trigger collection event (visual feedback via display: none)
 
-### Test Plan
+### Test Coverage
 
-**Unit Tests** (10-15 tests):
+**25 unit tests** covering:
 
-- Coins rendered at correct positions
-- Collected coins become invisible
-- Coin count matches game state
-- Visual feedback on collection
-- Performance with many coins
+- Container initialization and validation
+- Coin rendering from array of coin objects
+- Character grid positioning accuracy (10px × 16px)
+- Z-index layering (coins at z-index 1)
+- Visual styling (monospace font, diamond character)
+- Collected coin hiding (display: none)
+- Uncollected coin visibility (display: block)
+- Collection state updates
+- DOM element reuse and caching
+- Empty coin array handling
+- Coin clearing functionality
+- Error handling (no container, invalid coin data)
+- Character size configuration
+- Performance with 100 coins (< 100ms)
+- Integration with GameState coin format
 
 ---
 

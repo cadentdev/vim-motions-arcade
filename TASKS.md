@@ -195,7 +195,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Implement coin placement in map generation
   - Place at word boundaries initially
   - Random distribution with strategic placement
-- [ ] Render coins as DOM elements
+- [x] Render coins as DOM elements
 - [x] Implement collection detection
   - Check cursor position vs coin positions each frame
   - Remove collected coins from map
