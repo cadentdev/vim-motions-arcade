@@ -4,98 +4,97 @@ This document outlines the initial development tasks for building the Vim Motion
 
 ---
 
-
 ---
 
 ## Phase 1: Core Prototype (MVP)
 
 **Development Philosophy**: Build from outside-in. Start with screens and navigation, then add game mechanics.
 
-### 4. Screen Management System
+### 4. Screen Management System ✅
 
 #### 4.1 Screen Manager/Router
 
-- [ ] Create ScreenManager class/module
-- [ ] Define screen states (MAIN_MENU, PLAYING, LEVEL_COMPLETE, LEVEL_FAILED)
-- [ ] Implement screen switching logic
-- [ ] Handle screen transitions (show/hide DOM elements)
-- [ ] Add screen-specific event listener management (attach/detach)
+- [x] Create ScreenManager class/module
+- [x] Define screen states (MAIN_MENU, PLAYING, LEVEL_COMPLETE, LEVEL_FAILED)
+- [x] Implement screen switching logic
+- [x] Handle screen transitions (show/hide DOM elements)
+- [x] Add screen-specific event listener management (attach/detach)
 
 #### 4.2 Unit Tests for Screen Management
 
-- [ ] Test screen transitions (MAIN_MENU → PLAYING → COMPLETE/FAILED)
-- [ ] Test invalid screen transitions are prevented
-- [ ] Test event listeners are properly cleaned up on screen change
+- [x] Test screen transitions (MAIN_MENU → PLAYING → COMPLETE/FAILED)
+- [x] Test invalid screen transitions are prevented
+- [x] Test event listeners are properly cleaned up on screen change
 
-### 5. Main Menu Screen
+### 5. Main Menu Screen ✅
 
 #### 5.1 Main Menu UI
 
-- [ ] Create main menu HTML structure
-- [ ] Add title/logo area
-- [ ] Create "Start New Game" button
-- [ ] Create "Continue Game" button (disabled if no save exists)
-- [ ] Add basic instructions section (controls overview)
-- [ ] Style menu with retro/vim aesthetic
+- [x] Create main menu HTML structure
+- [x] Add title/logo area
+- [x] Create "Start New Game" button
+- [x] Create "Continue Game" button (disabled if no save exists)
+- [x] Add basic instructions section (controls overview)
+- [x] Style menu with retro/vim aesthetic
 
 #### 5.2 Local Leaderboard Display
 
-- [ ] Create leaderboard section (top 10 scores)
-- [ ] Display rank, score, level reached, date
-- [ ] Handle empty leaderboard (no games played yet)
-- [ ] Style leaderboard table/list
+- [x] Create leaderboard section (top 10 scores)
+- [x] Display rank, score, level reached, date
+- [x] Handle empty leaderboard (no games played yet)
+- [x] Style leaderboard table/list
 
 #### 5.3 Main Menu Functionality
 
-- [ ] Wire up "Start New Game" button click
-- [ ] Wire up "Continue Game" button click
-- [ ] Check for existing save on menu load (enable/disable continue button)
-- [ ] Load and display leaderboard data
+- [x] Wire up "Start New Game" button click
+- [x] Wire up "Continue Game" button click
+- [x] Check for existing save on menu load (enable/disable continue button)
+- [x] Load and display leaderboard data
 
-### 6. LocalStorage & Save System
+### 6. LocalStorage & Save System ✅
 
 #### 6.1 Save/Load Infrastructure
 
-- [ ] Create SaveManager class/module
-- [ ] Implement save game data structure
+- [x] Create SaveManager class/module
+- [x] Implement save game data structure
   - Current level, score, unlocked motions, XP
-- [ ] Implement saveGame() function (write to localStorage)
-- [ ] Implement loadGame() function (read from localStorage)
-- [ ] Implement hasSave() function (check if save exists)
+- [x] Implement saveGame() function (write to localStorage)
+- [x] Implement loadGame() function (read from localStorage)
+- [x] Implement hasSave() function (check if save exists)
 
 #### 6.2 Leaderboard System
 
-- [ ] Create Leaderboard class/module
-- [ ] Implement leaderboard data structure (array of entries)
-- [ ] Implement addScore() function (add new score, sort, keep top 10)
-- [ ] Implement getTopScores() function (retrieve top 10)
-- [ ] Implement clearLeaderboard() function (for testing)
+- [x] Create Leaderboard class/module
+- [x] Implement leaderboard data structure (array of entries)
+- [x] Implement addScore() function (add new score, sort, keep top 10)
+- [x] Implement getTopScores() function (retrieve top 10)
+- [x] Implement clearLeaderboard() function (for testing)
 
 #### 6.3 Unit Tests for Save System
 
-- [ ] Test save/load round-trip (save data, load data, verify match)
-- [ ] Test hasSave() returns correct boolean
-- [ ] Test leaderboard sorting (highest score first)
-- [ ] Test leaderboard limits to top 10 entries
-- [ ] Test saving when localStorage is full/unavailable
+- [x] Test save/load round-trip (save data, load data, verify match)
+- [x] Test hasSave() returns correct boolean
+- [x] Test leaderboard sorting (highest score first)
+- [x] Test leaderboard limits to top 10 entries
+- [x] Test saving when localStorage is full/unavailable
 
 ### 7. Command Mode & Tutorial Level 0
 
 #### 7.1 Command Mode Infrastructure
 
-- [ ] Create CommandMode class/module
-- [ ] Detect `:` key press to enter command mode
+- [x] Create CommandMode class/module
+- [x] Detect `:` key press to enter command mode
 - [ ] Create command input overlay/prompt
-- [ ] Implement command parsing (split on spaces, handle args)
-- [ ] Handle Esc to exit command mode
+- [x] Implement command parsing (split on spaces, handle args)
+- [x] Handle Esc to exit command mode
 - [ ] Display command feedback (success/error messages)
 
 #### 7.2 Implement Core Commands
 
-- [ ] Implement `:q` command (quit to main menu)
-- [ ] Implement `:quit` command (alias for :q)
-- [ ] Implement `:help` command (show available commands)
-- [ ] Handle unknown commands (error message)
+- [x] Implement `:q` command (quit to main menu)
+- [x] Implement `:quit` command (alias for :q)
+- [x] Implement `:help` command (show available commands)
+- [x] Handle unknown commands (error message)
 
 #### 7.3 Tutorial Level 0: "How to Quit Vim"
 
@@ -109,27 +108,27 @@ This document outlines the initial development tasks for building the Vim Motion
 
 #### 7.4 Unit Tests for Command Mode
 
-- [ ] Test command parsing (`:q`, `:quit`, `:help`)
-- [ ] Test command execution (correct function called)
-- [ ] Test unknown command handling
-- [ ] Test Esc exits command mode
+- [x] Test command parsing (`:q`, `:quit`, `:help`)
+- [x] Test command execution (correct function called)
+- [x] Test unknown command handling
+- [x] Test Esc exits command mode
 
 ### 8. Game Screen Container
 
 #### 8.1 Game Screen Structure
 
-- [ ] Create game screen HTML container
-- [ ] Add game area (where map/player will render)
+- [x] Create game screen HTML container
+- [x] Add game area (where map/player will render)
 - [ ] Create HUD container (fixed position overlay)
-- [ ] Set up basic layout (game area + HUD)
-- [ ] Style game screen (background, borders, etc.)
+- [x] Set up basic layout (game area + HUD)
+- [x] Style game screen (background, borders, etc.)
 
 #### 8.2 Game Screen Lifecycle
 
-- [ ] Implement enterGameScreen() function
-- [ ] Implement exitGameScreen() function (cleanup, return to menu)
-- [ ] Wire up screen transitions from menu
-- [ ] Test screen switching (menu → game → menu)
+- [x] Implement enterGameScreen() function
+- [x] Implement exitGameScreen() function (cleanup, return to menu)
+- [x] Wire up screen transitions from menu
+- [x] Test screen switching (menu → game → menu)
 
 ### 9. Map Generation System
 
