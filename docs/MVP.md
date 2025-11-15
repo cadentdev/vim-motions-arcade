@@ -1,8 +1,8 @@
 # Phase 1 MVP Implementation Plan
 
-**Status**: In Progress (Group 6 of 7 Complete)
+**Status**: Complete (Group 7 of 7 Complete)
 **Methodology**: Test-Driven Development (TDD)
-**Test Count**: 419 passing tests
+**Test Count**: 448 passing tests
 
 ---
 
@@ -30,7 +30,7 @@ The TASKS.md document is organized by architectural layer (Screen Management, Pl
 | **Group 4** | Coin Rendering           | Section 11.1 (rendering) | ✅ Complete |
 | **Group 5** | HUD Elements             | Section 13               | ✅ Complete |
 | **Group 6** | Win/Lose Integration     | Section 15               | ✅ Complete |
-| **Group 7** | Level End Screens        | Section 16               | ⏳ Pending  |
+| **Group 7** | Level End Screens        | Section 16               | ✅ Complete |
 
 ---
 
@@ -603,62 +603,130 @@ Completes **Section 15: Win/Lose Conditions**:
 
 ---
 
-## Group 7: Level End Screens ⏳
+## Group 7: Level End Screens ✅
 
-**Status**: Pending
-**Estimated Tests**: ~10-15
+**Completed**: ✅
+**Commits**: 1 (TBD - to be committed)
+**Tests Added**: 29
+**Files Created**: 2
 
-### What Will Be Built
+### What Was Built
 
-#### End Screen Manager (`src/ui/EndScreens.js`)
+#### EndScreenManager Class (`src/ui/EndScreenManager.js`)
 
-Manage level complete and failed screens:
+Manages level complete and failed end screens with score displays and button handling:
 
-**Responsibilities**:
+**Implementation Details**:
 
-- Update final score displays
-- Handle button clicks (retry, next level, menu)
-- Show appropriate messages
-- Animate transitions (optional)
+- References existing DOM elements from index.html (`#screen-level-complete`, `#screen-level-failed`)
+- Score display updates for both screens (`#final-score`, `#failed-score`)
+- Button event handler management with proper cleanup
+- Callback-based architecture for screen transitions (onRetry, onNextLevel, onMainMenu)
+- Show/hide logic ensures only one screen visible at a time
+- Event listener attachment/detachment for memory leak prevention
+- Score validation (must be a number)
 
 **Methods**:
 
-- `showLevelComplete(score)` - Display win screen with score
-- `showLevelFailed(score)` - Display lose screen with score
-- `attachEventListeners()` - Wire up buttons
-- `detachEventListeners()` - Clean up on hide
+- `showLevelComplete(score)` - Display win screen with score, hide failed screen
+- `showLevelFailed(score)` - Display lose screen with score, hide complete screen
+- `hide()` - Hide both end screens
+- `attachCompleteScreenListeners()` - Wire up buttons for level complete screen
+- `attachFailedScreenListeners()` - Wire up buttons for level failed screen
+- `detachEventListeners()` - Remove all event listeners (cleanup)
+- `handleNextLevel()` - Trigger onNextLevel callback with score
+- `handleRetry()` - Trigger onRetry callback with score
+- `handleMainMenuComplete()` / `handleMainMenuFailed()` - Trigger onMainMenu callback
 
 **Button Actions**:
 
-- **Next Level** (complete screen): Restart level (MVP restarts same level)
-- **Retry** (failed screen): Restart level
-- **Main Menu** (both screens): Return to menu, save score to leaderboard
+- **Next Level** (complete screen): Calls `onNextLevel({ score })` - restarts level for MVP
+- **Retry** (failed screen): Calls `onRetry({ score })` - restarts level
+- **Main Menu** (both screens): Calls `onMainMenu()` - returns to menu
+
+**Event Listener Design**:
+
+- Bound methods (`.bind(this)`) stored as instance properties for cleanup
+- Listeners attached when screen is shown
+- Listeners detached when screen is hidden or before re-showing
+- Prevents duplicate listeners and memory leaks
 
 ### TASKS.md Mapping
 
 Completes **Section 16: Level End Screens**:
 
-- [ ] Create level complete screen template
-  - [ ] Score display
-  - [ ] "Next Level" button (restarts for MVP)
-  - [ ] "Main Menu" button
-- [ ] Create level failed screen template
-  - [ ] Score display
-  - [ ] "Retry" button
-  - [ ] "Main Menu" button
+- ✅ Create level complete screen template (HTML already exists in index.html)
+  - ✅ Score display
+  - ✅ "Next Level" button (restarts for MVP)
+  - ✅ "Main Menu" button
+- ✅ Create level failed screen template (HTML already exists in index.html)
+  - ✅ Score display
+  - ✅ "Retry" button
+  - ✅ "Main Menu" button
 
-Note: HTML templates already exist in `index.html`, this group wires them up.
+Note: HTML templates already existed in `index.html`, this group wired them up with JavaScript functionality.
 
-### Test Plan
+### Test Coverage
 
-**Integration Tests** (10-15 tests):
+**29 unit tests** covering:
 
-- Score displayed correctly on both screens
-- "Next Level" button restarts game
-- "Retry" button restarts game
-- "Main Menu" returns to menu
-- Leaderboard updated with final score
-- Screen visibility toggled correctly
+**Initialization**:
+
+- Constructor with callbacks
+- Constructor without callbacks (graceful handling)
+- DOM element discovery (finds both screens)
+
+**Show Level Complete**:
+
+- Screen visibility (shows complete, hides failed)
+- Score display updates
+- Event listener attachment
+
+**Show Level Failed**:
+
+- Screen visibility (shows failed, hides complete)
+- Score display updates
+- Event listener attachment
+
+**Button Click Handling - Level Complete**:
+
+- Next Level button triggers onNextLevel callback
+- Main Menu button triggers onMainMenu callback
+- Score passed to callbacks correctly
+
+**Button Click Handling - Level Failed**:
+
+- Retry button triggers onRetry callback
+- Main Menu button triggers onMainMenu callback
+- Score passed to callbacks correctly
+
+**Hide Screens**:
+
+- Both screens hidden when hide() called
+- No errors if already hidden
+
+**Event Listener Management**:
+
+- Listeners detached when detachEventListeners() called
+- No duplicate calls after detaching
+- Safe to call detach without showing first
+- Multiple show/hide cycles work correctly
+
+**Score Display**:
+
+- Zero scores displayed correctly
+- Large scores (999999) displayed correctly
+- Score updates when shown multiple times
+
+**Screen Visibility**:
+
+- Only one screen visible at a time
+- Both screens initially hidden
+
+**Error Handling**:
+
+- Missing callbacks handled gracefully (no crashes)
+- Invalid score (non-number) throws error
 
 ---
 

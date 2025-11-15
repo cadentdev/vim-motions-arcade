@@ -309,13 +309,13 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Test correct final score calculation
 - [x] Test state transitions to LEVEL_COMPLETE and LEVEL_FAILED
 
-### 16. Level End Screens
+### 16. Level End Screens ✅
 
-- [ ] Create level complete screen template
+- [x] Create level complete screen template
   - Score display
   - "Next Level" button (restarts for MVP)
   - "Main Menu" button
-- [ ] Create level failed screen template
+- [x] Create level failed screen template
   - Score display
   - "Retry" button
   - "Main Menu" button
