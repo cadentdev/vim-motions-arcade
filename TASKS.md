@@ -342,14 +342,14 @@ This document outlines the initial development tasks for building the Vim Motion
 
 ### 19. E2E Tests (Deployment Gate)
 
-- [ ] Write E2E test: Tutorial Level 0 (start → type :q → return to menu)
-- [ ] Write E2E test: Menu navigation (main menu → game → back to menu)
-- [ ] Write E2E test: Continue game (save exists → continue button enabled → loads game)
-- [ ] Write E2E test: Happy path (start → collect all coins → win)
-- [ ] Write E2E test: Timeout path (start → timer expires → lose)
-- [ ] Write E2E test: Restart flow (complete level → restart → game works)
-- [ ] Write E2E test: Movement (hjkl keys move cursor correctly)
-- [ ] Write E2E test: Leaderboard (complete game → score appears in leaderboard)
+- [x] Write E2E test: Tutorial Level 0 (start → type :q → return to menu)
+- [x] Write E2E test: Menu navigation (main menu → game → back to menu)
+- [x] Write E2E test: Continue game (save exists → continue button enabled → loads game)
+- [x] Write E2E test: Happy path (start → collect all coins → win)
+- [x] Write E2E test: Timeout path (start → timer expires → lose)
+- [x] Write E2E test: Restart flow (complete level → restart → game works)
+- [x] Write E2E test: Movement (hjkl keys move cursor correctly)
+- [x] Write E2E test: Leaderboard (complete game → score appears in leaderboard)
 - [ ] Verify E2E tests run in pre-push hook
 - [ ] Ensure E2E tests block push if failing
 
