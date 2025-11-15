@@ -545,4 +545,10 @@ window.game = {
     });
     renderLeaderboard();
   },
+  // Expose game coordinator for E2E testing (use getter to access current instance)
+  get gameCoordinator() {
+    return gameCoordinator;
+  },
+  // Expose TutorialLevel for E2E testing
+  TutorialLevel,
 };
