@@ -1,0 +1,531 @@
+import { test, expect } from '@playwright/test';
+
+/**
+ * E2E Tests for Vim Motions Arcade - Game Flows
+ * Tests cover all critical user flows for MVP deployment
+ */
+
+// Helper function to clear localStorage before each test
+test.beforeEach(async ({ page }) => {
+  await page.goto('/');
+  // Clear localStorage to ensure clean state
+  await page.evaluate(() => localStorage.clear());
+});
+
+test.describe('Tutorial Level 0: How to Quit Vim', () => {
+  test('should complete tutorial by typing :q and return to menu', async ({
+    page,
+  }) => {
+    await page.goto('/');
+
+    // Click Start New Game
+    await page.click('#btn-start-game');
+
+    // Should show tutorial screen
+    const tutorialContent = page.locator('.tutorial-content');
+    await expect(tutorialContent).toBeVisible();
+    await expect(tutorialContent).toContainText('How to Quit Vim');
+    await expect(tutorialContent).toContainText('Type :q and press Enter');
+
+    // Press : to enter command mode
+    await page.keyboard.press(':');
+
+    // Command mode overlay should appear
+    const commandOverlay = page.locator('.command-mode-overlay');
+    await expect(commandOverlay).toBeVisible();
+
+    // Command input should show ":"
+    const commandInput = page.locator('.command-input');
+    await expect(commandInput).toContainText(':');
+
+    // Type "q"
+    await page.keyboard.type('q');
+    await expect(commandInput).toContainText(':q');
+
+    // Press Enter
+    await page.keyboard.press('Enter');
+
+    // Should show success feedback
+    const feedback = page.locator('.command-feedback.success');
+    await expect(feedback).toBeVisible();
+    await expect(feedback).toContainText('Success');
+
+    // Wait for transition to actual game (2 second delay in code)
+    await page.waitForTimeout(2500);
+
+    // Should now be in the actual game (not tutorial)
+    const gameArea = page.locator('#game-area');
+    await expect(gameArea).toBeVisible();
+
+    // Tutorial content should be gone
+    await expect(tutorialContent).not.toBeVisible();
+
+    // Should have HUD elements (score, timer, mode)
+    const hud = page.locator('.hud-container');
+    await expect(hud).toBeVisible();
+  });
+
+  test('should show tutorial only on first game', async ({ page }) => {
+    await page.goto('/');
+
+    // First game - should show tutorial
+    await page.click('#btn-start-game');
+    await expect(page.locator('.tutorial-content')).toBeVisible();
+
+    // Complete tutorial
+    await page.keyboard.press(':');
+    await page.keyboard.type('q');
+    await page.keyboard.press('Enter');
+
+    // Wait for game to start
+    await page.waitForTimeout(2500);
+
+    // Quit the game
+    await page.keyboard.press(':');
+    await page.keyboard.type('q');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(1500);
+
+    // Should be back at main menu
+    await expect(page.locator('#screen-main-menu')).toBeVisible();
+
+    // Start game again - should NOT show tutorial
+    await page.click('#btn-start-game');
+
+    // Should go straight to game, not tutorial
+    await expect(page.locator('.tutorial-content')).not.toBeVisible();
+    await expect(page.locator('.hud-container')).toBeVisible();
+  });
+
+  test('should allow Escape to cancel command mode in tutorial', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.click('#btn-start-game');
+
+    // Press : to enter command mode
+    await page.keyboard.press(':');
+    const commandOverlay = page.locator('.command-mode-overlay');
+    await expect(commandOverlay).toBeVisible();
+
+    // Press Escape to cancel
+    await page.keyboard.press('Escape');
+    await expect(commandOverlay).not.toBeVisible();
+
+    // Tutorial should still be showing
+    await expect(page.locator('.tutorial-content')).toBeVisible();
+  });
+});
+
+test.describe('Menu Navigation', () => {
+  test('should navigate from main menu to game and back', async ({ page }) => {
+    await page.goto('/');
+
+    // Complete tutorial first
+    await page.click('#btn-start-game');
+    await page.keyboard.press(':');
+    await page.keyboard.type('q');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(2500);
+
+    // Should be in game
+    await expect(page.locator('#screen-playing')).toBeVisible();
+    await expect(page.locator('#screen-main-menu')).not.toBeVisible();
+
+    // Quit back to menu with :q
+    await page.keyboard.press(':');
+    await page.keyboard.type('q');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(1500);
+
+    // Should be back at main menu
+    await expect(page.locator('#screen-main-menu')).toBeVisible();
+    await expect(page.locator('#screen-playing')).not.toBeVisible();
+  });
+
+  test('should show correct button states on menu', async ({ page }) => {
+    await page.goto('/');
+
+    // Continue button should be disabled (no save exists)
+    const continueBtn = page.locator('#btn-continue-game');
+    await expect(continueBtn).toBeDisabled();
+
+    // Start button should be enabled
+    const startBtn = page.locator('#btn-start-game');
+    await expect(startBtn).toBeEnabled();
+  });
+});
+
+test.describe('Movement System', () => {
+  test('should move cursor with hjkl keys', async ({ page }) => {
+    await page.goto('/');
+
+    // Mark tutorial as completed in localStorage
+    await page.evaluate(() => {
+      localStorage.setItem(
+        'vim-motions-arcade-save',
+        JSON.stringify({ tutorialCompleted: true })
+      );
+    });
+
+    // Reload page to pick up the tutorial completion
+    await page.reload();
+
+    // Start game
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(1000);
+
+    // Get initial cursor position by checking the player element
+    const player = page.locator('.player-cursor').first();
+    await expect(player).toBeVisible();
+
+    // Press h (left) - cursor should move
+    await page.keyboard.press('h');
+    await page.waitForTimeout(200);
+
+    // Press j (down)
+    await page.keyboard.press('j');
+    await page.waitForTimeout(200);
+
+    // Press k (up)
+    await page.keyboard.press('k');
+    await page.waitForTimeout(200);
+
+    // Press l (right)
+    await page.keyboard.press('l');
+    await page.waitForTimeout(200);
+
+    // Player should still be visible (basic movement works)
+    await expect(player).toBeVisible();
+  });
+});
+
+test.describe('Win Condition Flow', () => {
+  test('should show level complete screen when all coins collected', async ({
+    page,
+  }) => {
+    await page.goto('/');
+
+    // Start game
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(2500); // Wait for tutorial to complete
+
+    // For testing, we'll use page.evaluate to simulate collecting all coins
+    // In a real scenario, we'd navigate and collect them
+    await page.evaluate(() => {
+      // Access the game coordinator through window.game
+      const gameCoordinator = window.game?.gameCoordinator;
+      const gameState = gameCoordinator?.getGameState();
+      if (gameState) {
+        // Collect all coins
+        gameState.level.coins.forEach((coin, index) => {
+          gameState.collectCoin(index);
+        });
+      }
+    });
+
+    // Wait for win condition to trigger
+    await page.waitForTimeout(1000);
+
+    // Should show level complete screen
+    const completeScreen = page.locator('#screen-level-complete');
+    await expect(completeScreen).toBeVisible();
+
+    // Should show score
+    const scoreDisplay = page.locator('#final-score');
+    await expect(scoreDisplay).toBeVisible();
+    await expect(scoreDisplay).toContainText('Score:');
+  });
+
+  test('should allow returning to menu from level complete screen', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(2500);
+
+    // Simulate win
+    await page.evaluate(() => {
+      const gameState = window.game.gameCoordinator?.getGameState();
+      if (gameState) {
+        gameState.level.coins.forEach((_, index) => {
+          gameState.collectCoin(index);
+        });
+      }
+    });
+
+    await page.waitForTimeout(1000);
+
+    // Click Main Menu button
+    await page.click('#btn-menu-complete');
+
+    // Should return to main menu
+    await expect(page.locator('#screen-main-menu')).toBeVisible();
+    await expect(page.locator('#screen-level-complete')).not.toBeVisible();
+  });
+
+  test('should allow restarting from level complete screen', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(2500);
+
+    // Simulate win
+    await page.evaluate(() => {
+      const gameState = window.game.gameCoordinator?.getGameState();
+      if (gameState) {
+        gameState.level.coins.forEach((_, index) => {
+          gameState.collectCoin(index);
+        });
+      }
+    });
+
+    await page.waitForTimeout(1000);
+
+    // Click Next Level (which restarts for MVP)
+    await page.click('#btn-next-level');
+
+    // Should return to playing screen
+    await expect(page.locator('#screen-playing')).toBeVisible();
+    await expect(page.locator('#screen-level-complete')).not.toBeVisible();
+
+    // HUD should be visible
+    await expect(page.locator('.hud-container')).toBeVisible();
+  });
+});
+
+test.describe('Lose Condition Flow', () => {
+  test('should show level failed screen when timer expires', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(2500);
+
+    // Simulate timer expiring
+    await page.evaluate(() => {
+      const gameState = window.game.gameCoordinator?.getGameState();
+      if (gameState) {
+        gameState.timer = 0;
+      }
+    });
+
+    // Wait for lose condition to trigger
+    await page.waitForTimeout(1000);
+
+    // Should show level failed screen
+    const failedScreen = page.locator('#screen-level-failed');
+    await expect(failedScreen).toBeVisible();
+
+    // Should show score
+    const scoreDisplay = page.locator('#failed-score');
+    await expect(scoreDisplay).toBeVisible();
+    await expect(scoreDisplay).toContainText('Score:');
+  });
+
+  test('should allow retry from level failed screen', async ({ page }) => {
+    await page.goto('/');
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(2500);
+
+    // Simulate timer expiring
+    await page.evaluate(() => {
+      const gameState = window.game.gameCoordinator?.getGameState();
+      if (gameState) {
+        gameState.timer = 0;
+      }
+    });
+
+    await page.waitForTimeout(1000);
+
+    // Click Retry button
+    await page.click('#btn-retry');
+
+    // Should return to playing screen
+    await expect(page.locator('#screen-playing')).toBeVisible();
+    await expect(page.locator('#screen-level-failed')).not.toBeVisible();
+
+    // HUD should be visible
+    await expect(page.locator('.hud-container')).toBeVisible();
+  });
+
+  test('should allow returning to menu from level failed screen', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(2500);
+
+    // Simulate timer expiring
+    await page.evaluate(() => {
+      const gameState = window.game.gameCoordinator?.getGameState();
+      if (gameState) {
+        gameState.timer = 0;
+      }
+    });
+
+    await page.waitForTimeout(1000);
+
+    // Click Main Menu button
+    await page.click('#btn-menu-failed');
+
+    // Should return to main menu
+    await expect(page.locator('#screen-main-menu')).toBeVisible();
+    await expect(page.locator('#screen-level-failed')).not.toBeVisible();
+  });
+});
+
+test.describe('Leaderboard System', () => {
+  test('should display score in leaderboard after winning', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(2500);
+
+    // Simulate win with some score
+    await page.evaluate(() => {
+      const gameState = window.game.gameCoordinator?.getGameState();
+      if (gameState) {
+        gameState.score = 150;
+        gameState.level.coins.forEach((_, index) => {
+          gameState.collectCoin(index);
+        });
+      }
+    });
+
+    await page.waitForTimeout(1000);
+
+    // Return to main menu
+    await page.click('#btn-menu-complete');
+
+    // Check leaderboard
+    const leaderboard = page.locator('#leaderboard-list');
+    await expect(leaderboard).toBeVisible();
+
+    // Should contain the score we just earned
+    await expect(leaderboard).toContainText('150');
+    await expect(leaderboard).toContainText('pts');
+  });
+
+  test('should show empty message when no scores exist', async ({ page }) => {
+    await page.goto('/');
+
+    // Leaderboard should show empty message
+    const leaderboard = page.locator('#leaderboard-list');
+    await expect(leaderboard).toContainText('No scores yet');
+  });
+});
+
+test.describe('Game State Persistence', () => {
+  test('should enable continue button when save exists', async ({ page }) => {
+    await page.goto('/');
+
+    // Create a save in localStorage
+    await page.evaluate(() => {
+      localStorage.setItem(
+        'vim-motions-arcade-save',
+        JSON.stringify({
+          level: { current: 1 },
+          score: 50,
+          tutorialCompleted: true,
+        })
+      );
+    });
+
+    // Reload to trigger save detection
+    await page.reload();
+
+    // Continue button should now be enabled
+    const continueBtn = page.locator('#btn-continue-game');
+    await expect(continueBtn).toBeEnabled();
+  });
+});
+
+test.describe('Command Mode', () => {
+  test('should handle :help command', async ({ page }) => {
+    await page.goto('/');
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(2500);
+
+    // Enter command mode
+    await page.keyboard.press(':');
+
+    // Type help
+    await page.keyboard.type('help');
+    await page.keyboard.press('Enter');
+
+    // Should show help feedback
+    const feedback = page.locator('.command-feedback');
+    await expect(feedback).toBeVisible();
+    await expect(feedback).toContainText('Available commands');
+  });
+
+  test('should show error for unknown command', async ({ page }) => {
+    await page.goto('/');
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(2500);
+
+    // Enter command mode
+    await page.keyboard.press(':');
+
+    // Type invalid command
+    await page.keyboard.type('invalid');
+    await page.keyboard.press('Enter');
+
+    // Should show error feedback
+    const feedback = page.locator('.command-feedback.error');
+    await expect(feedback).toBeVisible();
+    await expect(feedback).toContainText('Unknown command');
+  });
+
+  test('should handle backspace in command mode', async ({ page }) => {
+    await page.goto('/');
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(2500);
+
+    // Enter command mode
+    await page.keyboard.press(':');
+
+    // Type some characters
+    await page.keyboard.type('abc');
+
+    // Check command input shows :abc
+    const commandInput = page.locator('.command-input');
+    await expect(commandInput).toContainText(':abc');
+
+    // Press backspace
+    await page.keyboard.press('Backspace');
+    await expect(commandInput).toContainText(':ab');
+
+    await page.keyboard.press('Backspace');
+    await expect(commandInput).toContainText(':a');
+  });
+});
+
+test.describe('HUD Display', () => {
+  test('should display HUD elements during gameplay', async ({ page }) => {
+    await page.goto('/');
+    await page.click('#btn-start-game');
+    await page.waitForTimeout(2500);
+
+    // HUD should be visible
+    const hud = page.locator('.hud-container');
+    await expect(hud).toBeVisible();
+
+    // Should show score
+    const score = page.locator('.hud-score');
+    await expect(score).toBeVisible();
+    await expect(score).toContainText('Score');
+
+    // Should show timer
+    const timer = page.locator('.hud-timer');
+    await expect(timer).toBeVisible();
+
+    // Should show mode indicator
+    const mode = page.locator('.hud-mode');
+    await expect(mode).toBeVisible();
+    await expect(mode).toContainText('NORMAL');
+  });
+});

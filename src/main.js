@@ -5,6 +5,10 @@
 import { ScreenManager } from './game/ScreenManager.js';
 import { SaveManager } from './storage/SaveManager.js';
 import { Leaderboard } from './storage/Leaderboard.js';
+import { GameCoordinator } from './game/GameCoordinator.js';
+import { CommandMode } from './input/modes/CommandMode.js';
+import { CommandModeUI } from './ui/CommandModeUI.js';
+import { TutorialLevel } from './game/TutorialLevel.js';
 
 console.log('Vim Motions Arcade - Initializing...');
 
@@ -12,6 +16,14 @@ console.log('Vim Motions Arcade - Initializing...');
 const screenManager = new ScreenManager();
 const saveManager = new SaveManager();
 const leaderboard = new Leaderboard();
+
+// Game instance (created when starting a game)
+let gameCoordinator = null;
+let commandMode = null;
+let commandModeUI = null;
+let tutorialLevel = null;
+let commandModeKeyHandler = null;
+let tutorialKeyHandler = null;
 
 // DOM Elements
 let elements = {};
@@ -183,8 +195,17 @@ function formatDate(dateString) {
  */
 function handleStartGame() {
   console.log('Starting new game...');
-  screenManager.switchTo('PLAYING');
-  // TODO: Initialize new game state
+
+  // Check if tutorial has been completed
+  tutorialLevel = new TutorialLevel(saveManager);
+
+  if (!tutorialLevel.isCompleted()) {
+    // Show tutorial level
+    startTutorialLevel();
+  } else {
+    // Start normal game at level 1
+    startGame(1);
+  }
 }
 
 /**
@@ -195,8 +216,8 @@ function handleContinueGame() {
   const savedGame = saveManager.loadGame();
   if (savedGame) {
     console.log('Loaded save:', savedGame);
-    screenManager.switchTo('PLAYING');
-    // TODO: Load game state and resume
+    const level = savedGame.level?.current || 1;
+    startGame(level);
   }
 }
 
@@ -205,8 +226,8 @@ function handleContinueGame() {
  */
 function handleNextLevel() {
   console.log('Next level...');
-  screenManager.switchTo('PLAYING');
-  // TODO: Load next level
+  const currentLevel = gameCoordinator?.getGameState()?.level?.current || 1;
+  startGame(currentLevel); // For MVP, restart same level
 }
 
 /**
@@ -214,8 +235,8 @@ function handleNextLevel() {
  */
 function handleRetry() {
   console.log('Retrying level...');
-  screenManager.switchTo('PLAYING');
-  // TODO: Restart current level
+  const currentLevel = gameCoordinator?.getGameState()?.level?.current || 1;
+  startGame(currentLevel);
 }
 
 /**
@@ -223,7 +244,263 @@ function handleRetry() {
  */
 function handleReturnToMenu() {
   console.log('Returning to main menu...');
+  cleanupGame();
   screenManager.switchTo('MAIN_MENU');
+}
+
+/**
+ * Start the tutorial level
+ */
+function startTutorialLevel() {
+  console.log('Starting tutorial level...');
+  screenManager.switchTo('PLAYING');
+
+  // Clear game area and show tutorial
+  const gameArea = elements.screenPlaying.querySelector('#game-area');
+  gameArea.innerHTML = '';
+
+  // Create tutorial content
+  const tutorialContent = document.createElement('div');
+  tutorialContent.className = 'tutorial-content';
+  tutorialContent.style.cssText = `
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #00ff00;
+    border-radius: 8px;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+  `;
+
+  const content = tutorialLevel.getContent();
+  tutorialContent.textContent = content.instructions;
+  gameArea.appendChild(tutorialContent);
+
+  // Set up command mode for tutorial
+  setupCommandModeForTutorial(gameArea);
+}
+
+/**
+ * Setup command mode for tutorial
+ */
+function setupCommandModeForTutorial(container) {
+  // Create command mode UI
+  commandModeUI = new CommandModeUI(container);
+  commandMode = new CommandMode({});
+
+  // Set up keyboard listener for tutorial
+  tutorialKeyHandler = (event) => {
+    // Handle colon to enter command mode
+    if (event.key === ':' && !commandMode.isActive) {
+      event.preventDefault();
+      commandMode.activate();
+      commandModeUI.show();
+      return;
+    }
+
+    // If command mode is active
+    if (commandMode.isActive) {
+      event.preventDefault();
+
+      if (event.key === 'Escape') {
+        commandMode.cancel();
+        commandModeUI.hide();
+      } else if (event.key === 'Enter') {
+        const result = commandMode.submit();
+
+        if (result.success && result.action === 'quit') {
+          // Tutorial complete!
+          tutorialLevel.markComplete();
+          commandModeUI.showFeedback(
+            "Success! You've learned how to quit vim. Starting the game...",
+            'success',
+            2000
+          );
+
+          // Start actual game after brief delay
+          setTimeout(() => {
+            cleanupGame();
+            startGame(1);
+          }, 2000);
+        } else if (!result.success) {
+          commandModeUI.showFeedback(result.error, 'error', 3000);
+        }
+
+        commandModeUI.hide();
+      } else if (event.key === 'Backspace') {
+        commandMode.backspace();
+        commandModeUI.updateInput(commandMode.getBuffer());
+      } else if (event.key.length === 1 && !event.ctrlKey && !event.metaKey) {
+        commandMode.addChar(event.key);
+        commandModeUI.updateInput(commandMode.getBuffer());
+      }
+    }
+  };
+
+  document.addEventListener('keydown', tutorialKeyHandler);
+}
+
+/**
+ * Start a normal game at specified level
+ */
+function startGame(level) {
+  console.log(`Starting game at level ${level}...`);
+  screenManager.switchTo('PLAYING');
+
+  const gameArea = elements.screenPlaying.querySelector('#game-area');
+  gameArea.innerHTML = ''; // Clear placeholder
+
+  // Create game coordinator
+  gameCoordinator = new GameCoordinator({
+    onWin: handleGameWin,
+    onLose: handleGameLose,
+    onQuit: handleGameQuit,
+  });
+
+  // Start the game
+  gameCoordinator.startNewGame(gameArea, level);
+
+  // Set up command mode
+  setupCommandMode(gameArea);
+}
+
+/**
+ * Setup command mode during normal gameplay
+ */
+function setupCommandMode(container) {
+  if (!gameCoordinator) return;
+
+  const gameState = gameCoordinator.getGameState();
+  commandModeUI = new CommandModeUI(container);
+  commandMode = new CommandMode(gameState);
+
+  // Override the InputManager's command mode callback
+  const inputManager = gameCoordinator.inputManager;
+
+  inputManager.callbacks.onCommandMode = () => {
+    commandMode.activate();
+    commandModeUI.show();
+
+    // Pause the game
+    gameCoordinator.pause();
+  };
+
+  // Set up command mode keyboard handling
+  commandModeKeyHandler = (event) => {
+    if (!commandMode.isActive) return;
+
+    event.preventDefault();
+
+    if (event.key === 'Escape') {
+      commandMode.cancel();
+      commandModeUI.hide();
+      gameCoordinator.resume();
+    } else if (event.key === 'Enter') {
+      const result = commandMode.submit();
+
+      if (result.success && result.action === 'quit') {
+        commandModeUI.showFeedback(
+          'Returning to main menu...',
+          'success',
+          1000
+        );
+        setTimeout(() => {
+          cleanupGame();
+          screenManager.switchTo('MAIN_MENU');
+        }, 1000);
+      } else if (result.success) {
+        commandModeUI.showFeedback(result.message, 'success');
+        commandModeUI.hide();
+        gameCoordinator.resume();
+      } else {
+        commandModeUI.showFeedback(result.error, 'error', 3000);
+        commandModeUI.hide();
+        gameCoordinator.resume();
+      }
+    } else if (event.key === 'Backspace') {
+      commandMode.backspace();
+      commandModeUI.updateInput(commandMode.getBuffer());
+    } else if (event.key.length === 1 && !event.ctrlKey && !event.metaKey) {
+      commandMode.addChar(event.key);
+      commandModeUI.updateInput(commandMode.getBuffer());
+    }
+  };
+
+  document.addEventListener('keydown', commandModeKeyHandler);
+}
+
+/**
+ * Handle game win
+ */
+function handleGameWin(result) {
+  console.log('Game won!', result);
+
+  // Save score to leaderboard
+  leaderboard.addScore({
+    score: result.score,
+    level: result.level,
+    date: new Date().toISOString(),
+  });
+
+  // Update end screen
+  elements.finalScore.textContent = `Score: ${result.score}`;
+
+  // Switch to level complete screen
+  screenManager.switchTo('LEVEL_COMPLETE');
+}
+
+/**
+ * Handle game lose
+ */
+function handleGameLose(result) {
+  console.log('Game lost!', result);
+
+  // Update end screen
+  elements.failedScore.textContent = `Score: ${result.score}`;
+
+  // Switch to level failed screen
+  screenManager.switchTo('LEVEL_FAILED');
+}
+
+/**
+ * Handle game quit (via :q command)
+ */
+function handleGameQuit() {
+  console.log('Game quit via command');
+  cleanupGame();
+  screenManager.switchTo('MAIN_MENU');
+}
+
+/**
+ * Clean up game resources
+ */
+function cleanupGame() {
+  // Remove event listeners
+  if (commandModeKeyHandler) {
+    document.removeEventListener('keydown', commandModeKeyHandler);
+    commandModeKeyHandler = null;
+  }
+
+  if (tutorialKeyHandler) {
+    document.removeEventListener('keydown', tutorialKeyHandler);
+    tutorialKeyHandler = null;
+  }
+
+  if (gameCoordinator) {
+    gameCoordinator.cleanup();
+    gameCoordinator = null;
+  }
+
+  if (commandModeUI) {
+    commandModeUI.destroy();
+    commandModeUI = null;
+  }
+
+  commandMode = null;
 }
 
 /**
@@ -263,4 +540,10 @@ window.game = {
     });
     renderLeaderboard();
   },
+  // Expose game coordinator for E2E testing (use getter to access current instance)
+  get gameCoordinator() {
+    return gameCoordinator;
+  },
+  // Expose TutorialLevel for E2E testing
+  TutorialLevel,
 };
