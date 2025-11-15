@@ -22,7 +22,6 @@ let gameCoordinator = null;
 let commandMode = null;
 let commandModeUI = null;
 let tutorialLevel = null;
-let isTutorialMode = false;
 let commandModeKeyHandler = null;
 let tutorialKeyHandler = null;
 
@@ -254,7 +253,6 @@ function handleReturnToMenu() {
  */
 function startTutorialLevel() {
   console.log('Starting tutorial level...');
-  isTutorialMode = true;
   screenManager.switchTo('PLAYING');
 
   // Clear game area and show tutorial
@@ -326,7 +324,6 @@ function setupCommandModeForTutorial(container) {
           // Start actual game after brief delay
           setTimeout(() => {
             cleanupGame();
-            isTutorialMode = false;
             startGame(1);
           }, 2000);
         } else if (!result.success) {
@@ -383,7 +380,6 @@ function setupCommandMode(container) {
 
   // Override the InputManager's command mode callback
   const inputManager = gameCoordinator.inputManager;
-  const originalOnCommandMode = inputManager.callbacks.onCommandMode;
 
   inputManager.callbacks.onCommandMode = () => {
     commandMode.activate();
@@ -505,7 +501,6 @@ function cleanupGame() {
   }
 
   commandMode = null;
-  isTutorialMode = false;
 }
 
 /**
