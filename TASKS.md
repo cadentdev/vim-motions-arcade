@@ -340,7 +340,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [ ] Verify state transitions work correctly
 - [ ] Test with different keyboard layouts
 
-### 19. E2E Tests (Deployment Gate)
+### 19. E2E Tests (Deployment Gate) ✅
 
 - [x] Write E2E test: Tutorial Level 0 (start → type :q → return to menu)
 - [x] Write E2E test: Menu navigation (main menu → game → back to menu)
@@ -350,8 +350,8 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Write E2E test: Restart flow (complete level → restart → game works)
 - [x] Write E2E test: Movement (hjkl keys move cursor correctly)
 - [x] Write E2E test: Leaderboard (complete game → score appears in leaderboard)
-- [ ] Verify E2E tests run in pre-push hook
-- [ ] Ensure E2E tests block push if failing
+- [x] Verify E2E tests run in pre-push hook
+- [x] Ensure E2E tests block push if failing
 
 ### 20. Code Quality
 

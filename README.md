@@ -2,6 +2,7 @@
 
 > Master vim motions through addictive arcade gameplay
 
+[![CI](https://github.com/cadentdev/vim-motions-arcade/actions/workflows/ci.yml/badge.svg)](https://github.com/cadentdev/vim-motions-arcade/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000)](https://www.ecma-international.org/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
@@ -162,6 +163,7 @@ vim-motions-arcade/
 
 - **[Product Requirements Document](./docs/PRD.md)**: Complete game design specification
 - **[Development Roadmap](./docs/ROADMAP.md)**: Phased development plan
+- **[Testing Guide](./docs/TESTING.md)**: How to run tests and CI/CD setup
 - **[Contributing Guide](./CONTRIBUTING.md)**: How to contribute to the project
 - **[Vim Motion Reference](./docs/VIM_MOTIONS.md)**: Complete list of vim commands in the game
 
