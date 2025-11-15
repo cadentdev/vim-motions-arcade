@@ -144,13 +144,13 @@ This document outlines the initial development tasks for building the Vim Motion
   - Ensure document-like structure (words separated by spaces)
   - Add blank lines (for future paragraph navigation)
 
-#### 9.2 Map Rendering (DOM-based)
+#### 9.2 Map Rendering (DOM-based) ✅
 
-- [ ] Create DOM elements for map blocks
-- [ ] Apply monospace styling for alignment
-- [ ] Implement block rendering from map data
-- [ ] Add basic styling (colors, spacing)
-- [ ] Create viewport/camera system
+- [x] Create DOM elements for map blocks
+- [x] Apply monospace styling for alignment
+- [x] Implement block rendering from map data
+- [x] Add basic styling (colors, spacing)
+- [x] Create viewport/camera system
   - Center view on player cursor
   - Handle map scrolling for larger documents
 
@@ -159,13 +159,13 @@ This document outlines the initial development tasks for building the Vim Motion
 #### 10.1 Cursor Block Implementation ✅
 
 - [x] Create Player/Cursor class
-- [ ] Render cursor block with distinct styling
-- [ ] Position cursor on character grid
-- [ ] Implement z-index layering (cursor above map blocks)
+- [x] Render cursor block with distinct styling
+- [x] Position cursor on character grid
+- [x] Implement z-index layering (cursor above map blocks)
 
 #### 10.2 Basic Movement (hjkl) ✅
 
-- [ ] Set up keyboard event listeners
+- [x] Set up keyboard event listeners
 - [x] Implement `h` (left) movement
   - Update player position
   - Validate movement (grid boundaries, obstacles)
@@ -176,7 +176,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Add movement validation
   - Prevent out-of-bounds movement
   - Collision detection with blocks (for future obstacles)
-- [ ] Implement smooth cursor transitions
+- [x] Implement smooth cursor transitions
   - CSS transitions for movement
   - Duration based on distance traveled
 
@@ -195,7 +195,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Implement coin placement in map generation
   - Place at word boundaries initially
   - Random distribution with strategic placement
-- [ ] Render coins as DOM elements
+- [x] Render coins as DOM elements
 - [x] Implement collection detection
   - Check cursor position vs coin positions each frame
   - Remove collected coins from map
@@ -232,90 +232,90 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Test timer completion triggers callback
 - [x] Test time formatting (MM:SS display)
 
-### 13. User Interface (HUD)
+### 13. User Interface (HUD) ✅
 
-#### 13.1 Basic HUD Elements
+#### 13.1 Basic HUD Elements ✅
 
-- [ ] Create HUD container (fixed position overlay)
-- [ ] Implement score display (top-right)
+- [x] Create HUD container (fixed position overlay)
+- [x] Implement score display (top-right)
   - Current score
   - Update on score change
-- [ ] Implement timer display (top-center)
+- [x] Implement timer display (top-center)
   - Countdown display
   - Color coding (green → yellow → red as time decreases)
-- [ ] Add basic styling for HUD elements
+- [x] Add basic styling for HUD elements
   - Modern, clean design
   - High contrast for readability
 
-#### 13.2 Mode Indicator
+#### 13.2 Mode Indicator ✅
 
-- [ ] Create mode indicator element (bottom-left)
-- [ ] Display "NORMAL" mode (Phase 1 only has Normal mode)
-- [ ] Style with distinct color
+- [x] Create mode indicator element (bottom-left)
+- [x] Display "NORMAL" mode (Phase 1 only has Normal mode)
+- [x] Style with distinct color
 
-### 14. Game Loop & State Management
+### 14. Game Loop & State Management ✅
 
-#### 14.1 Game Loop
+#### 14.1 Game Loop ✅
 
-- [ ] Implement requestAnimationFrame-based game loop
-- [ ] Create update() function
+- [x] Implement requestAnimationFrame-based game loop
+- [x] Create update() function
   - Update timer
   - Check win/lose conditions
   - Handle collision detection
-- [ ] Create render() function
+- [x] Create render() function
   - Update DOM based on game state
   - Re-render only changed elements (performance)
-- [ ] Implement frame rate monitoring (for debugging)
+- [x] Implement frame rate monitoring (for debugging)
 
-#### 14.2 State Management
+#### 14.2 State Management ✅
 
-- [ ] Create GameState class/store
-- [ ] Implement state transitions
+- [x] Create GameState class/store
+- [x] Implement state transitions
   - MENU → PLAYING
   - PLAYING → LEVEL_COMPLETE
   - PLAYING → LEVEL_FAILED
-- [ ] Handle state-specific rendering
-- [ ] Implement state persistence (for pause/resume)
+- [x] Handle state-specific rendering
+- [x] Implement state persistence (for pause/resume)
 
-#### 14.3 Unit Tests for State Management
+#### 14.3 Unit Tests for State Management ✅
 
-- [ ] Test state transitions (MENU → PLAYING → COMPLETE/FAILED)
-- [ ] Test invalid state transitions are prevented
-- [ ] Test state persistence on pause/resume
-- [ ] Test game state initialization
+- [x] Test state transitions (MENU → PLAYING → COMPLETE/FAILED)
+- [x] Test invalid state transitions are prevented
+- [x] Test state persistence on pause/resume
+- [x] Test game state initialization
 
-### 15. Win/Lose Conditions
+### 15. Win/Lose Conditions ✅
 
-#### 15.1 Win Condition
+#### 15.1 Win Condition ✅
 
-- [ ] Detect when all coins collected
-- [ ] Trigger level complete state
-- [ ] Display "Level Complete" message
-- [ ] Show final score
-- [ ] Add "Restart" button/option
+- [x] Detect when all coins collected
+- [x] Trigger level complete state
+- [x] Display "Level Complete" message (callback to screen)
+- [x] Show final score
+- [ ] Add "Restart" button/option (Group 7)
 
-#### 15.2 Lose Condition
+#### 15.2 Lose Condition ✅
 
-- [ ] Detect when timer reaches zero
-- [ ] Trigger level failed state
-- [ ] Display "Time's Up" message
-- [ ] Show final score (coins collected)
-- [ ] Add "Retry" button/option
+- [x] Detect when timer reaches zero
+- [x] Trigger level failed state
+- [x] Display "Time's Up" message (callback to screen)
+- [x] Show final score (coins collected)
+- [ ] Add "Retry" button/option (Group 7)
 
-#### 15.3 Unit Tests for Win/Lose Conditions
+#### 15.3 Unit Tests for Win/Lose Conditions ✅
 
-- [ ] Test win condition triggers when all coins collected
-- [ ] Test lose condition triggers when timer reaches zero
-- [ ] Test correct final score calculation
-- [ ] Test state transitions to LEVEL_COMPLETE and LEVEL_FAILED
+- [x] Test win condition triggers when all coins collected
+- [x] Test lose condition triggers when timer reaches zero
+- [x] Test correct final score calculation
+- [x] Test state transitions to LEVEL_COMPLETE and LEVEL_FAILED
 
-### 16. Level End Screens
+### 16. Level End Screens ✅
 
-- [ ] Create level complete screen template
+- [x] Create level complete screen template
   - Score display
   - "Next Level" button (restarts for MVP)
   - "Main Menu" button
-- [ ] Create level failed screen template
+- [x] Create level failed screen template
   - Score display
   - "Retry" button
   - "Main Menu" button
