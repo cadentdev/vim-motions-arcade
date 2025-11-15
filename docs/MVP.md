@@ -606,7 +606,7 @@ Completes **Section 15: Win/Lose Conditions**:
 ## Group 7: Level End Screens ✅
 
 **Completed**: ✅
-**Commits**: 1 (TBD - to be committed)
+**Commits**: 1 (f0efd27)
 **Tests Added**: 29
 **Files Created**: 2
 
