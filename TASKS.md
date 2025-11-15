@@ -292,7 +292,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Trigger level complete state
 - [x] Display "Level Complete" message (callback to screen)
 - [x] Show final score
-- [ ] Add "Restart" button/option (Group 7)
+- [x] Add "Restart" button/option (Group 7)
 
 #### 15.2 Lose Condition ✅
 
@@ -300,7 +300,7 @@ This document outlines the initial development tasks for building the Vim Motion
 - [x] Trigger level failed state
 - [x] Display "Time's Up" message (callback to screen)
 - [x] Show final score (coins collected)
-- [ ] Add "Retry" button/option (Group 7)
+- [x] Add "Retry" button/option (Group 7)
 
 #### 15.3 Unit Tests for Win/Lose Conditions ✅
 
