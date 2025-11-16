@@ -9,6 +9,7 @@ import { GameCoordinator } from './game/GameCoordinator.js';
 import { CommandMode } from './input/modes/CommandMode.js';
 import { CommandModeUI } from './ui/CommandModeUI.js';
 import { TutorialLevel } from './game/TutorialLevel.js';
+import { renderVersion } from './ui/VersionDisplay.js';
 
 console.log('Vim Motions Arcade - Initializing...');
 
@@ -88,6 +89,7 @@ function setupScreenCallbacks() {
     showScreen(elements.screenMainMenu);
     updateContinueButton();
     renderLeaderboard();
+    renderVersion(elements.screenMainMenu);
   });
 
   screenManager.onScreenExit('MAIN_MENU', () => {
