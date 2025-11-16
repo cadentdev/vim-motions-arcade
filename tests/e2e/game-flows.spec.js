@@ -186,23 +186,27 @@ test.describe('Menu Navigation', () => {
     await expect(startBtn).toBeEnabled();
     await expect(continueBtn).toBeEnabled();
 
-    // Start button should initially have focus (when both enabled, first button gets focus)
-    await expect(startBtn).toHaveClass(/focused/);
-    await expect(continueBtn).not.toHaveClass(/focused/);
-
-    // Press j to move down
-    await page.keyboard.press('j');
-
-    // Continue button should now have focus
-    await expect(startBtn).not.toHaveClass(/focused/);
+    // Continue button should initially have focus (since save exists)
     await expect(continueBtn).toHaveClass(/focused/);
+    await expect(startBtn).not.toHaveClass(/focused/);
 
-    // Press k to move back up
+    // Press k to move up
     await page.keyboard.press('k');
 
-    // Start button should have focus again
+    // Start button should now have focus
     await expect(startBtn).toHaveClass(/focused/);
     await expect(continueBtn).not.toHaveClass(/focused/);
+
+    // Press j to move back down
+    await page.keyboard.press('j');
+
+    // Continue button should have focus again
+    await expect(continueBtn).toHaveClass(/focused/);
+    await expect(startBtn).not.toHaveClass(/focused/);
+
+    // Press k one more time to move back to Start
+    await page.keyboard.press('k');
+    await expect(startBtn).toHaveClass(/focused/);
 
     // Press Enter to activate Start Game
     await page.keyboard.press('Enter');
