@@ -2,26 +2,33 @@
  * CommandMode - Handles vim command mode (:q, :quit, :help, etc.)
  */
 export class CommandMode {
-  constructor(gameState) {
-    this.gameState = gameState;
+  constructor(context, customCommands = null) {
+    this.context = context;
     this.isActive = false;
     this.buffer = '';
 
     // Register available commands
-    this.commands = {
-      q: {
-        execute: () => this._quitCommand(),
-        description: 'quit to main menu',
-      },
-      quit: {
-        execute: () => this._quitCommand(),
-        description: 'Quit to main menu (alias for :q)',
-      },
-      help: {
-        execute: (args) => this._helpCommand(args),
-        description: 'Show help for available commands',
-      },
-    };
+    if (customCommands) {
+      // Use custom commands (for menu mode)
+      this.commands = customCommands;
+    } else {
+      // Use default game commands (for backward compatibility)
+      this.gameState = context; // Keep gameState reference for backward compatibility
+      this.commands = {
+        q: {
+          execute: () => this._quitCommand(),
+          description: 'quit to main menu',
+        },
+        quit: {
+          execute: () => this._quitCommand(),
+          description: 'Quit to main menu (alias for :q)',
+        },
+        help: {
+          execute: (args) => this._helpCommand(args),
+          description: 'Show help for available commands',
+        },
+      };
+    }
   }
 
   /**

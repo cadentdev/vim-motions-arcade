@@ -8,6 +8,7 @@ import { Leaderboard } from './storage/Leaderboard.js';
 import { GameCoordinator } from './game/GameCoordinator.js';
 import { CommandMode } from './input/modes/CommandMode.js';
 import { CommandModeUI } from './ui/CommandModeUI.js';
+import { StatusBar } from './ui/StatusBar.js';
 import { TutorialLevel } from './game/TutorialLevel.js';
 import { renderVersion } from './ui/VersionDisplay.js';
 import { MenuNavigator } from './input/MenuNavigator.js';
@@ -27,8 +28,12 @@ let tutorialLevel = null;
 let commandModeKeyHandler = null;
 let tutorialKeyHandler = null;
 
-// Menu navigation
+// Menu navigation and command mode
 let menuNavigator = null;
+let menuCommandMode = null;
+let menuCommandModeUI = null;
+let menuStatusBar = null;
+let menuCommandModeKeyHandler = null;
 
 // DOM Elements
 let elements = {};
@@ -102,6 +107,18 @@ function setupScreenCallbacks() {
     if (menuNavigator) {
       menuNavigator.disable();
     }
+    if (menuCommandModeKeyHandler) {
+      document.removeEventListener('keydown', menuCommandModeKeyHandler);
+    }
+    if (menuCommandModeUI) {
+      menuCommandModeUI.destroy();
+      menuCommandModeUI = null;
+    }
+    if (menuStatusBar) {
+      menuStatusBar.destroy();
+      menuStatusBar = null;
+    }
+    menuCommandMode = null;
   });
 
   // Playing screen
@@ -167,13 +184,163 @@ function updateContinueButton() {
  */
 function setupMenuNavigator() {
   const buttons = [elements.btnStartGame, elements.btnContinueGame];
+  const mainMenuContainer = document.getElementById('main-menu-screen');
 
+  // Set up status bar
+  menuStatusBar = new StatusBar(mainMenuContainer);
+  menuStatusBar.setMode('NORMAL');
+
+  // Set up command mode UI
+  menuCommandModeUI = new CommandModeUI(mainMenuContainer);
+
+  // Create menu context for command mode
+  const menuContext = {
+    hasSavedGame: () => saveManager.hasSave(),
+  };
+
+  // Create menu-specific commands
+  const menuCommands = {
+    new: {
+      execute: () => ({
+        success: true,
+        action: 'new',
+        message: 'Starting new game...',
+      }),
+      description: 'Start a new game',
+    },
+    edit: {
+      execute: () => {
+        if (!menuContext.hasSavedGame()) {
+          return {
+            success: false,
+            error: 'No saved game found',
+          };
+        }
+        return {
+          success: true,
+          action: 'edit',
+          message: 'Loading saved game...',
+        };
+      },
+      description: 'Continue from saved game',
+    },
+    help: {
+      execute: async () => {
+        try {
+          const response = await fetch('/docs/MENU_HELP.md');
+          const helpText = await response.text();
+          return {
+            success: true,
+            action: 'help',
+            message: helpText,
+          };
+        } catch {
+          return {
+            success: false,
+            error: 'Could not load help text',
+          };
+        }
+      },
+      description: 'Show help documentation',
+    },
+    q: {
+      execute: () => ({
+        success: true,
+        action: 'quit',
+        requiresConfirmation: true,
+        message: 'Close game?',
+      }),
+      description: 'Quit the game',
+    },
+    quit: {
+      execute: () => ({
+        success: true,
+        action: 'quit',
+        requiresConfirmation: true,
+        message: 'Close game?',
+      }),
+      description: 'Quit the game (alias for :q)',
+    },
+  };
+
+  // Create command mode with menu commands
+  menuCommandMode = new CommandMode(menuContext, menuCommands);
+
+  // Set up menu navigator with command mode callback
   menuNavigator = new MenuNavigator(buttons, {
     onActivate: (button) => {
       // Trigger click on the activated button
       button.click();
     },
+    onCommandMode: () => {
+      menuCommandMode.activate();
+      menuCommandModeUI.show();
+      menuStatusBar.setMode('COMMAND');
+      menuNavigator.setCommandModeActive(true);
+    },
   });
+
+  // Set up command mode keyboard handling
+  menuCommandModeKeyHandler = (event) => {
+    if (!menuCommandMode.isActive) return;
+
+    event.preventDefault();
+
+    if (event.key === 'Escape') {
+      menuCommandMode.cancel();
+      menuCommandModeUI.hide();
+      menuStatusBar.setMode('NORMAL');
+      menuNavigator.setCommandModeActive(false);
+    } else if (event.key === 'Enter') {
+      const result = menuCommandMode.submit();
+
+      if (result.success) {
+        if (result.action === 'new') {
+          menuStatusBar.showMessage('Starting new game...');
+          setTimeout(() => {
+            elements.btnStartGame.click();
+          }, 500);
+        } else if (result.action === 'edit') {
+          menuStatusBar.showMessage('Loading saved game...');
+          setTimeout(() => {
+            elements.btnContinueGame.click();
+          }, 500);
+        } else if (result.action === 'help') {
+          // Show help in an alert or modal
+          alert(result.message);
+          menuCommandModeUI.hide();
+          menuStatusBar.setMode('NORMAL');
+          menuNavigator.setCommandModeActive(false);
+        } else if (result.action === 'quit') {
+          if (confirm('Are you sure you want to close the game?')) {
+            window.close();
+          }
+          menuCommandModeUI.hide();
+          menuStatusBar.setMode('NORMAL');
+          menuNavigator.setCommandModeActive(false);
+        } else {
+          menuCommandModeUI.showFeedback(result.message, 'success');
+          menuCommandModeUI.hide();
+          menuStatusBar.setMode('NORMAL');
+          menuNavigator.setCommandModeActive(false);
+        }
+      } else {
+        menuStatusBar.showError(result.error);
+        setTimeout(() => {
+          menuStatusBar.setMode('COMMAND');
+        }, 2000);
+        menuCommandModeUI.hide();
+      }
+    } else if (event.key === 'Backspace') {
+      menuCommandMode.backspace();
+      menuCommandModeUI.updateInput(menuCommandMode.getBuffer());
+    } else if (event.key.length === 1 && !event.ctrlKey && !event.metaKey) {
+      menuCommandMode.addChar(event.key);
+      menuCommandModeUI.updateInput(menuCommandMode.getBuffer());
+    }
+  };
+
+  document.addEventListener('keydown', menuCommandModeKeyHandler);
 
   // Enable first, then set initial focus based on save game state
   menuNavigator.enable();
