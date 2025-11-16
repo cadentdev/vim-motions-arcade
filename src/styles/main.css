@@ -72,6 +72,21 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xl);
+  position: relative;
+}
+
+/* Version Display */
+.version-display {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 0.85rem;
+  color: var(--text-color);
+  opacity: 0.5;
+  padding: var(--spacing-sm);
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
+  user-select: none;
 }
 
 .game-header {
