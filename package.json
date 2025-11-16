@@ -1,6 +1,6 @@
 {
   "name": "vim-motions-arcade",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A retro arcade game that teaches Vim motions through engaging gameplay",
   "type": "module",
   "scripts": {

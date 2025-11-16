@@ -46,13 +46,23 @@ export class MenuNavigator {
    * Handle keyboard events
    */
   handleKeyDown(event) {
-    if (!this.isEnabled) return;
+    if (!this.isEnabled) {
+      console.log('MenuNavigator: keydown ignored, not enabled');
+      return;
+    }
 
     const { key } = event;
+    console.log(
+      'MenuNavigator: handling key:',
+      key,
+      'commandModeActive:',
+      this.commandModeActive
+    );
 
     // Handle command mode activation
     if (key === ':') {
       event.preventDefault();
+      console.log('MenuNavigator: activating command mode');
       if (this.callbacks.onCommandMode) {
         this.callbacks.onCommandMode();
       }
@@ -60,11 +70,15 @@ export class MenuNavigator {
     }
 
     // Don't handle navigation keys if command mode is active
-    if (this.commandModeActive) return;
+    if (this.commandModeActive) {
+      console.log('MenuNavigator: command mode active, ignoring key');
+      return;
+    }
 
     // Handle navigation keys
     if (key === 'j' || key === 'k') {
       event.preventDefault();
+      console.log('MenuNavigator: navigation key pressed:', key);
 
       if (key === 'j') {
         this.moveDown();
@@ -75,6 +89,7 @@ export class MenuNavigator {
     // Handle Enter key activation
     else if (key === 'Enter') {
       event.preventDefault();
+      console.log('MenuNavigator: Enter pressed, activating');
       this.activate();
     }
   }
