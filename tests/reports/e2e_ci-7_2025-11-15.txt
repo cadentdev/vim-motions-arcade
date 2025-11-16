@@ -1,0 +1,1457 @@
+  npm run test:e2e
+  shell: /usr/bin/bash -e {0}
+
+> vim-motions-arcade@0.1.0 test:e2e
+> playwright test
+
+
+Running 22 tests using 2 workers
+··××F×××F·××F·×××FF××F××××T××TF××××TT·××F×××F×××F·×T×F
+
+  1) [chromium] › tests/e2e/example.spec.js:25:3 › Game Application › should display the main heading 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('h1')
+    Expected substring: "Vim Motions Arcade"
+    Error: strict mode violation: locator('h1') resolved to 3 elements:
+        1) <h1 class="game-title">VIM MOTIONS ARCADE</h1> aka getByRole('heading', { name: 'VIM MOTIONS ARCADE' })
+        2) <h1>Level Complete!</h1> aka getByText('Level Complete!')
+        3) <h1>Time's Up!</h1> aka getByText('Time\'s Up!')
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for locator('h1')
+
+
+      28 |     // Check that the h1 is present
+      29 |     const heading = page.locator('h1');
+    > 30 |     await expect(heading).toContainText('Vim Motions Arcade');
+         |                           ^
+      31 |   });
+      32 | });
+      33 |
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/example.spec.js:30:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/example-Game-Application-should-display-the-main-heading-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/example-Game-Application-should-display-the-main-heading-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('h1')
+    Expected substring: "Vim Motions Arcade"
+    Error: strict mode violation: locator('h1') resolved to 3 elements:
+        1) <h1 class="game-title">VIM MOTIONS ARCADE</h1> aka getByRole('heading', { name: 'VIM MOTIONS ARCADE' })
+        2) <h1>Level Complete!</h1> aka getByText('Level Complete!')
+        3) <h1>Time's Up!</h1> aka getByText('Time\'s Up!')
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for locator('h1')
+
+
+      28 |     // Check that the h1 is present
+      29 |     const heading = page.locator('h1');
+    > 30 |     await expect(heading).toContainText('Vim Motions Arcade');
+         |                           ^
+      31 |   });
+      32 | });
+      33 |
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/example.spec.js:30:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/example-Game-Application-should-display-the-main-heading-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/example-Game-Application-should-display-the-main-heading-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/example-Game-Application-should-display-the-main-heading-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/example-Game-Application-should-display-the-main-heading-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('h1')
+    Expected substring: "Vim Motions Arcade"
+    Error: strict mode violation: locator('h1') resolved to 3 elements:
+        1) <h1 class="game-title">VIM MOTIONS ARCADE</h1> aka getByRole('heading', { name: 'VIM MOTIONS ARCADE' })
+        2) <h1>Level Complete!</h1> aka getByText('Level Complete!')
+        3) <h1>Time's Up!</h1> aka getByText('Time\'s Up!')
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for locator('h1')
+
+
+      28 |     // Check that the h1 is present
+      29 |     const heading = page.locator('h1');
+    > 30 |     await expect(heading).toContainText('Vim Motions Arcade');
+         |                           ^
+      31 |   });
+      32 | });
+      33 |
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/example.spec.js:30:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/example-Game-Application-should-display-the-main-heading-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/example-Game-Application-should-display-the-main-heading-chromium-retry2/error-context.md
+
+  2) [chromium] › tests/e2e/game-flows.spec.js:16:3 › Tutorial Level 0: How to Quit Vim › should complete tutorial by typing :q and return to menu 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('.tutorial-content')
+    Timeout: 5000ms
+    - Expected substring  -  1
+    + Received string     + 12
+
+    - How to Quit Vim
+    + Welcome to Vim Motions Arcade!
+    +
+    + Before you begin your journey mastering vim motions,
+    + you must first learn the most important command of all:
+    +
+    + How to quit vim.
+    +
+    + ╔════════════════════════════════════════╗
+    + ║  Type :q and press Enter to continue   ║
+    + ╚════════════════════════════════════════╝
+    +
+    + (Press : to enter command mode, then type q and press Enter)
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for locator('.tutorial-content')
+        9 × locator resolved to <div class="tutorial-content">Welcome to Vim Motions Arcade!↵↵Before you begin …</div>
+          - unexpected value "Welcome to Vim Motions Arcade!
+    
+    Before you begin your journey mastering vim motions,
+    you must first learn the most important command of all:
+    
+    How to quit vim.
+    
+    ╔════════════════════════════════════════╗
+    ║  Type :q and press Enter to continue   ║
+    ╚════════════════════════════════════════╝
+    
+    (Press : to enter command mode, then type q and press Enter)"
+
+
+      25 |     const tutorialContent = page.locator('.tutorial-content');
+      26 |     await expect(tutorialContent).toBeVisible();
+    > 27 |     await expect(tutorialContent).toContainText('How to Quit Vim');
+         |                                   ^
+      28 |     await expect(tutorialContent).toContainText('Type :q and press Enter');
+      29 |
+      30 |     // Press : to enter command mode
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:27:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Tutorial-Level--b8162-typing-q-and-return-to-menu-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Tutorial-Level--b8162-typing-q-and-return-to-menu-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('.tutorial-content')
+    Timeout: 5000ms
+    - Expected substring  -  1
+    + Received string     + 12
+
+    - How to Quit Vim
+    + Welcome to Vim Motions Arcade!
+    +
+    + Before you begin your journey mastering vim motions,
+    + you must first learn the most important command of all:
+    +
+    + How to quit vim.
+    +
+    + ╔════════════════════════════════════════╗
+    + ║  Type :q and press Enter to continue   ║
+    + ╚════════════════════════════════════════╝
+    +
+    + (Press : to enter command mode, then type q and press Enter)
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for locator('.tutorial-content')
+        9 × locator resolved to <div class="tutorial-content">Welcome to Vim Motions Arcade!↵↵Before you begin …</div>
+          - unexpected value "Welcome to Vim Motions Arcade!
+    
+    Before you begin your journey mastering vim motions,
+    you must first learn the most important command of all:
+    
+    How to quit vim.
+    
+    ╔════════════════════════════════════════╗
+    ║  Type :q and press Enter to continue   ║
+    ╚════════════════════════════════════════╝
+    
+    (Press : to enter command mode, then type q and press Enter)"
+
+
+      25 |     const tutorialContent = page.locator('.tutorial-content');
+      26 |     await expect(tutorialContent).toBeVisible();
+    > 27 |     await expect(tutorialContent).toContainText('How to Quit Vim');
+         |                                   ^
+      28 |     await expect(tutorialContent).toContainText('Type :q and press Enter');
+      29 |
+      30 |     // Press : to enter command mode
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:27:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Tutorial-Level--b8162-typing-q-and-return-to-menu-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Tutorial-Level--b8162-typing-q-and-return-to-menu-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-Tutorial-Level--b8162-typing-q-and-return-to-menu-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-Tutorial-Level--b8162-typing-q-and-return-to-menu-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('.tutorial-content')
+    Timeout: 5000ms
+    - Expected substring  -  1
+    + Received string     + 12
+
+    - How to Quit Vim
+    + Welcome to Vim Motions Arcade!
+    +
+    + Before you begin your journey mastering vim motions,
+    + you must first learn the most important command of all:
+    +
+    + How to quit vim.
+    +
+    + ╔════════════════════════════════════════╗
+    + ║  Type :q and press Enter to continue   ║
+    + ╚════════════════════════════════════════╝
+    +
+    + (Press : to enter command mode, then type q and press Enter)
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for locator('.tutorial-content')
+        9 × locator resolved to <div class="tutorial-content">Welcome to Vim Motions Arcade!↵↵Before you begin …</div>
+          - unexpected value "Welcome to Vim Motions Arcade!
+    
+    Before you begin your journey mastering vim motions,
+    you must first learn the most important command of all:
+    
+    How to quit vim.
+    
+    ╔════════════════════════════════════════╗
+    ║  Type :q and press Enter to continue   ║
+    ╚════════════════════════════════════════╝
+    
+    (Press : to enter command mode, then type q and press Enter)"
+
+
+      25 |     const tutorialContent = page.locator('.tutorial-content');
+      26 |     await expect(tutorialContent).toBeVisible();
+    > 27 |     await expect(tutorialContent).toContainText('How to Quit Vim');
+         |                                   ^
+      28 |     await expect(tutorialContent).toContainText('Type :q and press Enter');
+      29 |
+      30 |     // Press : to enter command mode
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:27:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Tutorial-Level--b8162-typing-q-and-return-to-menu-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Tutorial-Level--b8162-typing-q-and-return-to-menu-chromium-retry2/error-context.md
+
+  3) [chromium] › tests/e2e/game-flows.spec.js:68:3 › Tutorial Level 0: How to Quit Vim › should show tutorial only on first game 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-main-menu')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-main-menu')
+        9 × locator resolved to <div class="screen" id="screen-main-menu">…</div>
+          - unexpected value "hidden"
+
+
+      88 |
+      89 |     // Should be back at main menu
+    > 90 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+         |                                                     ^
+      91 |
+      92 |     // Start game again - should NOT show tutorial
+      93 |     await page.click('#btn-start-game');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:90:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Tutorial-Level--8aea0-tutorial-only-on-first-game-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Tutorial-Level--8aea0-tutorial-only-on-first-game-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-main-menu')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-main-menu')
+        9 × locator resolved to <div class="screen" id="screen-main-menu">…</div>
+          - unexpected value "hidden"
+
+
+      88 |
+      89 |     // Should be back at main menu
+    > 90 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+         |                                                     ^
+      91 |
+      92 |     // Start game again - should NOT show tutorial
+      93 |     await page.click('#btn-start-game');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:90:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Tutorial-Level--8aea0-tutorial-only-on-first-game-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Tutorial-Level--8aea0-tutorial-only-on-first-game-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-Tutorial-Level--8aea0-tutorial-only-on-first-game-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-Tutorial-Level--8aea0-tutorial-only-on-first-game-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-main-menu')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-main-menu')
+        9 × locator resolved to <div class="screen" id="screen-main-menu">…</div>
+          - unexpected value "hidden"
+
+
+      88 |
+      89 |     // Should be back at main menu
+    > 90 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+         |                                                     ^
+      91 |
+      92 |     // Start game again - should NOT show tutorial
+      93 |     await page.click('#btn-start-game');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:90:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Tutorial-Level--8aea0-tutorial-only-on-first-game-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Tutorial-Level--8aea0-tutorial-only-on-first-game-chromium-retry2/error-context.md
+
+  4) [chromium] › tests/e2e/game-flows.spec.js:121:3 › Menu Navigation › should navigate from main menu to game and back 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-main-menu')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-main-menu')
+        9 × locator resolved to <div class="screen" id="screen-main-menu">…</div>
+          - unexpected value "hidden"
+
+
+      140 |
+      141 |     // Should be back at main menu
+    > 142 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+          |                                                     ^
+      143 |     await expect(page.locator('#screen-playing')).not.toBeVisible();
+      144 |   });
+      145 |
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:142:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Menu-Navigation-cbf9b--main-menu-to-game-and-back-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Menu-Navigation-cbf9b--main-menu-to-game-and-back-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-main-menu')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-main-menu')
+        9 × locator resolved to <div class="screen" id="screen-main-menu">…</div>
+          - unexpected value "hidden"
+
+
+      140 |
+      141 |     // Should be back at main menu
+    > 142 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+          |                                                     ^
+      143 |     await expect(page.locator('#screen-playing')).not.toBeVisible();
+      144 |   });
+      145 |
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:142:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Menu-Navigation-cbf9b--main-menu-to-game-and-back-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Menu-Navigation-cbf9b--main-menu-to-game-and-back-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-Menu-Navigation-cbf9b--main-menu-to-game-and-back-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-Menu-Navigation-cbf9b--main-menu-to-game-and-back-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-main-menu')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-main-menu')
+        9 × locator resolved to <div class="screen" id="screen-main-menu">…</div>
+          - unexpected value "hidden"
+
+
+      140 |
+      141 |     // Should be back at main menu
+    > 142 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+          |                                                     ^
+      143 |     await expect(page.locator('#screen-playing')).not.toBeVisible();
+      144 |   });
+      145 |
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:142:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Menu-Navigation-cbf9b--main-menu-to-game-and-back-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Menu-Navigation-cbf9b--main-menu-to-game-and-back-chromium-retry2/error-context.md
+
+  5) [chromium] › tests/e2e/game-flows.spec.js:160:3 › Movement System › should move cursor with hjkl keys 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.player-cursor').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.player-cursor').first()
+
+
+      178 |     // Get initial cursor position by checking the player element
+      179 |     const player = page.locator('.player-cursor').first();
+    > 180 |     await expect(player).toBeVisible();
+          |                          ^
+      181 |
+      182 |     // Press h (left) - cursor should move
+      183 |     await page.keyboard.press('h');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:180:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Movement-System-should-move-cursor-with-hjkl-keys-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Movement-System-should-move-cursor-with-hjkl-keys-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.player-cursor').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.player-cursor').first()
+
+
+      178 |     // Get initial cursor position by checking the player element
+      179 |     const player = page.locator('.player-cursor').first();
+    > 180 |     await expect(player).toBeVisible();
+          |                          ^
+      181 |
+      182 |     // Press h (left) - cursor should move
+      183 |     await page.keyboard.press('h');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:180:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Movement-System-should-move-cursor-with-hjkl-keys-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Movement-System-should-move-cursor-with-hjkl-keys-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-Movement-System-should-move-cursor-with-hjkl-keys-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-Movement-System-should-move-cursor-with-hjkl-keys-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.player-cursor').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.player-cursor').first()
+
+
+      178 |     // Get initial cursor position by checking the player element
+      179 |     const player = page.locator('.player-cursor').first();
+    > 180 |     await expect(player).toBeVisible();
+          |                          ^
+      181 |
+      182 |     // Press h (left) - cursor should move
+      183 |     await page.keyboard.press('h');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:180:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Movement-System-should-move-cursor-with-hjkl-keys-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Movement-System-should-move-cursor-with-hjkl-keys-chromium-retry2/error-context.md
+
+  6) [chromium] › tests/e2e/game-flows.spec.js:204:3 › Win Condition Flow › should show level complete screen when all coins collected 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-level-complete')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-level-complete')
+        9 × locator resolved to <div class="screen" id="screen-level-complete">…</div>
+          - unexpected value "hidden"
+
+
+      230 |     // Should show level complete screen
+      231 |     const completeScreen = page.locator('#screen-level-complete');
+    > 232 |     await expect(completeScreen).toBeVisible();
+          |                                  ^
+      233 |
+      234 |     // Should show score
+      235 |     const scoreDisplay = page.locator('#final-score');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:232:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-c5712-en-when-all-coins-collected-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-c5712-en-when-all-coins-collected-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-level-complete')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-level-complete')
+        9 × locator resolved to <div class="screen" id="screen-level-complete">…</div>
+          - unexpected value "hidden"
+
+
+      230 |     // Should show level complete screen
+      231 |     const completeScreen = page.locator('#screen-level-complete');
+    > 232 |     await expect(completeScreen).toBeVisible();
+          |                                  ^
+      233 |
+      234 |     // Should show score
+      235 |     const scoreDisplay = page.locator('#final-score');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:232:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-c5712-en-when-all-coins-collected-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-c5712-en-when-all-coins-collected-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-c5712-en-when-all-coins-collected-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-Win-Condition-F-c5712-en-when-all-coins-collected-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-level-complete')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-level-complete')
+        9 × locator resolved to <div class="screen" id="screen-level-complete">…</div>
+          - unexpected value "hidden"
+
+
+      230 |     // Should show level complete screen
+      231 |     const completeScreen = page.locator('#screen-level-complete');
+    > 232 |     await expect(completeScreen).toBeVisible();
+          |                                  ^
+      233 |
+      234 |     // Should show score
+      235 |     const scoreDisplay = page.locator('#final-score');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:232:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-c5712-en-when-all-coins-collected-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-c5712-en-when-all-coins-collected-chromium-retry2/error-context.md
+
+  7) [chromium] › tests/e2e/game-flows.spec.js:240:3 › Win Condition Flow › should allow returning to menu from level complete screen 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-menu-complete')
+        - locator resolved to <button class="menu-button" id="btn-menu-complete">Main Menu</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      258 |
+      259 |     // Click Main Menu button
+    > 260 |     await page.click('#btn-menu-complete');
+          |                ^
+      261 |
+      262 |     // Should return to main menu
+      263 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:260:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-d7533--from-level-complete-screen-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-d7533--from-level-complete-screen-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-menu-complete')
+        - locator resolved to <button class="menu-button" id="btn-menu-complete">Main Menu</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      258 |
+      259 |     // Click Main Menu button
+    > 260 |     await page.click('#btn-menu-complete');
+          |                ^
+      261 |
+      262 |     // Should return to main menu
+      263 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:260:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-d7533--from-level-complete-screen-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-d7533--from-level-complete-screen-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-d7533--from-level-complete-screen-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-Win-Condition-F-d7533--from-level-complete-screen-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-menu-complete')
+        - locator resolved to <button class="menu-button" id="btn-menu-complete">Main Menu</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      258 |
+      259 |     // Click Main Menu button
+    > 260 |     await page.click('#btn-menu-complete');
+          |                ^
+      261 |
+      262 |     // Should return to main menu
+      263 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:260:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-d7533--from-level-complete-screen-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-d7533--from-level-complete-screen-chromium-retry2/error-context.md
+
+  8) [chromium] › tests/e2e/game-flows.spec.js:267:3 › Win Condition Flow › should allow restarting from level complete screen 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-next-level')
+        - locator resolved to <button id="btn-next-level" class="menu-button primary">↵            Next Level↵          </button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      285 |
+      286 |     // Click Next Level (which restarts for MVP)
+    > 287 |     await page.click('#btn-next-level');
+          |                ^
+      288 |
+      289 |     // Should return to playing screen
+      290 |     await expect(page.locator('#screen-playing')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:287:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-8a8d4--from-level-complete-screen-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-8a8d4--from-level-complete-screen-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-next-level')
+        - locator resolved to <button id="btn-next-level" class="menu-button primary">↵            Next Level↵          </button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      285 |
+      286 |     // Click Next Level (which restarts for MVP)
+    > 287 |     await page.click('#btn-next-level');
+          |                ^
+      288 |
+      289 |     // Should return to playing screen
+      290 |     await expect(page.locator('#screen-playing')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:287:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-8a8d4--from-level-complete-screen-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────��───────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-8a8d4--from-level-complete-screen-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-8a8d4--from-level-complete-screen-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-Win-Condition-F-8a8d4--from-level-complete-screen-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-next-level')
+        - locator resolved to <button id="btn-next-level" class="menu-button primary">↵            Next Level↵          </button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      285 |
+      286 |     // Click Next Level (which restarts for MVP)
+    > 287 |     await page.click('#btn-next-level');
+          |                ^
+      288 |
+      289 |     // Should return to playing screen
+      290 |     await expect(page.locator('#screen-playing')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:287:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-8a8d4--from-level-complete-screen-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-8a8d4--from-level-complete-screen-chromium-retry2/error-context.md
+
+  9) [chromium] › tests/e2e/game-flows.spec.js:299:3 › Lose Condition Flow › should show level failed screen when timer expires 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-level-failed')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-level-failed')
+        9 × locator resolved to <div class="screen" id="screen-level-failed">…</div>
+          - unexpected value "hidden"
+
+
+      317 |     // Should show level failed screen
+      318 |     const failedScreen = page.locator('#screen-level-failed');
+    > 319 |     await expect(failedScreen).toBeVisible();
+          |                                ^
+      320 |
+      321 |     // Should show score
+      322 |     const scoreDisplay = page.locator('#failed-score');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:319:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--71282-d-screen-when-timer-expires-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--71282-d-screen-when-timer-expires-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-level-failed')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-level-failed')
+        9 × locator resolved to <div class="screen" id="screen-level-failed">…</div>
+          - unexpected value "hidden"
+
+
+      317 |     // Should show level failed screen
+      318 |     const failedScreen = page.locator('#screen-level-failed');
+    > 319 |     await expect(failedScreen).toBeVisible();
+          |                                ^
+      320 |
+      321 |     // Should show score
+      322 |     const scoreDisplay = page.locator('#failed-score');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:319:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--71282-d-screen-when-timer-expires-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--71282-d-screen-when-timer-expires-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--71282-d-screen-when-timer-expires-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-Lose-Condition--71282-d-screen-when-timer-expires-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('#screen-level-failed')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('#screen-level-failed')
+        9 × locator resolved to <div class="screen" id="screen-level-failed">…</div>
+          - unexpected value "hidden"
+
+
+      317 |     // Should show level failed screen
+      318 |     const failedScreen = page.locator('#screen-level-failed');
+    > 319 |     await expect(failedScreen).toBeVisible();
+          |                                ^
+      320 |
+      321 |     // Should show score
+      322 |     const scoreDisplay = page.locator('#failed-score');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:319:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--71282-d-screen-when-timer-expires-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--71282-d-screen-when-timer-expires-chromium-retry2/error-context.md
+
+  10) [chromium] › tests/e2e/game-flows.spec.js:327:3 › Lose Condition Flow › should allow retry from level failed screen 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-retry')
+        - locator resolved to <button id="btn-retry" class="menu-button primary">Retry</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      341 |
+      342 |     // Click Retry button
+    > 343 |     await page.click('#btn-retry');
+          |                ^
+      344 |
+      345 |     // Should return to playing screen
+      346 |     await expect(page.locator('#screen-playing')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:343:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--a391d-ry-from-level-failed-screen-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--a391d-ry-from-level-failed-screen-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-retry')
+        - locator resolved to <button id="btn-retry" class="menu-button primary">Retry</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      341 |
+      342 |     // Click Retry button
+    > 343 |     await page.click('#btn-retry');
+          |                ^
+      344 |
+      345 |     // Should return to playing screen
+      346 |     await expect(page.locator('#screen-playing')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:343:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--a391d-ry-from-level-failed-screen-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--a391d-ry-from-level-failed-screen-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--a391d-ry-from-level-failed-screen-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-Lose-Condition--a391d-ry-from-level-failed-screen-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-retry')
+        - locator resolved to <button id="btn-retry" class="menu-button primary">Retry</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      341 |
+      342 |     // Click Retry button
+    > 343 |     await page.click('#btn-retry');
+          |                ^
+      344 |
+      345 |     // Should return to playing screen
+      346 |     await expect(page.locator('#screen-playing')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:343:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--a391d-ry-from-level-failed-screen-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--a391d-ry-from-level-failed-screen-chromium-retry2/error-context.md
+
+  11) [chromium] › tests/e2e/game-flows.spec.js:353:3 › Lose Condition Flow › should allow returning to menu from level failed screen 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-menu-failed')
+        - locator resolved to <button class="menu-button" id="btn-menu-failed">Main Menu</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      369 |
+      370 |     // Click Main Menu button
+    > 371 |     await page.click('#btn-menu-failed');
+          |                ^
+      372 |
+      373 |     // Should return to main menu
+      374 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:371:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--c6288-nu-from-level-failed-screen-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--c6288-nu-from-level-failed-screen-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-menu-failed')
+        - locator resolved to <button class="menu-button" id="btn-menu-failed">Main Menu</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      369 |
+      370 |     // Click Main Menu button
+    > 371 |     await page.click('#btn-menu-failed');
+          |                ^
+      372 |
+      373 |     // Should return to main menu
+      374 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:371:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--c6288-nu-from-level-failed-screen-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--c6288-nu-from-level-failed-screen-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--c6288-nu-from-level-failed-screen-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-Lose-Condition--c6288-nu-from-level-failed-screen-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-menu-failed')
+        - locator resolved to <button class="menu-button" id="btn-menu-failed">Main Menu</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      369 |
+      370 |     // Click Main Menu button
+    > 371 |     await page.click('#btn-menu-failed');
+          |                ^
+      372 |
+      373 |     // Should return to main menu
+      374 |     await expect(page.locator('#screen-main-menu')).toBeVisible();
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:371:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--c6288-nu-from-level-failed-screen-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--c6288-nu-from-level-failed-screen-chromium-retry2/error-context.md
+
+  12) [chromium] › tests/e2e/game-flows.spec.js:380:3 › Leaderboard System › should display score in leaderboard after winning 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-menu-complete')
+        - locator resolved to <button class="menu-button" id="btn-menu-complete">Main Menu</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      399 |
+      400 |     // Return to main menu
+    > 401 |     await page.click('#btn-menu-complete');
+          |                ^
+      402 |
+      403 |     // Check leaderboard
+      404 |     const leaderboard = page.locator('#leaderboard-list');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:401:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Leaderboard-Sys-53662-n-leaderboard-after-winning-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Leaderboard-Sys-53662-n-leaderboard-after-winning-chromium/error-context.md
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-menu-complete')
+        - locator resolved to <button class="menu-button" id="btn-menu-complete">Main Menu</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      399 |
+      400 |     // Return to main menu
+    > 401 |     await page.click('#btn-menu-complete');
+          |                ^
+      402 |
+      403 |     // Check leaderboard
+      404 |     const leaderboard = page.locator('#leaderboard-list');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:401:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Leaderboard-Sys-53662-n-leaderboard-after-winning-chromium-retry1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Leaderboard-Sys-53662-n-leaderboard-after-winning-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-Leaderboard-Sys-53662-n-leaderboard-after-winning-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-Leaderboard-Sys-53662-n-leaderboard-after-winning-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('#btn-menu-complete')
+        - locator resolved to <button class="menu-button" id="btn-menu-complete">Main Menu</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        51 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      399 |
+      400 |     // Return to main menu
+    > 401 |     await page.click('#btn-menu-complete');
+          |                ^
+      402 |
+      403 |     // Check leaderboard
+      404 |     const leaderboard = page.locator('#leaderboard-list');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:401:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Leaderboard-Sys-53662-n-leaderboard-after-winning-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Leaderboard-Sys-53662-n-leaderboard-after-winning-chromium-retry2/error-context.md
+
+  13) [chromium] › tests/e2e/game-flows.spec.js:422:3 › Game State Persistence › should enable continue button when save exists 
+
+
+    Error Context: test-results/game-flows-HUD-Display-sho-47f26-UD-elements-during-gameplay-chromium-retry1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/game-flows-HUD-Display-sho-47f26-UD-elements-during-gameplay-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/game-flows-HUD-Display-sho-47f26-UD-elements-during-gameplay-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #2 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.hud-container')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.hud-container')
+
+
+      513 |     // HUD should be visible
+      514 |     const hud = page.locator('.hud-container');
+    > 515 |     await expect(hud).toBeVisible();
+          |                       ^
+      516 |
+      517 |     // Should show score
+      518 |     const score = page.locator('.hud-score');
+        at /home/runner/work/vim-motions-arcade/vim-motions-arcade/tests/e2e/game-flows.spec.js:515:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-HUD-Display-sho-47f26-UD-elements-during-gameplay-chromium-retry2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-HUD-Display-sho-47f26-UD-elements-during-gameplay-chromium-retry2/error-context.md
+
+  16 failed
+    [chromium] › tests/e2e/example.spec.js:25:3 › Game Application › should display the main heading 
+    [chromium] › tests/e2e/game-flows.spec.js:16:3 › Tutorial Level 0: How to Quit Vim › should complete tutorial by typing :q and return to menu 
+    [chromium] › tests/e2e/game-flows.spec.js:68:3 › Tutorial Level 0: How to Quit Vim › should show tutorial only on first game 
+    [chromium] › tests/e2e/game-flows.spec.js:121:3 › Menu Navigation › should navigate from main menu to game and back 
+    [chromium] › tests/e2e/game-flows.spec.js:160:3 › Movement System › should move cursor with hjkl keys 
+    [chromium] › tests/e2e/game-flows.spec.js:204:3 › Win Condition Flow › should show level complete screen when all coins collected 
+    [chromium] › tests/e2e/game-flows.spec.js:240:3 › Win Condition Flow › should allow returning to menu from level complete screen 
+    [chromium] › tests/e2e/game-flows.spec.js:267:3 › Win Condition Flow › should allow restarting from level complete screen 
+    [chromium] › tests/e2e/game-flows.spec.js:299:3 › Lose Condition Flow › should show level failed screen when timer expires 
+    [chromium] › tests/e2e/game-flows.spec.js:327:3 › Lose Condition Flow › should allow retry from level failed screen 
+    [chromium] › tests/e2e/game-flows.spec.js:353:3 › Lose Condition Flow › should allow returning to menu from level failed screen 
+    [chromium] › tests/e2e/game-flows.spec.js:380:3 › Leaderboard System › should display score in leaderboard after winning 
+    [chromium] › tests/e2e/game-flows.spec.js:422:3 › Game State Persistence › should enable continue button when save exists 
+    [chromium] › tests/e2e/game-flows.spec.js:447:3 › Command Mode › should handle :help command ───
+    [chromium] › tests/e2e/game-flows.spec.js:465:3 › Command Mode › should show error for unknown command 
+    [chromium] › tests/e2e/game-flows.spec.js:508:3 › HUD Display › should display HUD elements during gameplay 
+  6 passed (6.1m)
+Error: Process completed with exit code 1.
