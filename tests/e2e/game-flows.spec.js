@@ -24,7 +24,7 @@ test.describe('Tutorial Level 0: How to Quit Vim', () => {
     // Should show tutorial screen
     const tutorialContent = page.locator('.tutorial-content');
     await expect(tutorialContent).toBeVisible();
-    await expect(tutorialContent).toContainText('How to Quit Vim');
+    await expect(tutorialContent).toContainText('How to quit vim');
     await expect(tutorialContent).toContainText('Type :q and press Enter');
 
     // Press : to enter command mode
@@ -84,10 +84,11 @@ test.describe('Tutorial Level 0: How to Quit Vim', () => {
     await page.keyboard.press(':');
     await page.keyboard.type('q');
     await page.keyboard.press('Enter');
-    await page.waitForTimeout(1500);
 
-    // Should be back at main menu
-    await expect(page.locator('#screen-main-menu')).toBeVisible();
+    // Should be back at main menu (wait for transition)
+    await expect(page.locator('#screen-main-menu')).toBeVisible({
+      timeout: 5000,
+    });
 
     // Start game again - should NOT show tutorial
     await page.click('#btn-start-game');
@@ -136,10 +137,11 @@ test.describe('Menu Navigation', () => {
     await page.keyboard.press(':');
     await page.keyboard.type('q');
     await page.keyboard.press('Enter');
-    await page.waitForTimeout(1500);
 
-    // Should be back at main menu
-    await expect(page.locator('#screen-main-menu')).toBeVisible();
+    // Should be back at main menu (wait for transition)
+    await expect(page.locator('#screen-main-menu')).toBeVisible({
+      timeout: 5000,
+    });
     await expect(page.locator('#screen-playing')).not.toBeVisible();
   });
 
