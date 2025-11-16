@@ -254,14 +254,20 @@ test.describe('Win Condition Flow', () => {
       }
     });
 
-    await page.waitForTimeout(1000);
+    // Wait for level complete screen to be visible
+    const completeScreen = page.locator('#screen-level-complete');
+    await expect(completeScreen).toBeVisible({ timeout: 10000 });
 
-    // Click Main Menu button
-    await page.click('#btn-menu-complete');
+    // Wait for Main Menu button to be visible and click it
+    const menuButton = page.locator('#btn-menu-complete');
+    await expect(menuButton).toBeVisible({ timeout: 5000 });
+    await menuButton.click();
 
     // Should return to main menu
-    await expect(page.locator('#screen-main-menu')).toBeVisible();
-    await expect(page.locator('#screen-level-complete')).not.toBeVisible();
+    await expect(page.locator('#screen-main-menu')).toBeVisible({
+      timeout: 5000,
+    });
+    await expect(completeScreen).not.toBeVisible();
   });
 
   test('should allow restarting from level complete screen', async ({
@@ -281,14 +287,20 @@ test.describe('Win Condition Flow', () => {
       }
     });
 
-    await page.waitForTimeout(1000);
+    // Wait for level complete screen to be visible
+    const completeScreen = page.locator('#screen-level-complete');
+    await expect(completeScreen).toBeVisible({ timeout: 10000 });
 
-    // Click Next Level (which restarts for MVP)
-    await page.click('#btn-next-level');
+    // Wait for Next Level button to be visible and click it
+    const nextLevelButton = page.locator('#btn-next-level');
+    await expect(nextLevelButton).toBeVisible({ timeout: 5000 });
+    await nextLevelButton.click();
 
     // Should return to playing screen
-    await expect(page.locator('#screen-playing')).toBeVisible();
-    await expect(page.locator('#screen-level-complete')).not.toBeVisible();
+    await expect(page.locator('#screen-playing')).toBeVisible({
+      timeout: 5000,
+    });
+    await expect(completeScreen).not.toBeVisible();
 
     // HUD should be visible
     await expect(page.locator('.hud-container')).toBeVisible();
@@ -337,14 +349,20 @@ test.describe('Lose Condition Flow', () => {
       }
     });
 
-    await page.waitForTimeout(1000);
+    // Wait for level failed screen to be visible
+    const failedScreen = page.locator('#screen-level-failed');
+    await expect(failedScreen).toBeVisible({ timeout: 10000 });
 
-    // Click Retry button
-    await page.click('#btn-retry');
+    // Wait for Retry button to be visible and click it
+    const retryButton = page.locator('#btn-retry');
+    await expect(retryButton).toBeVisible({ timeout: 5000 });
+    await retryButton.click();
 
     // Should return to playing screen
-    await expect(page.locator('#screen-playing')).toBeVisible();
-    await expect(page.locator('#screen-level-failed')).not.toBeVisible();
+    await expect(page.locator('#screen-playing')).toBeVisible({
+      timeout: 5000,
+    });
+    await expect(failedScreen).not.toBeVisible();
 
     // HUD should be visible
     await expect(page.locator('.hud-container')).toBeVisible();
@@ -365,14 +383,20 @@ test.describe('Lose Condition Flow', () => {
       }
     });
 
-    await page.waitForTimeout(1000);
+    // Wait for level failed screen to be visible
+    const failedScreen = page.locator('#screen-level-failed');
+    await expect(failedScreen).toBeVisible({ timeout: 10000 });
 
-    // Click Main Menu button
-    await page.click('#btn-menu-failed');
+    // Wait for Main Menu button to be visible and click it
+    const menuButton = page.locator('#btn-menu-failed');
+    await expect(menuButton).toBeVisible({ timeout: 5000 });
+    await menuButton.click();
 
     // Should return to main menu
-    await expect(page.locator('#screen-main-menu')).toBeVisible();
-    await expect(page.locator('#screen-level-failed')).not.toBeVisible();
+    await expect(page.locator('#screen-main-menu')).toBeVisible({
+      timeout: 5000,
+    });
+    await expect(failedScreen).not.toBeVisible();
   });
 });
 
@@ -395,10 +419,19 @@ test.describe('Leaderboard System', () => {
       }
     });
 
-    await page.waitForTimeout(1000);
+    // Wait for level complete screen to be visible
+    const completeScreen = page.locator('#screen-level-complete');
+    await expect(completeScreen).toBeVisible({ timeout: 10000 });
 
-    // Return to main menu
-    await page.click('#btn-menu-complete');
+    // Wait for Main Menu button to be visible and click it
+    const menuButton = page.locator('#btn-menu-complete');
+    await expect(menuButton).toBeVisible({ timeout: 5000 });
+    await menuButton.click();
+
+    // Wait for main menu to be visible
+    await expect(page.locator('#screen-main-menu')).toBeVisible({
+      timeout: 5000,
+    });
 
     // Check leaderboard
     const leaderboard = page.locator('#leaderboard-list');
