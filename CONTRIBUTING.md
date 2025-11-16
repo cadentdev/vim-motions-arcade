@@ -47,22 +47,26 @@ Unacceptable behavior will not be tolerated. Please report any issues to hello@c
 1. **Fork the repository** on GitHub
 
 2. **Clone your fork**:
+
    ```bash
    git clone https://github.com/YOUR_USERNAME/vim-motions-arcade.git
    cd vim-motions-arcade
    ```
 
 3. **Add upstream remote**:
+
    ```bash
    git remote add upstream https://github.com/cadentdev/vim-motions-arcade.git
    ```
 
 4. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 5. **Start the dev server**:
+
    ```bash
    npm run dev
    ```
@@ -89,6 +93,7 @@ git checkout -b docs/documentation-update
 ```
 
 Branch naming conventions:
+
 - `feature/` - New features
 - `fix/` - Bug fixes
 - `docs/` - Documentation changes
@@ -146,6 +151,7 @@ npm run format
 ```
 
 **Key conventions**:
+
 - Use ES6+ features (const/let, arrow functions, destructuring)
 - Use camelCase for variables and functions
 - Use PascalCase for classes
@@ -155,6 +161,7 @@ npm run format
 - Add JSDoc comments for public APIs
 
 **Example**:
+
 ```javascript
 /**
  * Calculates the score bonus for collecting all coins
@@ -165,7 +172,7 @@ npm run format
 function calculateBonus(timeRemaining, coinsCollected) {
   const TIME_MULTIPLIER = 10;
   const COIN_MULTIPLIER = 5;
-  return (timeRemaining * TIME_MULTIPLIER) + (coinsCollected * COIN_MULTIPLIER);
+  return timeRemaining * TIME_MULTIPLIER + coinsCollected * COIN_MULTIPLIER;
 }
 ```
 
@@ -228,6 +235,7 @@ describe('calculateBonus', () => {
 ```
 
 Run unit tests:
+
 ```bash
 npm test              # Run once
 npm run test:watch    # Watch mode
@@ -243,14 +251,14 @@ import { test, expect } from '@playwright/test';
 
 test('player can collect coins and win level', async ({ page }) => {
   await page.goto('http://localhost:3000');
-  
+
   // Start game
   await page.click('button:has-text("Start New Game")');
-  
+
   // Collect coins using hjkl keys
   await page.keyboard.press('l');
   await page.keyboard.press('j');
-  
+
   // Verify score increased
   const score = await page.textContent('.score');
   expect(parseInt(score)).toBeGreaterThan(0);
@@ -258,6 +266,7 @@ test('player can collect coins and win level', async ({ page }) => {
 ```
 
 Run E2E tests:
+
 ```bash
 npm run test:e2e              # Run all E2E tests
 npm run test:e2e:headed       # Run with browser visible
@@ -267,6 +276,7 @@ npm run test:e2e:debug        # Debug mode
 ### Test Coverage
 
 Aim for:
+
 - **80%+ coverage** for core game logic
 - **100% coverage** for critical systems (scoring, collision, state management)
 - **E2E tests** for all major user flows
@@ -338,23 +348,28 @@ refactor(rendering): extract DOM manipulation to separate module
 When opening a PR, include:
 
 **Description**
+
 - What does this PR do?
 - Why is this change needed?
 
 **Type of Change**
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
 
 **Testing**
+
 - How was this tested?
 - What test cases were added?
 
 **Screenshots** (if applicable)
+
 - Before/after screenshots for UI changes
 
 **Related Issues**
+
 - Fixes #123
 - Related to #456
 
@@ -385,6 +400,7 @@ Check the [Issues](../../issues) page for bugs labeled `bug` or `good first issu
 ### ✨ Features
 
 Implement features from the [Roadmap](./docs/ROADMAP.md):
+
 - New vim motions
 - Power-up systems
 - Visual effects
@@ -441,6 +457,7 @@ Implement features from the [Roadmap](./docs/ROADMAP.md):
 ### Reporting Bugs
 
 Use the bug report template and include:
+
 - Clear description of the bug
 - Steps to reproduce
 - Expected vs actual behavior
@@ -451,6 +468,7 @@ Use the bug report template and include:
 ### Suggesting Features
 
 Use the feature request template and include:
+
 - Clear description of the feature
 - Use case and motivation
 - Proposed implementation (if any)

@@ -2,9 +2,19 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # E2E tests as deployment gate
-# Note: Chromium must be installed with system dependencies for E2E tests to run
-# Run manually with: npm run test:e2e
-# TODO: Enable this in CI environment where Chromium can be properly installed
-# npm run test:e2e
+# Note: E2E tests run in GitHub Actions CI on PRs
+# Pre-push hook disabled to allow faster local development workflow
+# E2E tests will still run as merge gate on pull requests
 
-echo "Pre-push hook: E2E tests skipped (run manually with 'npm run test:e2e')"
+echo "⏭️  Pre-push hook: E2E tests disabled locally (run on PR in CI)"
+echo "✅ Push allowed. E2E tests will run on pull request."
+
+# Uncomment below to re-enable E2E tests on push
+# echo "Pre-push hook: Running E2E tests..."
+# npm run test:e2e
+#
+# if [ $? -ne 0 ]; then
+#   echo "❌ E2E tests failed. Push blocked."
+#   echo "Fix the failing tests or run 'git push --no-verify' to skip (not recommended)"
+#   exit 1
+# fi

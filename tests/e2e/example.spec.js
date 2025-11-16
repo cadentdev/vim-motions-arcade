@@ -25,8 +25,8 @@ test.describe('Game Application', () => {
   test('should display the main heading', async ({ page }) => {
     await page.goto('/');
 
-    // Check that the h1 is present
-    const heading = page.locator('h1');
-    await expect(heading).toContainText('Vim Motions Arcade');
+    // Check that the main game title h1 is present (use class to be specific)
+    const heading = page.locator('h1.game-title');
+    await expect(heading).toContainText('VIM MOTIONS ARCADE');
   });
 });
