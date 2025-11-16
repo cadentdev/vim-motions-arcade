@@ -171,7 +171,7 @@ test.describe('Menu Navigation', () => {
         JSON.stringify({
           level: { current: 1 },
           score: 50,
-          tutorialCompleted: true,
+          tutorialCompleted: false,
         })
       );
     });
