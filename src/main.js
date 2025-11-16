@@ -10,6 +10,7 @@ import { CommandMode } from './input/modes/CommandMode.js';
 import { CommandModeUI } from './ui/CommandModeUI.js';
 import { TutorialLevel } from './game/TutorialLevel.js';
 import { renderVersion } from './ui/VersionDisplay.js';
+import { MenuNavigator } from './input/MenuNavigator.js';
 
 console.log('Vim Motions Arcade - Initializing...');
 
@@ -25,6 +26,9 @@ let commandModeUI = null;
 let tutorialLevel = null;
 let commandModeKeyHandler = null;
 let tutorialKeyHandler = null;
+
+// Menu navigation
+let menuNavigator = null;
 
 // DOM Elements
 let elements = {};
@@ -90,10 +94,14 @@ function setupScreenCallbacks() {
     updateContinueButton();
     renderLeaderboard();
     renderVersion(elements.screenMainMenu);
+    setupMenuNavigator();
   });
 
   screenManager.onScreenExit('MAIN_MENU', () => {
     hideScreen(elements.screenMainMenu);
+    if (menuNavigator) {
+      menuNavigator.disable();
+    }
   });
 
   // Playing screen
@@ -152,6 +160,27 @@ function showMainMenu() {
 function updateContinueButton() {
   const hasSave = saveManager.hasSave();
   elements.btnContinueGame.disabled = !hasSave;
+}
+
+/**
+ * Set up keyboard navigation for main menu
+ */
+function setupMenuNavigator() {
+  const buttons = [elements.btnStartGame, elements.btnContinueGame];
+
+  menuNavigator = new MenuNavigator(buttons, {
+    onActivate: (button) => {
+      // Trigger click on the activated button
+      button.click();
+    },
+  });
+
+  // Enable first, then set initial focus based on save game state
+  menuNavigator.enable();
+
+  // Focus "Continue Game" if there's a save, otherwise "Start New Game"
+  const initialIndex = saveManager.hasSave() ? 1 : 0;
+  menuNavigator.setFocus(initialIndex);
 }
 
 /**

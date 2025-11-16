@@ -168,6 +168,25 @@ body {
   border-color: #444;
 }
 
+/* Vim keyboard navigation styles */
+.menu-button.focused {
+  background: var(--button-hover);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+  transform: translateY(-2px);
+}
+
+.menu-button.focused.primary {
+  background: rgba(0, 255, 136, 0.2);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+.menu-button.active {
+  background: rgba(0, 255, 136, 0.3);
+  transform: translateY(0);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+}
+
 /* Instructions Section */
 .instructions {
   text-align: center;

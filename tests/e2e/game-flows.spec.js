@@ -158,6 +158,153 @@ test.describe('Menu Navigation', () => {
     const startBtn = page.locator('#btn-start-game');
     await expect(startBtn).toBeEnabled();
   });
+
+  test('should navigate menu with vim keys (j/k) and activate with Enter', async ({
+    page,
+  }) => {
+    await page.goto('/');
+
+    // Create a save so Continue button is enabled and we have 2 navigable buttons
+    await page.evaluate(() => {
+      localStorage.setItem(
+        'vim-arcade-save',
+        JSON.stringify({
+          level: { current: 1 },
+          score: 50,
+          tutorialCompleted: false,
+        })
+      );
+    });
+
+    // Reload to apply the save
+    await page.reload();
+
+    const startBtn = page.locator('#btn-start-game');
+    const continueBtn = page.locator('#btn-continue-game');
+
+    // Both buttons should be enabled
+    await expect(startBtn).toBeEnabled();
+    await expect(continueBtn).toBeEnabled();
+
+    // Continue button should initially have focus (since save exists)
+    await expect(continueBtn).toHaveClass(/focused/);
+    await expect(startBtn).not.toHaveClass(/focused/);
+
+    // Press k to move up
+    await page.keyboard.press('k');
+
+    // Start button should now have focus
+    await expect(startBtn).toHaveClass(/focused/);
+    await expect(continueBtn).not.toHaveClass(/focused/);
+
+    // Press j to move back down
+    await page.keyboard.press('j');
+
+    // Continue button should have focus again
+    await expect(continueBtn).toHaveClass(/focused/);
+    await expect(startBtn).not.toHaveClass(/focused/);
+
+    // Press k one more time to move back to Start
+    await page.keyboard.press('k');
+    await expect(startBtn).toHaveClass(/focused/);
+
+    // Press Enter to activate Start Game
+    await page.keyboard.press('Enter');
+
+    // Should navigate to tutorial/game
+    await page.waitForTimeout(500);
+    await expect(page.locator('.tutorial-content')).toBeVisible();
+  });
+
+  test('should skip disabled Continue button when navigating', async ({
+    page,
+  }) => {
+    await page.goto('/');
+
+    const startBtn = page.locator('#btn-start-game');
+    const continueBtn = page.locator('#btn-continue-game');
+
+    // Continue button should be disabled (no save exists)
+    await expect(continueBtn).toBeDisabled();
+
+    // Start button should initially have focus
+    await expect(startBtn).toHaveClass(/focused/);
+
+    // Press j to move down - should skip disabled Continue button
+    // (When Continue is disabled, there's only 1 active button, so j shouldn't move)
+    await page.keyboard.press('j');
+
+    // Since Continue is disabled and there are only 2 buttons,
+    // we should still be on Start (can't move to disabled button)
+    await expect(startBtn).toHaveClass(/focused/);
+    await expect(continueBtn).not.toHaveClass(/focused/);
+
+    // Press k to try moving up - should also stay on Start
+    await page.keyboard.press('k');
+    await expect(startBtn).toHaveClass(/focused/);
+  });
+
+  test('should focus Continue button when save exists', async ({ page }) => {
+    await page.goto('/');
+
+    // Create a save in localStorage
+    await page.evaluate(() => {
+      localStorage.setItem(
+        'vim-arcade-save',
+        JSON.stringify({
+          level: { current: 1 },
+          score: 50,
+          tutorialCompleted: true,
+        })
+      );
+    });
+
+    // Reload to trigger save detection and menu navigator setup
+    await page.reload();
+
+    const continueBtn = page.locator('#btn-continue-game');
+
+    // Continue button should be enabled now
+    await expect(continueBtn).toBeEnabled();
+
+    // Continue button should have initial focus (since save exists)
+    await expect(continueBtn).toHaveClass(/focused/);
+  });
+
+  test('should activate focused button when Enter is pressed', async ({
+    page,
+  }) => {
+    await page.goto('/');
+
+    const startBtn = page.locator('#btn-start-game');
+
+    // Start button should have focus
+    await expect(startBtn).toHaveClass(/focused/);
+
+    // Press Enter to activate the focused button
+    await page.keyboard.press('Enter');
+
+    // Should navigate to tutorial (verifying Enter activated the Start button)
+    await page.waitForTimeout(500);
+    await expect(page.locator('.tutorial-content')).toBeVisible();
+  });
+
+  test('should not allow navigation past boundaries', async ({ page }) => {
+    await page.goto('/');
+
+    const startBtn = page.locator('#btn-start-game');
+
+    // Start button should have focus
+    await expect(startBtn).toHaveClass(/focused/);
+
+    // Press k multiple times (trying to go up past first button)
+    await page.keyboard.press('k');
+    await page.keyboard.press('k');
+    await page.keyboard.press('k');
+
+    // Should still be on Start button (no wrapping)
+    await expect(startBtn).toHaveClass(/focused/);
+  });
 });
 
 test.describe('Movement System', () => {
@@ -167,7 +314,7 @@ test.describe('Movement System', () => {
     // Mark tutorial as completed in localStorage
     await page.evaluate(() => {
       localStorage.setItem(
-        'vim-motions-arcade-save',
+        'vim-arcade-save',
         JSON.stringify({ tutorialCompleted: true })
       );
     });
@@ -464,7 +611,7 @@ test.describe('Game State Persistence', () => {
     // Create a save in localStorage
     await page.evaluate(() => {
       localStorage.setItem(
-        'vim-motions-arcade-save',
+        'vim-arcade-save',
         JSON.stringify({
           level: { current: 1 },
           score: 50,
