@@ -9,6 +9,7 @@ export class MenuNavigator {
     this.callbacks = callbacks;
     this.currentIndex = 0;
     this.isEnabled = false;
+    this.commandModeActive = false;
     this.boundHandleKeyDown = this.handleKeyDown.bind(this);
   }
 
@@ -48,6 +49,18 @@ export class MenuNavigator {
     if (!this.isEnabled) return;
 
     const { key } = event;
+
+    // Handle command mode activation
+    if (key === ':') {
+      event.preventDefault();
+      if (this.callbacks.onCommandMode) {
+        this.callbacks.onCommandMode();
+      }
+      return;
+    }
+
+    // Don't handle navigation keys if command mode is active
+    if (this.commandModeActive) return;
 
     // Handle navigation keys
     if (key === 'j' || key === 'k') {
@@ -125,5 +138,14 @@ export class MenuNavigator {
 
       this.callbacks.onActivate(currentButton);
     }
+  }
+
+  /**
+   * Set whether command mode is active
+   * When command mode is active, navigation keys are disabled
+   * @param {boolean} active - Whether command mode is active
+   */
+  setCommandModeActive(active) {
+    this.commandModeActive = active;
   }
 }

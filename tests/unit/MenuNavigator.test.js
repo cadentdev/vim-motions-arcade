@@ -342,17 +342,15 @@ describe('MenuNavigator', () => {
       expect(buttons[0].classList.contains('active')).toBe(true);
     });
 
-    it('should remove active class after a short delay', (done) => {
+    it('should remove active class after a short delay', async () => {
       const event = new KeyboardEvent('keydown', { key: 'Enter' });
       document.dispatchEvent(event);
 
       expect(buttons[0].classList.contains('active')).toBe(true);
 
       // Check after 200ms
-      setTimeout(() => {
-        expect(buttons[0].classList.contains('active')).toBe(false);
-        done();
-      }, 200);
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      expect(buttons[0].classList.contains('active')).toBe(false);
     });
 
     it('should remove focused class from all buttons when disabled', () => {
@@ -362,6 +360,72 @@ describe('MenuNavigator', () => {
 
       expect(buttons[0].classList.contains('focused')).toBe(false);
       expect(buttons[1].classList.contains('focused')).toBe(false);
+    });
+  });
+
+  describe('Command Mode Integration', () => {
+    beforeEach(() => {
+      mockCallbacks.onCommandMode = vi.fn();
+      menuNavigator = new MenuNavigator(buttons, mockCallbacks);
+      menuNavigator.enable();
+    });
+
+    it('should call onCommandMode callback when : is pressed', () => {
+      const event = new KeyboardEvent('keydown', { key: ':' });
+      document.dispatchEvent(event);
+
+      expect(mockCallbacks.onCommandMode).toHaveBeenCalled();
+    });
+
+    it('should prevent default behavior when : is pressed', () => {
+      const event = new KeyboardEvent('keydown', { key: ':' });
+      const preventDefaultSpy = vi.spyOn(event, 'preventDefault');
+
+      document.dispatchEvent(event);
+
+      expect(preventDefaultSpy).toHaveBeenCalled();
+    });
+
+    it('should not respond to : key when disabled', () => {
+      menuNavigator.disable();
+
+      const event = new KeyboardEvent('keydown', { key: ':' });
+      document.dispatchEvent(event);
+
+      expect(mockCallbacks.onCommandMode).not.toHaveBeenCalled();
+    });
+
+    it('should not call onCommandMode if callback is not provided', () => {
+      menuNavigator = new MenuNavigator(buttons, { onActivate: vi.fn() });
+      menuNavigator.enable();
+
+      const event = new KeyboardEvent('keydown', { key: ':' });
+      // Should not throw
+      expect(() => document.dispatchEvent(event)).not.toThrow();
+    });
+
+    it('should disable navigation when command mode is active', () => {
+      // Setup menu navigator with command mode awareness
+      menuNavigator.setCommandModeActive(true);
+
+      const event = new KeyboardEvent('keydown', { key: 'j' });
+      const initialIndex = menuNavigator.currentIndex;
+      document.dispatchEvent(event);
+
+      // Index should not change because command mode is active
+      expect(menuNavigator.currentIndex).toBe(initialIndex);
+    });
+
+    it('should re-enable navigation when command mode is deactivated', () => {
+      menuNavigator.setCommandModeActive(true);
+      menuNavigator.setCommandModeActive(false);
+
+      const event = new KeyboardEvent('keydown', { key: 'j' });
+      const initialIndex = menuNavigator.currentIndex;
+      document.dispatchEvent(event);
+
+      // Index should change because command mode is not active
+      expect(menuNavigator.currentIndex).toBe(initialIndex + 1);
     });
   });
 });

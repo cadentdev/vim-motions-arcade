@@ -400,6 +400,33 @@ body {
   border: 1px solid var(--accent-danger);
 }
 
+/* Status Bar */
+.status-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-md);
+  background: rgba(10, 14, 39, 0.95);
+  border-top: 1px solid var(--accent-primary);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  text-align: center;
+  z-index: 999;
+  transition: all 0.2s ease;
+}
+
+.status-bar.hidden {
+  display: none;
+}
+
+.status-bar.error {
+  color: var(--accent-danger);
+  background: rgba(255, 51, 102, 0.1);
+  border-top: 1px solid var(--accent-danger);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .game-title {

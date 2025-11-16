@@ -715,3 +715,142 @@ test.describe('HUD Display', () => {
     await expect(mode).toContainText('NORMAL');
   });
 });
+
+test.describe('Menu Command Mode', () => {
+  test('should show status bar on main menu', async ({ page }) => {
+    await page.goto('/');
+
+    // Status bar should be visible
+    const statusBar = page.locator('.status-bar');
+    await expect(statusBar).toBeVisible();
+    await expect(statusBar).toContainText('NORMAL');
+  });
+
+  test('should enter command mode when pressing :', async ({ page }) => {
+    await page.goto('/');
+
+    // Press : to enter command mode
+    await page.keyboard.press(':');
+
+    // Status bar should show COMMAND mode
+    const statusBar = page.locator('.status-bar');
+    await expect(statusBar).toContainText('COMMAND');
+
+    // Command mode overlay should appear
+    const commandOverlay = page.locator('.command-mode-overlay');
+    await expect(commandOverlay).toBeVisible();
+
+    // Command input should show ":"
+    const commandInput = page.locator('.command-input');
+    await expect(commandInput).toContainText(':');
+  });
+
+  test('should exit command mode with Escape', async ({ page }) => {
+    await page.goto('/');
+
+    // Enter command mode
+    await page.keyboard.press(':');
+
+    // Type some characters
+    await page.keyboard.type('test');
+
+    // Press Escape
+    await page.keyboard.press('Escape');
+
+    // Status bar should show NORMAL mode
+    const statusBar = page.locator('.status-bar');
+    await expect(statusBar).toContainText('NORMAL');
+
+    // Command mode overlay should be hidden
+    const commandOverlay = page.locator('.command-mode-overlay');
+    await expect(commandOverlay).not.toBeVisible();
+  });
+
+  test('should start new game with :new command', async ({ page }) => {
+    await page.goto('/');
+
+    // Enter command mode and type :new
+    await page.keyboard.press(':');
+    await page.keyboard.type('new');
+
+    // Command input should show ":new"
+    const commandInput = page.locator('.command-input');
+    await expect(commandInput).toContainText(':new');
+
+    // Press Enter
+    await page.keyboard.press('Enter');
+
+    // Should navigate to game screen (may show tutorial first)
+    // Wait for either tutorial or game to appear
+    await page.waitForTimeout(1000);
+
+    // Should not be on main menu anymore
+    const mainMenu = page.locator('#screen-main-menu');
+    await expect(mainMenu).not.toBeVisible();
+  });
+
+  test('should show error for invalid command', async ({ page }) => {
+    await page.goto('/');
+
+    // Enter command mode and type invalid command
+    await page.keyboard.press(':');
+    await page.keyboard.type('invalid');
+    await page.keyboard.press('Enter');
+
+    // Status bar should show error
+    const statusBar = page.locator('.status-bar');
+    await expect(statusBar).toHaveClass(/error/);
+    await expect(statusBar).toContainText('Unknown command');
+  });
+
+  test('should disable j/k navigation when in command mode', async ({
+    page,
+  }) => {
+    await page.goto('/');
+
+    // Initially focus should be on first button (Start Game)
+    const startButton = page.locator('#btn-start-game');
+    await expect(startButton).toHaveClass(/focused/);
+
+    // Enter command mode
+    await page.keyboard.press(':');
+
+    // Press j (should not move focus)
+    await page.keyboard.type('j');
+
+    // Command input should show ":j" (not navigate)
+    const commandInput = page.locator('.command-input');
+    await expect(commandInput).toContainText(':j');
+
+    // Exit command mode
+    await page.keyboard.press('Escape');
+
+    // Now j should work for navigation
+    await page.keyboard.press('j');
+    const continueButton = page.locator('#btn-continue-game');
+    await expect(continueButton).toHaveClass(/focused/);
+  });
+
+  test('should show help with :help command', async ({ page }) => {
+    await page.goto('/');
+
+    // Mock dialog alert
+    page.on('dialog', async (dialog) => {
+      expect(dialog.type()).toBe('alert');
+      expect(dialog.message()).toContain('Vim Motions Arcade');
+      await dialog.accept();
+    });
+
+    // Enter command mode and type :help
+    await page.keyboard.press(':');
+    await page.keyboard.type('help');
+    await page.keyboard.press('Enter');
+
+    // Wait for dialog to be handled
+    await page.waitForTimeout(500);
+
+    // Should return to NORMAL mode
+    const statusBar = page.locator('.status-bar');
+    await expect(statusBar).toContainText('NORMAL');
+  });
+});
