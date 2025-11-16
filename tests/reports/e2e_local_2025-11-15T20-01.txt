@@ -1,0 +1,520 @@
+
+> vim-motions-arcade@0.1.0 test:e2e
+> playwright test
+
+
+Running 22 tests using 5 workers
+
+[1A[2K[1/22] [chromium] › tests/e2e/example.spec.js:9:3 › Game Application › should load the application
+[1A[2K[2/22] [chromium] › tests/e2e/game-flows.spec.js:68:3 › Tutorial Level 0: How to Quit Vim › should show tutorial only on first game
+[1A[2K[3/22] [chromium] › tests/e2e/game-flows.spec.js:16:3 › Tutorial Level 0: How to Quit Vim › should complete tutorial by typing :q and return to menu
+[1A[2K[4/22] [chromium] › tests/e2e/example.spec.js:17:3 › Game Application › should display the game container
+[1A[2K[5/22] [chromium] › tests/e2e/example.spec.js:25:3 › Game Application › should display the main heading
+[1A[2K[6/22] [chromium] › tests/e2e/game-flows.spec.js:101:3 › Tutorial Level 0: How to Quit Vim › should allow Escape to cancel command mode in tutorial
+[1A[2K[7/22] [chromium] › tests/e2e/game-flows.spec.js:122:3 › Menu Navigation › should navigate from main menu to game and back
+[1A[2K[8/22] [chromium] › tests/e2e/game-flows.spec.js:148:3 › Menu Navigation › should show correct button states on menu
+[1A[2K[9/22] [chromium] › tests/e2e/game-flows.spec.js:162:3 › Movement System › should move cursor with hjkl keys
+[1A[2K[10/22] [chromium] › tests/e2e/game-flows.spec.js:206:3 › Win Condition Flow › should show level complete screen when all coins collected
+[1A[2K  1) [chromium] › tests/e2e/game-flows.spec.js:16:3 › Tutorial Level 0: How to Quit Vim › should complete tutorial by typing :q and return to menu 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('.command-feedback.success')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('.command-feedback.success')[22m
+
+
+      48 |     // Should show success feedback
+      49 |     const feedback = page.locator('.command-feedback.success');
+    > 50 |     await expect(feedback).toBeVisible();
+         |                            ^
+      51 |     await expect(feedback).toContainText('Success');
+      52 |
+      53 |     // Wait for transition to actual game (2 second delay in code)
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:50:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Tutorial-Level--b8162-typing-q-and-return-to-menu-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Tutorial-Level--b8162-typing-q-and-return-to-menu-chromium/error-context.md
+
+
+[1A[2K[11/22] [chromium] › tests/e2e/game-flows.spec.js:242:3 › Win Condition Flow › should allow returning to menu from level complete screen
+[1A[2K  2) [chromium] › tests/e2e/game-flows.spec.js:162:3 › Movement System › should move cursor with hjkl keys 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('.player-cursor').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('.player-cursor').first()[22m
+
+
+      180 |     // Get initial cursor position by checking the player element
+      181 |     const player = page.locator('.player-cursor').first();
+    > 182 |     await expect(player).toBeVisible();
+          |                          ^
+      183 |
+      184 |     // Press h (left) - cursor should move
+      185 |     await page.keyboard.press('h');
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:182:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Movement-System-should-move-cursor-with-hjkl-keys-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Movement-System-should-move-cursor-with-hjkl-keys-chromium/error-context.md
+
+
+[1A[2K[12/22] [chromium] › tests/e2e/game-flows.spec.js:275:3 › Win Condition Flow › should allow restarting from level complete screen
+[1A[2K  3) [chromium] › tests/e2e/game-flows.spec.js:68:3 › Tutorial Level 0: How to Quit Vim › should show tutorial only on first game 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('#screen-main-menu')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('#screen-main-menu')[22m
+    [2m    9 × locator resolved to <div class="screen" id="screen-main-menu">…</div>[22m
+    [2m      - unexpected value "hidden"[22m
+
+
+      87 |
+      88 |     // Should be back at main menu (wait for transition)
+    > 89 |     await expect(page.locator('#screen-main-menu')).toBeVisible({
+         |                                                     ^
+      90 |       timeout: 5000,
+      91 |     });
+      92 |
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:89:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Tutorial-Level--8aea0-tutorial-only-on-first-game-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Tutorial-Level--8aea0-tutorial-only-on-first-game-chromium/error-context.md
+
+
+[1A[2K  4) [chromium] › tests/e2e/game-flows.spec.js:122:3 › Menu Navigation › should navigate from main menu to game and back 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('#screen-main-menu')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('#screen-main-menu')[22m
+    [2m    9 × locator resolved to <div class="screen" id="screen-main-menu">…</div>[22m
+    [2m      - unexpected value "hidden"[22m
+
+
+      140 |
+      141 |     // Should be back at main menu (wait for transition)
+    > 142 |     await expect(page.locator('#screen-main-menu')).toBeVisible({
+          |                                                     ^
+      143 |       timeout: 5000,
+      144 |     });
+      145 |     await expect(page.locator('#screen-playing')).not.toBeVisible();
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:142:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Menu-Navigation-cbf9b--main-menu-to-game-and-back-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Menu-Navigation-cbf9b--main-menu-to-game-and-back-chromium/error-context.md
+
+
+[1A[2K[13/22] [chromium] › tests/e2e/game-flows.spec.js:313:3 › Lose Condition Flow › should show level failed screen when timer expires
+[1A[2K[14/22] [chromium] › tests/e2e/game-flows.spec.js:341:3 › Lose Condition Flow › should allow retry from level failed screen
+[1A[2K  5) [chromium] › tests/e2e/game-flows.spec.js:206:3 › Win Condition Flow › should show level complete screen when all coins collected 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('#screen-level-complete')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('#screen-level-complete')[22m
+    [2m    9 × locator resolved to <div class="screen" id="screen-level-complete">…</div>[22m
+    [2m      - unexpected value "hidden"[22m
+
+
+      232 |     // Should show level complete screen
+      233 |     const completeScreen = page.locator('#screen-level-complete');
+    > 234 |     await expect(completeScreen).toBeVisible();
+          |                                  ^
+      235 |
+      236 |     // Should show score
+      237 |     const scoreDisplay = page.locator('#final-score');
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:234:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-c5712-en-when-all-coins-collected-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-c5712-en-when-all-coins-collected-chromium/error-context.md
+
+
+[1A[2K[15/22] [chromium] › tests/e2e/game-flows.spec.js:373:3 › Lose Condition Flow › should allow returning to menu from level failed screen
+[1A[2K  6) [chromium] › tests/e2e/game-flows.spec.js:313:3 › Lose Condition Flow › should show level failed screen when timer expires 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('#screen-level-failed')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('#screen-level-failed')[22m
+    [2m    9 × locator resolved to <div class="screen" id="screen-level-failed">…</div>[22m
+    [2m      - unexpected value "hidden"[22m
+
+
+      331 |     // Should show level failed screen
+      332 |     const failedScreen = page.locator('#screen-level-failed');
+    > 333 |     await expect(failedScreen).toBeVisible();
+          |                                ^
+      334 |
+      335 |     // Should show score
+      336 |     const scoreDisplay = page.locator('#failed-score');
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:333:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--71282-d-screen-when-timer-expires-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--71282-d-screen-when-timer-expires-chromium/error-context.md
+
+
+[1A[2K[16/22] [chromium] › tests/e2e/game-flows.spec.js:406:3 › Leaderboard System › should display score in leaderboard after winning
+[1A[2K  7) [chromium] › tests/e2e/game-flows.spec.js:242:3 › Win Condition Flow › should allow returning to menu from level complete screen 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('#screen-level-complete')
+    Expected: visible
+    Received: hidden
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('#screen-level-complete')[22m
+    [2m    14 × locator resolved to <div class="screen" id="screen-level-complete">…</div>[22m
+    [2m       - unexpected value "hidden"[22m
+
+
+      259 |     // Wait for level complete screen to be visible
+      260 |     const completeScreen = page.locator('#screen-level-complete');
+    > 261 |     await expect(completeScreen).toBeVisible({ timeout: 10000 });
+          |                                  ^
+      262 |
+      263 |     // Wait for Main Menu button to be visible and click it
+      264 |     const menuButton = page.locator('#btn-menu-complete');
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:261:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-d7533--from-level-complete-screen-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-d7533--from-level-complete-screen-chromium/error-context.md
+
+
+[1A[2K[17/22] [chromium] › tests/e2e/game-flows.spec.js:447:3 › Leaderboard System › should show empty message when no scores exist
+[1A[2K[18/22] [chromium] › tests/e2e/game-flows.spec.js:457:3 › Game State Persistence › should enable continue button when save exists
+[1A[2K  8) [chromium] › tests/e2e/game-flows.spec.js:275:3 › Win Condition Flow › should allow restarting from level complete screen 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('#screen-level-complete')
+    Expected: visible
+    Received: hidden
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('#screen-level-complete')[22m
+    [2m    14 × locator resolved to <div class="screen" id="screen-level-complete">…</div>[22m
+    [2m       - unexpected value "hidden"[22m
+
+
+      292 |     // Wait for level complete screen to be visible
+      293 |     const completeScreen = page.locator('#screen-level-complete');
+    > 294 |     await expect(completeScreen).toBeVisible({ timeout: 10000 });
+          |                                  ^
+      295 |
+      296 |     // Wait for Next Level button to be visible and click it
+      297 |     const nextLevelButton = page.locator('#btn-next-level');
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:294:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Win-Condition-F-8a8d4--from-level-complete-screen-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Win-Condition-F-8a8d4--from-level-complete-screen-chromium/error-context.md
+
+
+[1A[2K[19/22] [chromium] › tests/e2e/game-flows.spec.js:482:3 › Command Mode › should handle :help command
+[1A[2K  9) [chromium] › tests/e2e/game-flows.spec.js:341:3 › Lose Condition Flow › should allow retry from level failed screen 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('#screen-level-failed')
+    Expected: visible
+    Received: hidden
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('#screen-level-failed')[22m
+    [2m    14 × locator resolved to <div class="screen" id="screen-level-failed">…</div>[22m
+    [2m       - unexpected value "hidden"[22m
+
+
+      354 |     // Wait for level failed screen to be visible
+      355 |     const failedScreen = page.locator('#screen-level-failed');
+    > 356 |     await expect(failedScreen).toBeVisible({ timeout: 10000 });
+          |                                ^
+      357 |
+      358 |     // Wait for Retry button to be visible and click it
+      359 |     const retryButton = page.locator('#btn-retry');
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:356:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--a391d-ry-from-level-failed-screen-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--a391d-ry-from-level-failed-screen-chromium/error-context.md
+
+
+[1A[2K[20/22] [chromium] › tests/e2e/game-flows.spec.js:500:3 › Command Mode › should show error for unknown command
+[1A[2K  10) [chromium] › tests/e2e/game-flows.spec.js:373:3 › Lose Condition Flow › should allow returning to menu from level failed screen 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('#screen-level-failed')
+    Expected: visible
+    Received: hidden
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('#screen-level-failed')[22m
+    [2m    14 × locator resolved to <div class="screen" id="screen-level-failed">…</div>[22m
+    [2m       - unexpected value "hidden"[22m
+
+
+      388 |     // Wait for level failed screen to be visible
+      389 |     const failedScreen = page.locator('#screen-level-failed');
+    > 390 |     await expect(failedScreen).toBeVisible({ timeout: 10000 });
+          |                                ^
+      391 |
+      392 |     // Wait for Main Menu button to be visible and click it
+      393 |     const menuButton = page.locator('#btn-menu-failed');
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:390:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Lose-Condition--c6288-nu-from-level-failed-screen-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Lose-Condition--c6288-nu-from-level-failed-screen-chromium/error-context.md
+
+
+[1A[2K[21/22] [chromium] › tests/e2e/game-flows.spec.js:518:3 › Command Mode › should handle backspace in command mode
+[1A[2K  11) [chromium] › tests/e2e/game-flows.spec.js:457:3 › Game State Persistence › should enable continue button when save exists 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeEnabled[2m([22m[2m)[22m failed
+
+    Locator:  locator('#btn-continue-game')
+    Expected: enabled
+    Received: disabled
+    Timeout:  5000ms
+
+    Call log:
+    [2m  - Expect "toBeEnabled" with timeout 5000ms[22m
+    [2m  - waiting for locator('#btn-continue-game')[22m
+    [2m    9 × locator resolved to <button disabled class="menu-button" id="btn-continue-game">↵              Continue Game↵            </button>[22m
+    [2m      - unexpected value "disabled"[22m
+
+
+      475 |     // Continue button should now be enabled
+      476 |     const continueBtn = page.locator('#btn-continue-game');
+    > 477 |     await expect(continueBtn).toBeEnabled();
+          |                               ^
+      478 |   });
+      479 | });
+      480 |
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:477:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Game-State-Pers-12d3c-nue-button-when-save-exists-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Game-State-Pers-12d3c-nue-button-when-save-exists-chromium/error-context.md
+
+
+[1A[2K[22/22] [chromium] › tests/e2e/game-flows.spec.js:543:3 › HUD Display › should display HUD elements during gameplay
+[1A[2K  12) [chromium] › tests/e2e/game-flows.spec.js:482:3 › Command Mode › should handle :help command ─
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('.command-feedback')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('.command-feedback')[22m
+    [2m    9 × locator resolved to <div class="command-feedback hidden"></div>[22m
+    [2m      - unexpected value "hidden"[22m
+
+
+      494 |     // Should show help feedback
+      495 |     const feedback = page.locator('.command-feedback');
+    > 496 |     await expect(feedback).toBeVisible();
+          |                            ^
+      497 |     await expect(feedback).toContainText('Available commands');
+      498 |   });
+      499 |
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:496:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Command-Mode-should-handle-help-command-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Command-Mode-should-handle-help-command-chromium/error-context.md
+
+
+[1A[2K  13) [chromium] › tests/e2e/game-flows.spec.js:500:3 › Command Mode › should show error for unknown command 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('.command-feedback.error')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('.command-feedback.error')[22m
+
+
+      512 |     // Should show error feedback
+      513 |     const feedback = page.locator('.command-feedback.error');
+    > 514 |     await expect(feedback).toBeVisible();
+          |                            ^
+      515 |     await expect(feedback).toContainText('Unknown command');
+      516 |   });
+      517 |
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:514:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Command-Mode-sh-b555c-w-error-for-unknown-command-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Command-Mode-sh-b555c-w-error-for-unknown-command-chromium/error-context.md
+
+
+[1A[2K  14) [chromium] › tests/e2e/game-flows.spec.js:406:3 › Leaderboard System › should display score in leaderboard after winning 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('#screen-level-complete')
+    Expected: visible
+    Received: hidden
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('#screen-level-complete')[22m
+    [2m    14 × locator resolved to <div class="screen" id="screen-level-complete">…</div>[22m
+    [2m       - unexpected value "hidden"[22m
+
+
+      424 |     // Wait for level complete screen to be visible
+      425 |     const completeScreen = page.locator('#screen-level-complete');
+    > 426 |     await expect(completeScreen).toBeVisible({ timeout: 10000 });
+          |                                  ^
+      427 |
+      428 |     // Wait for Main Menu button to be visible and click it
+      429 |     const menuButton = page.locator('#btn-menu-complete');
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:426:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Leaderboard-Sys-53662-n-leaderboard-after-winning-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Leaderboard-Sys-53662-n-leaderboard-after-winning-chromium/error-context.md
+
+
+[1A[2K  15) [chromium] › tests/e2e/game-flows.spec.js:543:3 › HUD Display › should display HUD elements during gameplay 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('.hud-container')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('.hud-container')[22m
+
+
+      548 |     // HUD should be visible
+      549 |     const hud = page.locator('.hud-container');
+    > 550 |     await expect(hud).toBeVisible();
+          |                       ^
+      551 |
+      552 |     // Should show score
+      553 |     const score = page.locator('.hud-score');
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:550:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-HUD-Display-sho-47f26-UD-elements-during-gameplay-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-HUD-Display-sho-47f26-UD-elements-during-gameplay-chromium/error-context.md
+
+
+[1A[2K  15 failed
+    [chromium] › tests/e2e/game-flows.spec.js:16:3 › Tutorial Level 0: How to Quit Vim › should complete tutorial by typing :q and return to menu 
+    [chromium] › tests/e2e/game-flows.spec.js:68:3 › Tutorial Level 0: How to Quit Vim › should show tutorial only on first game 
+    [chromium] › tests/e2e/game-flows.spec.js:122:3 › Menu Navigation › should navigate from main menu to game and back 
+    [chromium] › tests/e2e/game-flows.spec.js:162:3 › Movement System › should move cursor with hjkl keys 
+    [chromium] › tests/e2e/game-flows.spec.js:206:3 › Win Condition Flow › should show level complete screen when all coins collected 
+    [chromium] › tests/e2e/game-flows.spec.js:242:3 › Win Condition Flow › should allow returning to menu from level complete screen 
+    [chromium] › tests/e2e/game-flows.spec.js:275:3 › Win Condition Flow › should allow restarting from level complete screen 
+    [chromium] › tests/e2e/game-flows.spec.js:313:3 › Lose Condition Flow › should show level failed screen when timer expires 
+    [chromium] › tests/e2e/game-flows.spec.js:341:3 › Lose Condition Flow › should allow retry from level failed screen 
+    [chromium] › tests/e2e/game-flows.spec.js:373:3 › Lose Condition Flow › should allow returning to menu from level failed screen 
+    [chromium] › tests/e2e/game-flows.spec.js:406:3 › Leaderboard System › should display score in leaderboard after winning 
+    [chromium] › tests/e2e/game-flows.spec.js:457:3 › Game State Persistence › should enable continue button when save exists 
+    [chromium] › tests/e2e/game-flows.spec.js:482:3 › Command Mode › should handle :help command ───
+    [chromium] › tests/e2e/game-flows.spec.js:500:3 › Command Mode › should show error for unknown command 
+    [chromium] › tests/e2e/game-flows.spec.js:543:3 › HUD Display › should display HUD elements during gameplay 
+  7 passed (33.8s)
+
+[36m  Serving HTML report at http://localhost:53955. Press Ctrl+C to quit.[39m
