@@ -106,9 +106,11 @@ function setupScreenCallbacks() {
     hideScreen(elements.screenMainMenu);
     if (menuNavigator) {
       menuNavigator.disable();
+      menuNavigator = null;
     }
     if (menuCommandModeKeyHandler) {
       document.removeEventListener('keydown', menuCommandModeKeyHandler);
+      menuCommandModeKeyHandler = null;
     }
     if (menuCommandModeUI) {
       menuCommandModeUI.destroy();
@@ -183,8 +185,16 @@ function updateContinueButton() {
  * Set up keyboard navigation for main menu
  */
 function setupMenuNavigator() {
+  console.log('setupMenuNavigator called');
   const buttons = [elements.btnStartGame, elements.btnContinueGame];
-  const mainMenuContainer = document.getElementById('main-menu-screen');
+  const mainMenuContainer = document.getElementById('screen-main-menu');
+
+  if (!mainMenuContainer) {
+    console.error('Main menu container not found!');
+    return;
+  }
+
+  console.log('Menu container found, setting up UI components');
 
   // Set up status bar
   menuStatusBar = new StatusBar(mainMenuContainer);
@@ -348,6 +358,11 @@ function setupMenuNavigator() {
   // Focus "Continue Game" if there's a save, otherwise "Start New Game"
   const initialIndex = saveManager.hasSave() ? 1 : 0;
   menuNavigator.setFocus(initialIndex);
+
+  console.log(
+    'Menu navigator setup complete, enabled:',
+    menuNavigator.isEnabled
+  );
 }
 
 /**

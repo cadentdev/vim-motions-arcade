@@ -3,7 +3,7 @@
  */
 
 // Version number (hardcoded as per requirements)
-const VERSION = '0.1.0';
+const VERSION = '0.1.1';
 
 /**
  * Renders the version display on the main menu
