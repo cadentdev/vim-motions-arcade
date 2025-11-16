@@ -1,0 +1,138 @@
+
+> vim-motions-arcade@0.1.0 test:e2e
+> playwright test
+
+
+Running 27 tests using 5 workers
+
+[1A[2K[1/27] [chromium] › tests/e2e/game-flows.spec.js:16:8 › Tutorial Level 0: How to Quit Vim › should complete tutorial by typing :q and return to menu
+[1A[2K[2/27] [chromium] › tests/e2e/game-flows.spec.js:68:8 › Tutorial Level 0: How to Quit Vim › should show tutorial only on first game
+[1A[2K[3/27] [chromium] › tests/e2e/game-flows.spec.js:122:8 › Menu Navigation › should navigate from main menu to game and back
+[1A[2K[4/27] [chromium] › tests/e2e/example.spec.js:9:3 › Game Application › should load the application
+[1A[2K[5/27] [chromium] › tests/e2e/game-flows.spec.js:150:3 › Menu Navigation › should show correct button states on menu
+[1A[2K[6/27] [chromium] › tests/e2e/game-flows.spec.js:101:3 › Tutorial Level 0: How to Quit Vim › should allow Escape to cancel command mode in tutorial
+[1A[2K[7/27] [chromium] › tests/e2e/example.spec.js:17:3 › Game Application › should display the game container
+[1A[2K[8/27] [chromium] › tests/e2e/example.spec.js:25:3 › Game Application › should display the main heading
+[1A[2K[9/27] [chromium] › tests/e2e/game-flows.spec.js:162:3 › Menu Navigation › should navigate menu with vim keys (j/k) and activate with Enter
+[1A[2K[10/27] [chromium] › tests/e2e/game-flows.spec.js:243:3 › Menu Navigation › should show visual feedback when Enter is pressed
+[1A[2K[11/27] [chromium] › tests/e2e/game-flows.spec.js:196:3 › Menu Navigation › should skip disabled Continue button when navigating
+[1A[2K[12/27] [chromium] › tests/e2e/game-flows.spec.js:216:3 › Menu Navigation › should focus Continue button when save exists
+[1A[2K[13/27] [chromium] › tests/e2e/game-flows.spec.js:261:3 › Menu Navigation › should not allow navigation past boundaries
+[1A[2K[14/27] [chromium] › tests/e2e/game-flows.spec.js:280:8 › Movement System › should move cursor with hjkl keys
+[1A[2K[15/27] [chromium] › tests/e2e/game-flows.spec.js:324:8 › Win Condition Flow › should show level complete screen when all coins collected
+[1A[2K[16/27] [chromium] › tests/e2e/game-flows.spec.js:360:8 › Win Condition Flow › should allow returning to menu from level complete screen
+[1A[2K[17/27] [chromium] › tests/e2e/game-flows.spec.js:393:8 › Win Condition Flow › should allow restarting from level complete screen
+[1A[2K[18/27] [chromium] › tests/e2e/game-flows.spec.js:431:8 › Lose Condition Flow › should show level failed screen when timer expires
+[1A[2K[19/27] [chromium] › tests/e2e/game-flows.spec.js:459:8 › Lose Condition Flow › should allow retry from level failed screen
+[1A[2K[20/27] [chromium] › tests/e2e/game-flows.spec.js:491:8 › Lose Condition Flow › should allow returning to menu from level failed screen
+[1A[2K[21/27] [chromium] › tests/e2e/game-flows.spec.js:524:8 › Leaderboard System › should display score in leaderboard after winning
+[1A[2K[22/27] [chromium] › tests/e2e/game-flows.spec.js:565:3 › Leaderboard System › should show empty message when no scores exist
+[1A[2K[23/27] [chromium] › tests/e2e/game-flows.spec.js:575:8 › Game State Persistence › should enable continue button when save exists
+[1A[2K[24/27] [chromium] › tests/e2e/game-flows.spec.js:602:8 › Command Mode › should handle :help command
+[1A[2K[25/27] [chromium] › tests/e2e/game-flows.spec.js:620:8 › Command Mode › should show error for unknown command
+[1A[2K[26/27] [chromium] › tests/e2e/game-flows.spec.js:638:3 › Command Mode › should handle backspace in command mode
+[1A[2K[27/27] [chromium] › tests/e2e/game-flows.spec.js:663:8 › HUD Display › should display HUD elements during gameplay
+[1A[2K  1) [chromium] › tests/e2e/game-flows.spec.js:243:3 › Menu Navigation › should show visual feedback when Enter is pressed 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveClass[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('#btn-start-game')
+    Expected pattern: [32m/active/[39m
+    Received string:  [31m"menu-button primary"[39m
+    Timeout: 5000ms
+
+    Call log:
+    [2m  - Expect "toHaveClass" with timeout 5000ms[22m
+    [2m  - waiting for locator('#btn-start-game')[22m
+    [2m    9 × locator resolved to <button id="btn-start-game" class="menu-button primary">↵              Start New Game↵            </button>[22m
+    [2m      - unexpected value "menu-button primary"[22m
+
+
+      256 |     // Button should briefly have 'active' class (for visual feedback)
+      257 |     // Note: The active class is removed after 150ms, so we check immediately
+    > 258 |     await expect(startBtn).toHaveClass(/active/);
+          |                            ^
+      259 |   });
+      260 |
+      261 |   test('should not allow navigation past boundaries', async ({ page }) => {
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:258:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Menu-Navigation-49a6b-dback-when-Enter-is-pressed-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Menu-Navigation-49a6b-dback-when-Enter-is-pressed-chromium/error-context.md
+
+
+[1A[2K  2) [chromium] › tests/e2e/game-flows.spec.js:162:3 › Menu Navigation › should navigate menu with vim keys (j/k) and activate with Enter 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).not.[22mtoHaveClass[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('#btn-start-game')
+    Expected pattern: not [32m/focused/[39m
+    Received string: [31m"menu-button primary [7mfocused[27m"[39m
+    Timeout: 5000ms
+
+    Call log:
+    [2m  - Expect "not toHaveClass" with timeout 5000ms[22m
+    [2m  - waiting for locator('#btn-start-game')[22m
+    [2m    9 × locator resolved to <button id="btn-start-game" class="menu-button primary focused">↵              Start New Game↵            </button>[22m
+    [2m      - unexpected value "menu-button primary focused"[22m
+
+
+      176 |
+      177 |     // Continue button should now have focus (even though disabled, navigation works)
+    > 178 |     await expect(startBtn).not.toHaveClass(/focused/);
+          |                                ^
+      179 |     await expect(continueBtn).toHaveClass(/focused/);
+      180 |
+      181 |     // Press k to move back up
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:178:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Menu-Navigation-4f7b2-j-k-and-activate-with-Enter-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Menu-Navigation-4f7b2-j-k-and-activate-with-Enter-chromium/error-context.md
+
+
+[1A[2K  3) [chromium] › tests/e2e/game-flows.spec.js:216:3 › Menu Navigation › should focus Continue button when save exists 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeEnabled[2m([22m[2m)[22m failed
+
+    Locator:  locator('#btn-continue-game')
+    Expected: enabled
+    Received: disabled
+    Timeout:  5000ms
+
+    Call log:
+    [2m  - Expect "toBeEnabled" with timeout 5000ms[22m
+    [2m  - waiting for locator('#btn-continue-game')[22m
+    [2m    9 × locator resolved to <button disabled class="menu-button" id="btn-continue-game">↵              Continue Game↵            </button>[22m
+    [2m      - unexpected value "disabled"[22m
+
+
+      235 |
+      236 |     // Continue button should be enabled now
+    > 237 |     await expect(continueBtn).toBeEnabled();
+          |                               ^
+      238 |
+      239 |     // Continue button should have initial focus (since save exists)
+      240 |     await expect(continueBtn).toHaveClass(/focused/);
+        at /Users/neil/Repos/cadentdev/vim-motions-arcade/tests/e2e/game-flows.spec.js:237:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/game-flows-Menu-Navigation-579ab-nue-button-when-save-exists-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/game-flows-Menu-Navigation-579ab-nue-button-when-save-exists-chromium/error-context.md
+
+
+[1A[2K  3 failed
+    [chromium] › tests/e2e/game-flows.spec.js:162:3 › Menu Navigation › should navigate menu with vim keys (j/k) and activate with Enter 
+    [chromium] › tests/e2e/game-flows.spec.js:216:3 › Menu Navigation › should focus Continue button when save exists 
+    [chromium] › tests/e2e/game-flows.spec.js:243:3 › Menu Navigation › should show visual feedback when Enter is pressed 
+  15 skipped
+  9 passed (9.4s)
+
+[36m  Serving HTML report at http://localhost:9323. Press Ctrl+C to quit.[39m
