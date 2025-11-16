@@ -168,10 +168,6 @@ function updateContinueButton() {
 function setupMenuNavigator() {
   const buttons = [elements.btnStartGame, elements.btnContinueGame];
 
-  // Determine initial focus based on save game state
-  // Focus "Continue Game" if there's a save, otherwise "Start New Game"
-  const initialIndex = saveManager.hasSave() ? 1 : 0;
-
   menuNavigator = new MenuNavigator(buttons, {
     onActivate: (button) => {
       // Trigger click on the activated button
@@ -179,9 +175,12 @@ function setupMenuNavigator() {
     },
   });
 
-  // Set initial focus to appropriate button
-  menuNavigator.currentIndex = initialIndex;
+  // Enable first, then set initial focus based on save game state
   menuNavigator.enable();
+
+  // Focus "Continue Game" if there's a save, otherwise "Start New Game"
+  const initialIndex = saveManager.hasSave() ? 1 : 0;
+  menuNavigator.setFocus(initialIndex);
 }
 
 /**
