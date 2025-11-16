@@ -164,17 +164,36 @@ test.describe('Menu Navigation', () => {
   }) => {
     await page.goto('/');
 
+    // Create a save so Continue button is enabled and we have 2 navigable buttons
+    await page.evaluate(() => {
+      localStorage.setItem(
+        'vim-arcade-save',
+        JSON.stringify({
+          level: { current: 1 },
+          score: 50,
+          tutorialCompleted: true,
+        })
+      );
+    });
+
+    // Reload to apply the save
+    await page.reload();
+
     const startBtn = page.locator('#btn-start-game');
     const continueBtn = page.locator('#btn-continue-game');
 
-    // Start button should initially have focus (no save exists)
+    // Both buttons should be enabled
+    await expect(startBtn).toBeEnabled();
+    await expect(continueBtn).toBeEnabled();
+
+    // Start button should initially have focus (when both enabled, first button gets focus)
     await expect(startBtn).toHaveClass(/focused/);
     await expect(continueBtn).not.toHaveClass(/focused/);
 
     // Press j to move down
     await page.keyboard.press('j');
 
-    // Continue button should now have focus (even though disabled, navigation works)
+    // Continue button should now have focus
     await expect(startBtn).not.toHaveClass(/focused/);
     await expect(continueBtn).toHaveClass(/focused/);
 
@@ -201,6 +220,9 @@ test.describe('Menu Navigation', () => {
     const startBtn = page.locator('#btn-start-game');
     const continueBtn = page.locator('#btn-continue-game');
 
+    // Continue button should be disabled (no save exists)
+    await expect(continueBtn).toBeDisabled();
+
     // Start button should initially have focus
     await expect(startBtn).toHaveClass(/focused/);
 
@@ -210,7 +232,12 @@ test.describe('Menu Navigation', () => {
 
     // Since Continue is disabled and there are only 2 buttons,
     // we should still be on Start (can't move to disabled button)
-    await expect(continueBtn).toBeDisabled();
+    await expect(startBtn).toHaveClass(/focused/);
+    await expect(continueBtn).not.toHaveClass(/focused/);
+
+    // Press k to try moving up - should also stay on Start
+    await page.keyboard.press('k');
+    await expect(startBtn).toHaveClass(/focused/);
   });
 
   test('should focus Continue button when save exists', async ({ page }) => {
@@ -219,7 +246,7 @@ test.describe('Menu Navigation', () => {
     // Create a save in localStorage
     await page.evaluate(() => {
       localStorage.setItem(
-        'vim-motions-arcade-save',
+        'vim-arcade-save',
         JSON.stringify({
           level: { current: 1 },
           score: 50,
@@ -240,7 +267,7 @@ test.describe('Menu Navigation', () => {
     await expect(continueBtn).toHaveClass(/focused/);
   });
 
-  test('should show visual feedback when Enter is pressed', async ({
+  test('should activate focused button when Enter is pressed', async ({
     page,
   }) => {
     await page.goto('/');
@@ -250,12 +277,12 @@ test.describe('Menu Navigation', () => {
     // Start button should have focus
     await expect(startBtn).toHaveClass(/focused/);
 
-    // Press Enter
+    // Press Enter to activate the focused button
     await page.keyboard.press('Enter');
 
-    // Button should briefly have 'active' class (for visual feedback)
-    // Note: The active class is removed after 150ms, so we check immediately
-    await expect(startBtn).toHaveClass(/active/);
+    // Should navigate to tutorial (verifying Enter activated the Start button)
+    await page.waitForTimeout(500);
+    await expect(page.locator('.tutorial-content')).toBeVisible();
   });
 
   test('should not allow navigation past boundaries', async ({ page }) => {
@@ -283,7 +310,7 @@ test.describe('Movement System', () => {
     // Mark tutorial as completed in localStorage
     await page.evaluate(() => {
       localStorage.setItem(
-        'vim-motions-arcade-save',
+        'vim-arcade-save',
         JSON.stringify({ tutorialCompleted: true })
       );
     });
@@ -580,7 +607,7 @@ test.describe('Game State Persistence', () => {
     // Create a save in localStorage
     await page.evaluate(() => {
       localStorage.setItem(
-        'vim-motions-arcade-save',
+        'vim-arcade-save',
         JSON.stringify({
           level: { current: 1 },
           score: 50,
