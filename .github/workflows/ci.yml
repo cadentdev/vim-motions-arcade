@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ['**']  # Run on pushes to all branches
+    branches: ['**'] # Run on pushes to all branches
   pull_request:
-    branches: [main]  # Run on PRs targeting main
+    branches: [main] # Run on PRs targeting main
 
 jobs:
   lint:
@@ -57,6 +57,8 @@ jobs:
 
   e2e-tests:
     name: E2E Tests
+    # Only run E2E tests on pull requests (merge gate), not on regular pushes
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
