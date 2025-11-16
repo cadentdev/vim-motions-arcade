@@ -1,0 +1,36 @@
+
+> vim-motions-arcade@0.1.0 test:e2e
+> playwright test
+
+
+Running 22 tests using 5 workers
+
+[1A[2K[1/22] [chromium] › tests/e2e/game-flows.spec.js:16:8 › Tutorial Level 0: How to Quit Vim › should complete tutorial by typing :q and return to menu
+[1A[2K[2/22] [chromium] › tests/e2e/game-flows.spec.js:68:8 › Tutorial Level 0: How to Quit Vim › should show tutorial only on first game
+[1A[2K[3/22] [chromium] › tests/e2e/game-flows.spec.js:122:8 › Menu Navigation › should navigate from main menu to game and back
+[1A[2K[4/22] [chromium] › tests/e2e/example.spec.js:25:3 › Game Application › should display the main heading
+[1A[2K[5/22] [chromium] › tests/e2e/game-flows.spec.js:150:3 › Menu Navigation › should show correct button states on menu
+[1A[2K[6/22] [chromium] › tests/e2e/example.spec.js:9:3 › Game Application › should load the application
+[1A[2K[7/22] [chromium] › tests/e2e/example.spec.js:17:3 › Game Application › should display the game container
+[1A[2K[8/22] [chromium] › tests/e2e/game-flows.spec.js:101:3 › Tutorial Level 0: How to Quit Vim › should allow Escape to cancel command mode in tutorial
+[1A[2K[9/22] [chromium] › tests/e2e/game-flows.spec.js:164:8 › Movement System › should move cursor with hjkl keys
+[1A[2K[10/22] [chromium] › tests/e2e/game-flows.spec.js:208:8 › Win Condition Flow › should show level complete screen when all coins collected
+[1A[2K[11/22] [chromium] › tests/e2e/game-flows.spec.js:244:8 › Win Condition Flow › should allow returning to menu from level complete screen
+[1A[2K[12/22] [chromium] › tests/e2e/game-flows.spec.js:277:8 › Win Condition Flow › should allow restarting from level complete screen
+[1A[2K[13/22] [chromium] › tests/e2e/game-flows.spec.js:315:8 › Lose Condition Flow › should show level failed screen when timer expires
+[1A[2K[14/22] [chromium] › tests/e2e/game-flows.spec.js:343:8 › Lose Condition Flow › should allow retry from level failed screen
+[1A[2K[15/22] [chromium] › tests/e2e/game-flows.spec.js:375:8 › Lose Condition Flow › should allow returning to menu from level failed screen
+[1A[2K[16/22] [chromium] › tests/e2e/game-flows.spec.js:408:8 › Leaderboard System › should display score in leaderboard after winning
+[1A[2K[17/22] [chromium] › tests/e2e/game-flows.spec.js:459:8 › Game State Persistence › should enable continue button when save exists
+[1A[2K[18/22] [chromium] › tests/e2e/game-flows.spec.js:486:8 › Command Mode › should handle :help command
+[1A[2K[19/22] [chromium] › tests/e2e/game-flows.spec.js:504:8 › Command Mode › should show error for unknown command
+[1A[2K[20/22] [chromium] › tests/e2e/game-flows.spec.js:547:8 › HUD Display › should display HUD elements during gameplay
+[1A[2K[21/22] [chromium] › tests/e2e/game-flows.spec.js:449:3 › Leaderboard System › should show empty message when no scores exist
+[1A[2K[22/22] [chromium] › tests/e2e/game-flows.spec.js:522:3 › Command Mode › should handle backspace in command mode
+[1A[2K  15 skipped
+  7 passed (5.0s)
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report[39m
+[36m[39m
