@@ -62,6 +62,7 @@ export class MenuNavigator {
     // Handle command mode activation
     if (key === ':') {
       event.preventDefault();
+      event.stopPropagation();
       console.log('MenuNavigator: activating command mode');
       if (this.callbacks.onCommandMode) {
         this.callbacks.onCommandMode();

@@ -294,14 +294,23 @@ function setupMenuNavigator() {
   menuCommandModeKeyHandler = (event) => {
     if (!menuCommandMode.isActive) return;
 
-    event.preventDefault();
+    console.log(
+      'menuCommandModeKeyHandler: key pressed:',
+      event.key,
+      'length:',
+      event.key.length
+    );
 
     if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
       menuCommandMode.cancel();
       menuCommandModeUI.hide();
       menuStatusBar.setMode('NORMAL');
       menuNavigator.setCommandModeActive(false);
     } else if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
       const result = menuCommandMode.submit();
 
       if (result.success) {
@@ -342,9 +351,19 @@ function setupMenuNavigator() {
         menuCommandModeUI.hide();
       }
     } else if (event.key === 'Backspace') {
+      event.preventDefault();
+      event.stopPropagation();
       menuCommandMode.backspace();
       menuCommandModeUI.updateInput(menuCommandMode.getBuffer());
-    } else if (event.key.length === 1 && !event.ctrlKey && !event.metaKey) {
+    } else if (
+      event.key.length === 1 &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
+      console.log('menuCommandModeKeyHandler: adding char:', event.key);
       menuCommandMode.addChar(event.key);
       menuCommandModeUI.updateInput(menuCommandMode.getBuffer());
     }
@@ -606,13 +625,15 @@ function setupCommandMode(container) {
   commandModeKeyHandler = (event) => {
     if (!commandMode.isActive) return;
 
-    event.preventDefault();
-
     if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
       commandMode.cancel();
       commandModeUI.hide();
       gameCoordinator.resume();
     } else if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
       const result = commandMode.submit();
 
       if (result.success && result.action === 'quit') {
@@ -635,9 +656,18 @@ function setupCommandMode(container) {
         gameCoordinator.resume();
       }
     } else if (event.key === 'Backspace') {
+      event.preventDefault();
+      event.stopPropagation();
       commandMode.backspace();
       commandModeUI.updateInput(commandMode.getBuffer());
-    } else if (event.key.length === 1 && !event.ctrlKey && !event.metaKey) {
+    } else if (
+      event.key.length === 1 &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
       commandMode.addChar(event.key);
       commandModeUI.updateInput(commandMode.getBuffer());
     }
