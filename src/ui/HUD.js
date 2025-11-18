@@ -1,8 +1,9 @@
 /**
  * HUD - Heads-Up Display for game information
  *
- * Displays score, timer, and mode indicator as a fixed overlay.
+ * Displays score and timer as a fixed overlay.
  * Updates in real-time based on GameState changes.
+ * Note: Mode indicator is now handled by StatusBar component for consistency.
  */
 export class HUD {
   constructor() {
@@ -10,7 +11,6 @@ export class HUD {
     this.hudContainer = null;
     this.scoreElement = null;
     this.timerElement = null;
-    this.modeElement = null;
     this.initialized = false;
   }
 
@@ -67,25 +67,9 @@ export class HUD {
     this.timerElement.style.borderRadius = '4px';
     this.timerElement.textContent = '0:00';
 
-    // Create mode indicator (bottom-left)
-    this.modeElement = document.createElement('div');
-    this.modeElement.className = 'hud-mode';
-    this.modeElement.style.position = 'absolute';
-    this.modeElement.style.bottom = '10px';
-    this.modeElement.style.left = '10px';
-    this.modeElement.style.fontFamily = 'monospace';
-    this.modeElement.style.fontSize = '16px';
-    this.modeElement.style.fontWeight = 'bold';
-    this.modeElement.style.color = '#ffffff';
-    this.modeElement.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    this.modeElement.style.padding = '6px 10px';
-    this.modeElement.style.borderRadius = '4px';
-    this.modeElement.textContent = '-- NORMAL --';
-
     // Append elements to HUD container
     this.hudContainer.appendChild(this.scoreElement);
     this.hudContainer.appendChild(this.timerElement);
-    this.hudContainer.appendChild(this.modeElement);
 
     // Append HUD container to parent
     this.container.appendChild(this.hudContainer);
@@ -146,20 +130,6 @@ export class HUD {
   }
 
   /**
-   * Update mode indicator
-   * @param {string} mode - Current vim mode (e.g., 'NORMAL', 'INSERT', 'VISUAL')
-   */
-  updateMode(mode) {
-    if (!this.initialized) {
-      throw new Error('HUD must be initialized before updating mode');
-    }
-
-    // Convert to uppercase for consistency
-    const modeUpper = mode.toUpperCase();
-    this.modeElement.textContent = `-- ${modeUpper} --`;
-  }
-
-  /**
    * Clean up and remove HUD from DOM
    */
   destroy() {
@@ -171,7 +141,6 @@ export class HUD {
     this.hudContainer = null;
     this.scoreElement = null;
     this.timerElement = null;
-    this.modeElement = null;
     this.initialized = false;
   }
 }
