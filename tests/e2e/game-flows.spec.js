@@ -709,10 +709,10 @@ test.describe('HUD Display', () => {
     const timer = page.locator('.hud-timer');
     await expect(timer).toBeVisible();
 
-    // Should show mode indicator
-    const mode = page.locator('.hud-mode');
-    await expect(mode).toBeVisible();
-    await expect(mode).toContainText('NORMAL');
+    // Should show status bar with mode indicator
+    const statusBar = page.locator('.status-bar');
+    await expect(statusBar).toBeVisible();
+    await expect(statusBar).toContainText('NORMAL');
   });
 });
 

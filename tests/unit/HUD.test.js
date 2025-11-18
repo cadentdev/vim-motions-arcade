@@ -54,13 +54,6 @@ describe('HUD', () => {
       expect(timerDisplay).not.toBeNull();
     });
 
-    it('should create mode indicator element', () => {
-      hud.initialize(mockContainer);
-
-      const modeIndicator = mockContainer.querySelector('.hud-mode');
-      expect(modeIndicator).not.toBeNull();
-    });
-
     it('should throw error if container is not a DOM element', () => {
       expect(() => hud.initialize('not-an-element')).toThrow();
       expect(() => hud.initialize(null)).toThrow();
@@ -93,11 +86,6 @@ describe('HUD', () => {
     it('should position timer display at top-center', () => {
       const timerDisplay = mockContainer.querySelector('.hud-timer');
       expect(timerDisplay.classList.contains('hud-timer')).toBe(true);
-    });
-
-    it('should position mode indicator at bottom-left', () => {
-      const modeIndicator = mockContainer.querySelector('.hud-mode');
-      expect(modeIndicator.classList.contains('hud-mode')).toBe(true);
     });
   });
 
@@ -237,38 +225,6 @@ describe('HUD', () => {
     });
   });
 
-  describe('Mode Indicator', () => {
-    beforeEach(() => {
-      hud.initialize(mockContainer);
-    });
-
-    it('should display default mode as NORMAL', () => {
-      const modeIndicator = mockContainer.querySelector('.hud-mode');
-      expect(modeIndicator.textContent).toContain('NORMAL');
-    });
-
-    it('should update mode when updateMode is called', () => {
-      hud.updateMode('INSERT');
-
-      const modeIndicator = mockContainer.querySelector('.hud-mode');
-      expect(modeIndicator.textContent).toContain('INSERT');
-    });
-
-    it('should handle different mode values', () => {
-      hud.updateMode('VISUAL');
-
-      const modeIndicator = mockContainer.querySelector('.hud-mode');
-      expect(modeIndicator.textContent).toContain('VISUAL');
-    });
-
-    it('should display mode in uppercase', () => {
-      hud.updateMode('normal');
-
-      const modeIndicator = mockContainer.querySelector('.hud-mode');
-      expect(modeIndicator.textContent).toMatch(/NORMAL/);
-    });
-  });
-
   describe('Destroy', () => {
     it('should remove HUD elements from DOM', () => {
       hud.initialize(mockContainer);
@@ -324,10 +280,6 @@ describe('HUD', () => {
 
     it('should throw error if updating timer before initialization', () => {
       expect(() => hud.updateTimer(60)).toThrow(/initialize/i);
-    });
-
-    it('should throw error if updating mode before initialization', () => {
-      expect(() => hud.updateMode('NORMAL')).toThrow(/initialize/i);
     });
 
     it('should validate timer is a number', () => {

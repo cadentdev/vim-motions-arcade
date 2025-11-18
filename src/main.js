@@ -24,6 +24,7 @@ const leaderboard = new Leaderboard();
 let gameCoordinator = null;
 let commandMode = null;
 let commandModeUI = null;
+let gameStatusBar = null;
 let tutorialLevel = null;
 let commandModeKeyHandler = null;
 let tutorialKeyHandler = null;
@@ -588,6 +589,12 @@ function setupCommandMode(container) {
   if (!gameCoordinator) return;
 
   const gameState = gameCoordinator.getGameState();
+
+  // Set up status bar (same as menu)
+  gameStatusBar = new StatusBar(container);
+  gameStatusBar.setMode('NORMAL');
+
+  // Set up command mode UI
   commandModeUI = new CommandModeUI(container);
   commandMode = new CommandMode(gameState);
 
@@ -597,6 +604,7 @@ function setupCommandMode(container) {
   inputManager.callbacks.onCommandMode = () => {
     commandMode.activate();
     commandModeUI.show();
+    gameStatusBar.setMode('COMMAND');
 
     // Pause the game
     gameCoordinator.pause();
@@ -611,16 +619,13 @@ function setupCommandMode(container) {
     if (event.key === 'Escape') {
       commandMode.cancel();
       commandModeUI.hide();
+      gameStatusBar.setMode('NORMAL');
       gameCoordinator.resume();
     } else if (event.key === 'Enter') {
       const result = commandMode.submit();
 
       if (result.success && result.action === 'quit') {
-        commandModeUI.showFeedback(
-          'Returning to main menu...',
-          'success',
-          1000
-        );
+        gameStatusBar.showMessage('Returning to main menu...');
         setTimeout(() => {
           cleanupGame();
           screenManager.switchTo('MAIN_MENU');
@@ -628,9 +633,13 @@ function setupCommandMode(container) {
       } else if (result.success) {
         commandModeUI.showFeedback(result.message, 'success');
         commandModeUI.hide();
+        gameStatusBar.setMode('NORMAL');
         gameCoordinator.resume();
       } else {
-        commandModeUI.showFeedback(result.error, 'error', 3000);
+        gameStatusBar.showError(result.error);
+        setTimeout(() => {
+          gameStatusBar.setMode('COMMAND');
+        }, 2000);
         commandModeUI.hide();
         gameCoordinator.resume();
       }
@@ -711,6 +720,11 @@ function cleanupGame() {
   if (commandModeUI) {
     commandModeUI.destroy();
     commandModeUI = null;
+  }
+
+  if (gameStatusBar) {
+    gameStatusBar.destroy();
+    gameStatusBar = null;
   }
 
   commandMode = null;

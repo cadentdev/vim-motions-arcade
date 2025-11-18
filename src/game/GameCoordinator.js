@@ -92,12 +92,11 @@ export class GameCoordinator {
     this.coinRenderer.setContainer(container);
     this.coinRenderer.renderCoins(this.gameState.level.coins);
 
-    // Initialize HUD
+    // Initialize HUD (score and timer only - mode is handled by StatusBar)
     this.hud = new HUD();
     this.hud.initialize(container);
     this.hud.updateScore(this.gameState.score);
     this.hud.updateTimer(this.gameState.timer);
-    this.hud.updateMode(this.gameState.player.mode);
 
     // Initialize InputManager
     this.inputManager = new InputManager({
