@@ -212,11 +212,23 @@ function setupMenuNavigator() {
   // Create menu-specific commands
   const menuCommands = {
     new: {
-      execute: () => ({
-        success: true,
-        action: 'new',
-        message: 'Starting new game...',
-      }),
+      execute: () => {
+        // Check if there's a saved game
+        if (menuContext.hasSavedGame()) {
+          return {
+            success: true,
+            action: 'new',
+            requiresConfirmation: true,
+            message: 'Delete current game and start over?',
+          };
+        }
+        // No saved game, proceed directly
+        return {
+          success: true,
+          action: 'new',
+          message: 'Starting new game...',
+        };
+      },
       description: 'Start a new game',
     },
     edit: {
@@ -307,10 +319,28 @@ function setupMenuNavigator() {
 
       if (result.success) {
         if (result.action === 'new') {
-          menuStatusBar.showMessage('Starting new game...');
-          setTimeout(() => {
-            elements.btnStartGame.click();
-          }, 500);
+          // Check if confirmation is required (saved game exists)
+          if (result.requiresConfirmation) {
+            if (confirm(result.message)) {
+              // User confirmed - delete the saved game
+              saveManager.deleteSave();
+              menuStatusBar.showMessage('Starting new game...');
+              setTimeout(() => {
+                elements.btnStartGame.click();
+              }, 500);
+            } else {
+              // User cancelled - just exit command mode
+              menuCommandModeUI.hide();
+              menuStatusBar.setMode('NORMAL');
+              menuNavigator.setCommandModeActive(false);
+            }
+          } else {
+            // No confirmation needed - proceed directly
+            menuStatusBar.showMessage('Starting new game...');
+            setTimeout(() => {
+              elements.btnStartGame.click();
+            }, 500);
+          }
         } else if (result.action === 'edit') {
           menuStatusBar.showMessage('Loading saved game...');
           setTimeout(() => {
