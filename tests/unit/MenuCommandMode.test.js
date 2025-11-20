@@ -22,22 +22,34 @@ describe('MenuCommandMode', () => {
       continueGame: mockContinueGame,
       showHelp: mockShowHelp,
       quitGame: mockQuitGame,
-      hasSavedGame: true,
+      hasSavedGame: vi.fn(() => true),
     };
 
     // Create custom commands for menu
     const menuCommands = {
       new: {
-        execute: () => ({
-          success: true,
-          action: 'new',
-          message: 'Starting new game...',
-        }),
+        execute: () => {
+          // Check if there's a saved game
+          if (menuContext.hasSavedGame()) {
+            return {
+              success: true,
+              action: 'new',
+              requiresConfirmation: true,
+              message: 'Delete current game and start over?',
+            };
+          }
+          // No saved game, proceed directly
+          return {
+            success: true,
+            action: 'new',
+            message: 'Starting new game...',
+          };
+        },
         description: 'Start a new game',
       },
       edit: {
         execute: () => {
-          if (!menuContext.hasSavedGame) {
+          if (!menuContext.hasSavedGame()) {
             return {
               success: false,
               error: 'No saved game found',
@@ -84,11 +96,22 @@ describe('MenuCommandMode', () => {
 
   describe('Menu-specific Commands', () => {
     describe(':new command', () => {
-      it('should execute :new command', () => {
+      it('should require confirmation when saved game exists', () => {
+        menuContext.hasSavedGame.mockReturnValue(true);
         const result = commandMode.executeCommand('new');
         expect(result.success).toBe(true);
         expect(result.action).toBe('new');
-        expect(result.message).toContain('new game');
+        expect(result.requiresConfirmation).toBe(true);
+        expect(result.message).toContain('Delete current game and start over?');
+      });
+
+      it('should not require confirmation when no saved game exists', () => {
+        menuContext.hasSavedGame.mockReturnValue(false);
+        const result = commandMode.executeCommand('new');
+        expect(result.success).toBe(true);
+        expect(result.action).toBe('new');
+        expect(result.requiresConfirmation).toBeUndefined();
+        expect(result.message).toContain('Starting new game');
       });
 
       it('should have :new command registered', () => {
@@ -105,11 +128,11 @@ describe('MenuCommandMode', () => {
       });
 
       it('should fail when no saved game exists', () => {
-        menuContext.hasSavedGame = false;
+        menuContext.hasSavedGame.mockReturnValue(false);
         const menuCommands = {
           edit: {
             execute: () => {
-              if (!menuContext.hasSavedGame) {
+              if (!menuContext.hasSavedGame()) {
                 return {
                   success: false,
                   error: 'No saved game found',
