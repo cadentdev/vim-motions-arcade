@@ -248,21 +248,27 @@ function setupMenuNavigator() {
       description: 'Continue from saved game',
     },
     help: {
-      execute: async () => {
-        try {
-          const response = await fetch('/docs/MENU_HELP.md');
-          const helpText = await response.text();
-          return {
-            success: true,
-            action: 'help',
-            message: helpText,
-          };
-        } catch {
-          return {
-            success: false,
-            error: 'Could not load help text',
-          };
-        }
+      execute: () => {
+        const helpText = `Vim Motions Arcade - Help
+
+NAVIGATION (NORMAL Mode)
+  j     - Move down to next menu item
+  k     - Move up to previous menu item
+  Enter - Activate selected menu item
+  :     - Enter COMMAND mode
+
+COMMANDS
+  :new  - Start a new game
+  :edit - Continue from saved game
+  :help - Display this help
+  :q    - Close the game
+
+Press Escape to return to NORMAL mode.`;
+        return {
+          success: true,
+          action: 'help',
+          message: helpText,
+        };
       },
       description: 'Show help documentation',
     },
