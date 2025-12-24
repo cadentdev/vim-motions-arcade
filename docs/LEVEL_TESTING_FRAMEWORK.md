@@ -283,6 +283,7 @@ A dedicated HTML page that bypasses the main game flow and loads directly into g
 **Location:** `/standalone.html` (root of project)
 
 **Behavior:**
+
 1. Parses URL parameters for level configuration
 2. Initializes LevelRunner instead of main.js flow
 3. Renders debug overlay and controls
@@ -298,17 +299,17 @@ A dedicated HTML page that bypasses the main game flow and loads directly into g
 
 **Supported Parameters:**
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `mode` | string | "procedural" | "procedural", "static", or level ID |
-| `seed` | number/string | random | Seed for procedural generation, or "random" |
-| `difficulty` | number | 3 | 1-10 difficulty scale |
-| `width` | number | 40 | Map width in characters |
-| `height` | number | 20 | Map height in lines |
-| `time` | number | 60 | Time limit in seconds |
-| `motions` | string | "hjkl" | Allowed motions (comma-separated or shorthand) |
-| `debug` | boolean | true | Show debug overlay |
-| `metrics` | boolean | false | Compute and display metrics |
+| Parameter    | Type          | Default      | Description                                    |
+| ------------ | ------------- | ------------ | ---------------------------------------------- |
+| `mode`       | string        | "procedural" | "procedural", "static", or level ID            |
+| `seed`       | number/string | random       | Seed for procedural generation, or "random"    |
+| `difficulty` | number        | 3            | 1-10 difficulty scale                          |
+| `width`      | number        | 40           | Map width in characters                        |
+| `height`     | number        | 20           | Map height in lines                            |
+| `time`       | number        | 60           | Time limit in seconds                          |
+| `motions`    | string        | "hjkl"       | Allowed motions (comma-separated or shorthand) |
+| `debug`      | boolean       | true         | Show debug overlay                             |
+| `metrics`    | boolean       | false        | Compute and display metrics                    |
 
 ### LevelRunner Class
 
@@ -399,18 +400,18 @@ Toggle-able overlays for map analysis:
 
 ### Keyboard Shortcuts (Debug Mode)
 
-| Key | Action |
-|-----|--------|
-| `F1` | Toggle debug panel |
-| `F2` | Toggle coin visibility overlay |
-| `F3` | Toggle grid overlay |
-| `F4` | Toggle optimal path display |
-| `F5` | Regenerate with new random seed |
-| `F6` | Export current level as JSON |
-| `F7` | Copy level URL to clipboard |
-| `F8` | Toggle pause |
-| `F9` | Instant win (skip to completion) |
-| `F10` | Instant lose (skip to failure) |
+| Key   | Action                             |
+| ----- | ---------------------------------- |
+| `F1`  | Toggle debug panel                 |
+| `F2`  | Toggle coin visibility overlay     |
+| `F3`  | Toggle grid overlay                |
+| `F4`  | Toggle optimal path display        |
+| `F5`  | Regenerate with new random seed    |
+| `F6`  | Export current level as JSON       |
+| `F7`  | Copy level URL to clipboard        |
+| `F8`  | Toggle pause                       |
+| `F9`  | Instant win (skip to completion)   |
+| `F10` | Instant lose (skip to failure)     |
 | `F11` | Increase difficulty and regenerate |
 | `F12` | Decrease difficulty and regenerate |
 
@@ -444,17 +445,17 @@ class LevelValidator {
 
 ### Validation Checks
 
-| Check | Description | Severity |
-|-------|-------------|----------|
-| **Coin Accessibility** | All coins reachable from player start | Error |
-| **Time Adequacy** | Time limit >= 1.5x optimal path time | Warning |
-| **Motion Sufficiency** | Allowed motions can reach all coins | Error |
-| **Boundary Validity** | All coins/blocks within map bounds | Error |
-| **Block Overlap** | No overlapping text blocks | Warning |
-| **Coin Overlap** | No coins on same position | Error |
-| **Empty Level** | Level has at least 1 coin | Error |
-| **Start Position** | Player start is valid position | Error |
-| **Difficulty Match** | Computed difficulty matches declared | Info |
+| Check                  | Description                           | Severity |
+| ---------------------- | ------------------------------------- | -------- |
+| **Coin Accessibility** | All coins reachable from player start | Error    |
+| **Time Adequacy**      | Time limit >= 1.5x optimal path time  | Warning  |
+| **Motion Sufficiency** | Allowed motions can reach all coins   | Error    |
+| **Boundary Validity**  | All coins/blocks within map bounds    | Error    |
+| **Block Overlap**      | No overlapping text blocks            | Warning  |
+| **Coin Overlap**       | No coins on same position             | Error    |
+| **Empty Level**        | Level has at least 1 coin             | Error    |
+| **Start Position**     | Player start is valid position        | Error    |
+| **Difficulty Match**   | Computed difficulty matches declared  | Info     |
 
 ### ValidationResult Schema
 
@@ -534,6 +535,7 @@ Normalized to 1-10 scale.
 For automated testing in CI/CD pipelines.
 
 **Usage:**
+
 ```bash
 # Test a specific level configuration
 npm run test:level -- --seed=12345 --difficulty=5
@@ -556,32 +558,32 @@ npm run test:level -- --metrics levels/chapter1-level5.json
  */
 describe('Level Generation', () => {
   describe('Procedural Levels', () => {
-    it('generates completable levels for difficulty 1-5', () => {})
-    it('generates completable levels for difficulty 6-10', () => {})
-    it('same seed produces identical levels', () => {})
-    it('different seeds produce different levels', () => {})
-    it('respects width/height parameters', () => {})
-    it('respects coin density parameter', () => {})
-  })
+    it('generates completable levels for difficulty 1-5', () => {});
+    it('generates completable levels for difficulty 6-10', () => {});
+    it('same seed produces identical levels', () => {});
+    it('different seeds produce different levels', () => {});
+    it('respects width/height parameters', () => {});
+    it('respects coin density parameter', () => {});
+  });
 
   describe('Validation', () => {
-    it('detects unreachable coins', () => {})
-    it('detects insufficient time limit', () => {})
-    it('detects out-of-bounds elements', () => {})
-    it('validates motion requirements match allowed motions', () => {})
-  })
+    it('detects unreachable coins', () => {});
+    it('detects insufficient time limit', () => {});
+    it('detects out-of-bounds elements', () => {});
+    it('validates motion requirements match allowed motions', () => {});
+  });
 
   describe('Metrics', () => {
-    it('computes accurate optimal path', () => {})
-    it('difficulty rating correlates with parameters', () => {})
-    it('time adequacy reflects actual playability', () => {})
-  })
+    it('computes accurate optimal path', () => {});
+    it('difficulty rating correlates with parameters', () => {});
+    it('time adequacy reflects actual playability', () => {});
+  });
 
   describe('Regression', () => {
-    it('known seeds produce expected metrics', () => {})
-    it('level definitions load without errors', () => {})
-  })
-})
+    it('known seeds produce expected metrics', () => {});
+    it('level definitions load without errors', () => {});
+  });
+});
 ```
 
 ---
@@ -704,13 +706,13 @@ standalone.html                 # Standalone entry point
 **Priority:** Critical
 **Dependencies:** None
 
-| Task | Description | Estimated Complexity |
-|------|-------------|---------------------|
-| Create LevelDefinition schema | Define TypeScript/JSDoc interfaces | Low |
-| Create LevelRunner class | Basic standalone execution | Medium |
-| Create standalone.html | Entry point with URL parsing | Low |
-| Basic debug overlay | Show seed, position, coins | Medium |
-| Unit tests for schemas | Validate serialization | Low |
+| Task                          | Description                        | Estimated Complexity |
+| ----------------------------- | ---------------------------------- | -------------------- |
+| Create LevelDefinition schema | Define TypeScript/JSDoc interfaces | Low                  |
+| Create LevelRunner class      | Basic standalone execution         | Medium               |
+| Create standalone.html        | Entry point with URL parsing       | Low                  |
+| Basic debug overlay           | Show seed, position, coins         | Medium               |
+| Unit tests for schemas        | Validate serialization             | Low                  |
 
 **Deliverable:** Can launch into a procedural level via URL
 
@@ -719,13 +721,13 @@ standalone.html                 # Standalone entry point
 **Priority:** High
 **Dependencies:** Phase 1
 
-| Task | Description | Estimated Complexity |
-|------|-------------|---------------------|
-| LevelValidator class | Completability and boundary checks | Medium |
-| Coin accessibility algorithm | Pathfinding for reachability | Medium |
-| LevelMetrics calculator | Difficulty and optimal path | High |
-| Validation test suite | Cover all validation rules | Medium |
-| Metrics visualization | Display in debug overlay | Low |
+| Task                         | Description                        | Estimated Complexity |
+| ---------------------------- | ---------------------------------- | -------------------- |
+| LevelValidator class         | Completability and boundary checks | Medium               |
+| Coin accessibility algorithm | Pathfinding for reachability       | Medium               |
+| LevelMetrics calculator      | Difficulty and optimal path        | High                 |
+| Validation test suite        | Cover all validation rules         | Medium               |
+| Metrics visualization        | Display in debug overlay           | Low                  |
 
 **Deliverable:** Levels are validated and metrics displayed
 
@@ -734,13 +736,13 @@ standalone.html                 # Standalone entry point
 **Priority:** Medium
 **Dependencies:** Phase 2
 
-| Task | Description | Estimated Complexity |
-|------|-------------|---------------------|
-| Full debug overlay UI | All panels and controls | Medium |
-| Visualization overlays | Grid, path, heatmap | Medium |
-| Debug keyboard shortcuts | All F-key bindings | Low |
-| Level export (JSON) | Export current level definition | Low |
-| URL generation | Copy shareable level URL | Low |
+| Task                     | Description                     | Estimated Complexity |
+| ------------------------ | ------------------------------- | -------------------- |
+| Full debug overlay UI    | All panels and controls         | Medium               |
+| Visualization overlays   | Grid, path, heatmap             | Medium               |
+| Debug keyboard shortcuts | All F-key bindings              | Low                  |
+| Level export (JSON)      | Export current level definition | Low                  |
+| URL generation           | Copy shareable level URL        | Low                  |
 
 **Deliverable:** Full debug toolkit for level testing
 
@@ -749,12 +751,12 @@ standalone.html                 # Standalone entry point
 **Priority:** Medium
 **Dependencies:** Phase 1
 
-| Task | Description | Estimated Complexity |
-|------|-------------|---------------------|
-| Static level format | Hand-crafted level loading | Medium |
-| LevelRegistry class | Central level storage | Medium |
-| Tutorial level definitions | Initial tutorial content | Medium |
-| Level pack schema | Organize levels into groups | Low |
+| Task                       | Description                 | Estimated Complexity |
+| -------------------------- | --------------------------- | -------------------- |
+| Static level format        | Hand-crafted level loading  | Medium               |
+| LevelRegistry class        | Central level storage       | Medium               |
+| Tutorial level definitions | Initial tutorial content    | Medium               |
+| Level pack schema          | Organize levels into groups | Low                  |
 
 **Deliverable:** Can create and load hand-crafted levels
 
@@ -763,12 +765,12 @@ standalone.html                 # Standalone entry point
 **Priority:** Medium
 **Dependencies:** Phase 2
 
-| Task | Description | Estimated Complexity |
-|------|-------------|---------------------|
-| CLI test runner | npm script for level testing | Medium |
-| Fuzz testing | Generate and validate N levels | Medium |
-| Regression snapshots | Known-good level outputs | Low |
-| CI integration | Run level tests in pipeline | Low |
+| Task                 | Description                    | Estimated Complexity |
+| -------------------- | ------------------------------ | -------------------- |
+| CLI test runner      | npm script for level testing   | Medium               |
+| Fuzz testing         | Generate and validate N levels | Medium               |
+| Regression snapshots | Known-good level outputs       | Low                  |
+| CI integration       | Run level tests in pipeline    | Low                  |
 
 **Deliverable:** Automated level validation in CI
 
@@ -777,12 +779,12 @@ standalone.html                 # Standalone entry point
 **Priority:** Low (after core game features)
 **Dependencies:** Phases 1-4
 
-| Task | Description | Estimated Complexity |
-|------|-------------|---------------------|
-| ProgressionManager | Track level completion | Medium |
-| GameCoordinator integration | Load levels from registry | Medium |
-| Level select screen | UI for choosing levels | Medium |
-| Unlock system | Motion unlocks from levels | Medium |
+| Task                        | Description                | Estimated Complexity |
+| --------------------------- | -------------------------- | -------------------- |
+| ProgressionManager          | Track level completion     | Medium               |
+| GameCoordinator integration | Load levels from registry  | Medium               |
+| Level select screen         | UI for choosing levels     | Medium               |
+| Unlock system               | Motion unlocks from levels | Medium               |
 
 **Deliverable:** Framework fully integrated with game
 
@@ -792,29 +794,29 @@ standalone.html                 # Standalone entry point
 
 ### Unit Tests
 
-| Component | Key Test Cases |
-|-----------|----------------|
+| Component       | Key Test Cases                                      |
+| --------------- | --------------------------------------------------- |
 | LevelDefinition | Schema validation, serialization, factory functions |
-| LevelRunner | Initialization, restart, config updates |
-| LevelValidator | Each validation rule, edge cases |
-| LevelMetrics | Path calculation, difficulty scoring |
-| LevelRegistry | Registration, retrieval, queries |
+| LevelRunner     | Initialization, restart, config updates             |
+| LevelValidator  | Each validation rule, edge cases                    |
+| LevelMetrics    | Path calculation, difficulty scoring                |
+| LevelRegistry   | Registration, retrieval, queries                    |
 
 ### Integration Tests
 
-| Scenario | Description |
-|----------|-------------|
-| Procedural generation | Generate levels, validate, compute metrics |
-| Static level loading | Load JSON, play through, verify behavior |
-| Full game flow | Level select → play → complete → progress saved |
+| Scenario              | Description                                     |
+| --------------------- | ----------------------------------------------- |
+| Procedural generation | Generate levels, validate, compute metrics      |
+| Static level loading  | Load JSON, play through, verify behavior        |
+| Full game flow        | Level select → play → complete → progress saved |
 
 ### E2E Tests
 
-| Flow | Description |
-|------|-------------|
+| Flow                  | Description                               |
+| --------------------- | ----------------------------------------- |
 | Standalone happy path | Load URL → play → collect all coins → win |
-| Debug controls | Use debug shortcuts, verify behavior |
-| Level validation | Load invalid level, verify error display |
+| Debug controls        | Use debug shortcuts, verify behavior      |
+| Level validation      | Load invalid level, verify error display  |
 
 ---
 
