@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vim Motions Arcade - Lane Runner (j/k Training)</title>
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="/src/styles/standalone.css" />
+    <link rel="stylesheet" href="/src/styles/lane-runner.css" />
+  </head>
+  <body>
+    <div id="game-container">
+      <!-- Debug Header -->
+      <div id="debug-header" class="debug-header">
+        <span class="debug-title">LANE RUNNER - j/k Training</span>
+        <span id="debug-info" class="debug-info">Loading...</span>
+      </div>
+
+      <!-- Game Area -->
+      <div id="game-area" class="game-area lane-runner-area">
+        <!-- Level renders here -->
+      </div>
+
+      <!-- Debug Footer -->
+      <div id="debug-footer" class="debug-footer">
+        <div class="debug-controls">
+          <span class="debug-key"><kbd>j</kbd> Down (index finger)</span>
+          <span class="debug-key"><kbd>k</kbd> Up (middle finger)</span>
+          <span class="debug-key"><kbd>R</kbd> Restart</span>
+        </div>
+        <div id="debug-position" class="debug-position">Lane: TOP</div>
+      </div>
+
+      <!-- Instructions overlay (shown at start) -->
+      <div id="instructions-overlay" class="instructions-overlay">
+        <div class="instructions-content">
+          <h2>Lane Runner</h2>
+          <p class="instructions-subtitle">Learn the j/k vim motions</p>
+
+          <div class="finger-guide">
+            <div class="finger-key">
+              <kbd>j</kbd>
+              <span class="finger-label">Index finger</span>
+              <span class="direction">Move DOWN</span>
+            </div>
+            <div class="finger-key">
+              <kbd>k</kbd>
+              <span class="finger-label">Middle finger</span>
+              <span class="direction">Move UP</span>
+            </div>
+          </div>
+
+          <p class="instructions-goal">
+            Avoid obstacles by switching lanes. Reach the finish line to win!
+          </p>
+
+          <button id="start-button" class="menu-button primary">
+            Press SPACE or ENTER to Start
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/levels/lane-runner.js"></script>
+  </body>
+</html>

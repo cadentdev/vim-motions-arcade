@@ -1,0 +1,323 @@
+/**
+ * Lane Runner Level Styles
+ * Two-lane side-scrolling game for j/k training
+ */
+
+/* Game Area Override */
+.lane-runner-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  padding: var(--spacing-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Lane Track Container */
+.lane-track {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--accent-primary);
+  border-radius: 4px;
+  box-shadow:
+    0 0 20px rgba(0, 255, 136, 0.2),
+    inset 0 0 40px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+/* Individual Lanes */
+.lane {
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 255, 136, 0.05) 0%,
+    rgba(0, 255, 136, 0.02) 50%,
+    rgba(0, 255, 136, 0.05) 100%
+  );
+}
+
+.lane-top {
+  border-bottom: none;
+}
+
+.lane-bottom {
+  border-top: none;
+}
+
+/* Lane Divider */
+.lane-divider {
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--accent-primary) 0px,
+    var(--accent-primary) 20px,
+    transparent 20px,
+    transparent 40px
+  );
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+/* Player Cursor */
+.lane-player {
+  position: absolute;
+  border-radius: 4px;
+  background: #ffffff;
+  z-index: 10;
+  transition: top 0.1s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lane-player.glow {
+  box-shadow:
+    0 0 10px #ffffff,
+    0 0 20px #ffffff,
+    0 0 30px rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(255, 255, 255, 0.3);
+  animation: player-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes player-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 10px #ffffff,
+      0 0 20px #ffffff,
+      0 0 30px rgba(255, 255, 255, 0.5),
+      0 0 40px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 15px #ffffff,
+      0 0 30px #ffffff,
+      0 0 45px rgba(255, 255, 255, 0.6),
+      0 0 60px rgba(255, 255, 255, 0.4);
+  }
+}
+
+.lane-player.hit {
+  background: var(--accent-danger);
+  animation: hit-flash 0.1s ease-in-out 3;
+  box-shadow:
+    0 0 20px var(--accent-danger),
+    0 0 40px var(--accent-danger);
+}
+
+@keyframes hit-flash {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Obstacles */
+.lane-obstacle {
+  position: absolute;
+  background: var(--accent-danger);
+  border: 2px solid #ff6688;
+  border-radius: 4px;
+  box-shadow:
+    0 0 10px rgba(255, 51, 102, 0.5),
+    inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.lane-obstacle::before {
+  content: 'X';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Coins */
+.lane-coin {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow:
+    0 0 10px #ffd700,
+    0 0 20px #ffd700,
+    0 0 30px rgba(255, 215, 0, 0.5);
+  animation: coin-glow 1s ease-in-out infinite;
+  z-index: 5;
+}
+
+@keyframes coin-glow {
+  0%,
+  100% {
+    text-shadow:
+      0 0 10px #ffd700,
+      0 0 20px #ffd700,
+      0 0 30px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    text-shadow:
+      0 0 15px #ffd700,
+      0 0 30px #ffd700,
+      0 0 45px rgba(255, 215, 0, 0.7);
+  }
+}
+
+.lane-coin.collected {
+  display: none;
+}
+
+/* Finish Line */
+.finish-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: repeating-linear-gradient(
+    0deg,
+    #fff 0px,
+    #fff 10px,
+    #000 10px,
+    #000 20px
+  );
+  z-index: 5;
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(255, 255, 255, 0.3);
+}
+
+.finish-line.reached {
+  animation: finish-pulse 0.5s ease-in-out infinite;
+}
+
+@keyframes finish-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(0, 255, 136, 0.8),
+      0 0 40px rgba(0, 255, 136, 0.5);
+  }
+  50% {
+    box-shadow:
+      0 0 40px rgba(0, 255, 136, 1),
+      0 0 60px rgba(0, 255, 136, 0.7);
+  }
+}
+
+.finish-label {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--accent-primary);
+  text-shadow: 0 0 10px var(--accent-primary);
+  white-space: nowrap;
+  letter-spacing: 0.1em;
+}
+
+/* Instructions Overlay */
+.instructions-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 14, 39, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  transition: opacity 0.3s ease;
+}
+
+.instructions-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.instructions-content {
+  text-align: center;
+  padding: var(--spacing-xl);
+  max-width: 500px;
+}
+
+.instructions-content h2 {
+  font-size: 2.5rem;
+  color: var(--accent-primary);
+  margin-bottom: var(--spacing-sm);
+  text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+  letter-spacing: 0.2em;
+}
+
+.instructions-subtitle {
+  color: var(--accent-tertiary);
+  font-size: 1.2rem;
+  margin-bottom: var(--spacing-xl);
+  letter-spacing: 0.1em;
+}
+
+.finger-guide {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.finger-key {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 8px;
+}
+
+.finger-key kbd {
+  font-size: 2.5rem;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--accent-primary);
+  border-radius: 8px;
+  color: var(--accent-primary);
+  box-shadow:
+    0 4px 0 rgba(0, 255, 136, 0.3),
+    0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.finger-label {
+  font-size: 0.9rem;
+  color: var(--accent-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.direction {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.instructions-goal {
+  color: var(--text-color);
+  font-size: 1rem;
+  margin-bottom: var(--spacing-xl);
+  opacity: 0.8;
+}
+
+/* Debug Info States */
+.debug-info.lose {
+  color: var(--accent-danger);
+  text-shadow: 0 0 10px var(--accent-danger);
+}
