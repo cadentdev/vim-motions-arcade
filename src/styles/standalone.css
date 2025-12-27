@@ -1,0 +1,214 @@
+/**
+ * Standalone Level Testing Styles
+ * Includes glowing cursor and debug overlay styling
+ */
+
+/* Debug Header */
+.debug-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--accent-tertiary);
+  border-radius: 4px;
+  margin-bottom: var(--spacing-md);
+}
+
+.debug-title {
+  font-size: 1.2rem;
+  color: var(--accent-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: bold;
+}
+
+.debug-info {
+  font-size: 1rem;
+  color: var(--accent-primary);
+  font-family: var(--font-mono);
+}
+
+.debug-info.win {
+  color: var(--accent-warning);
+  text-shadow: 0 0 10px var(--accent-warning);
+  animation: pulse-win 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-win {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Debug Footer */
+.debug-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--accent-tertiary);
+  border-radius: 4px;
+  margin-top: var(--spacing-md);
+}
+
+.debug-controls {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+
+.debug-key {
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+.debug-key kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  margin-right: 4px;
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid var(--accent-primary);
+  border-radius: 3px;
+  color: var(--accent-primary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.debug-position {
+  color: var(--accent-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+/* Standalone Game Area */
+.standalone-game-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: var(--spacing-xl);
+}
+
+/* Level Map Container */
+.level-map {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--accent-primary);
+  border-radius: 4px;
+  padding: 4px;
+  box-shadow:
+    0 0 20px rgba(0, 255, 136, 0.2),
+    inset 0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Maze Wall */
+.maze-wall {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--accent-secondary);
+  text-shadow: 0 0 5px var(--accent-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+/* Maze Coin */
+.maze-coin {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--accent-warning);
+  text-shadow:
+    0 0 8px var(--accent-warning),
+    0 0 16px rgba(255, 170, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: coin-pulse 1.5s ease-in-out infinite;
+  user-select: none;
+  z-index: 5;
+}
+
+@keyframes coin-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+.maze-coin.collected {
+  display: none;
+}
+
+/* Player Cursor - Glowing Effect */
+.player-cursor {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--accent-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  transition:
+    left 0.1s ease-out,
+    top 0.1s ease-out;
+}
+
+.player-cursor.glow {
+  color: #00ff88;
+  text-shadow:
+    0 0 5px #00ff88,
+    0 0 10px #00ff88,
+    0 0 20px #00ff88,
+    0 0 40px #00ff88,
+    0 0 60px rgba(0, 255, 136, 0.5);
+  animation: cursor-glow 2s ease-in-out infinite;
+}
+
+@keyframes cursor-glow {
+  0%,
+  100% {
+    text-shadow:
+      0 0 5px #00ff88,
+      0 0 10px #00ff88,
+      0 0 20px #00ff88,
+      0 0 40px #00ff88,
+      0 0 60px rgba(0, 255, 136, 0.5);
+  }
+  50% {
+    text-shadow:
+      0 0 10px #00ff88,
+      0 0 20px #00ff88,
+      0 0 30px #00ff88,
+      0 0 50px #00ff88,
+      0 0 80px rgba(0, 255, 136, 0.7);
+  }
+}
+
+/* Movement trail effect (optional, can be enabled) */
+.player-cursor.trail::after {
+  content: '\2588';
+  position: absolute;
+  color: rgba(0, 255, 136, 0.3);
+  animation: trail-fade 0.3s ease-out forwards;
+}
+
+@keyframes trail-fade {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0;
+  }
+}

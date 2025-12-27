@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vim Motions Arcade - Standalone Level</title>
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="/src/styles/standalone.css" />
+  </head>
+  <body>
+    <div id="game-container">
+      <!-- Debug Header -->
+      <div id="debug-header" class="debug-header">
+        <span class="debug-title">STANDALONE LEVEL TEST</span>
+        <span id="debug-info" class="debug-info">Loading...</span>
+      </div>
+
+      <!-- Game Area -->
+      <div id="game-area" class="game-area standalone-game-area">
+        <!-- Level renders here -->
+      </div>
+
+      <!-- Debug Footer -->
+      <div id="debug-footer" class="debug-footer">
+        <div class="debug-controls">
+          <span class="debug-key"
+            ><kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> Move</span
+          >
+          <span class="debug-key"><kbd>R</kbd> Restart</span>
+          <span class="debug-key"><kbd>Esc</kbd> Exit</span>
+        </div>
+        <div id="debug-position" class="debug-position">Position: (0, 0)</div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/levels/standalone.js"></script>
+  </body>
+</html>
